@@ -11,45 +11,44 @@
 html,body{width:100%;height:100%;background:#000;overflow:hidden;touch-action:none;font-family:'Georgia',serif;-webkit-user-select:none;user-select:none;}
 @media screen and (orientation:portrait){#rotWrap{display:flex!important;}}
 #rotWrap{display:none;position:fixed;inset:0;background:#000;z-index:9999;flex-direction:column;align-items:center;justify-content:center;gap:14px;}
-.rotIcon{font-size:54px;animation:rotAnim 2s ease-in-out infinite;}
-@keyframes rotAnim{0%,100%{transform:rotate(0deg);}50%{transform:rotate(90deg);}}
+.rotIcon{font-size:52px;animation:rA 2s ease-in-out infinite;}
+@keyframes rA{0%,100%{transform:rotate(0)}50%{transform:rotate(90deg)}}
 .rotTxt{color:#f0d060;font-size:13px;letter-spacing:2px;text-align:center;line-height:1.7;}
 #gc{position:fixed;inset:0;width:100vw;height:100vh;display:block;}
-/* HUD */
 #hud{position:fixed;inset:0;pointer-events:none;z-index:10;}
-/* Status bars top-left */
+/* ── Status bars ── */
 #sb{position:absolute;top:8px;left:8px;display:flex;flex-direction:column;gap:4px;}
 .br{display:flex;align-items:center;gap:5px;}
-.bl{color:#ccc;font-size:9px;text-shadow:1px 1px 2px #000;width:14px;}
-.bt{width:110px;height:10px;background:rgba(0,0,0,.65);border:1px solid rgba(255,255,255,.2);border-radius:5px;overflow:hidden;}
+.bl{color:#ddd;font-size:9px;text-shadow:1px 1px 2px #000;width:14px;}
+.bt{width:112px;height:10px;background:rgba(0,0,0,.65);border:1px solid rgba(255,255,255,.2);border-radius:5px;overflow:hidden;}
 #hf{height:100%;background:linear-gradient(90deg,#8b0000,#e74c3c);width:100%;transition:width .2s;}
 #sf{height:100%;background:linear-gradient(90deg,#1a7a30,#2ecc71);width:100%;transition:width .2s;}
-/* Top center */
+/* ── Top centre ── */
 #tc{position:absolute;top:6px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:2px;pointer-events:none;}
 #pn{color:#f0d060;font-size:10px;letter-spacing:2px;text-shadow:0 0 8px #000;}
 #lb{background:rgba(0,0,0,.75);border:1px solid #8b6914;color:#f0d060;font-size:9px;padding:1px 10px;border-radius:10px;}
 #zl{color:#f0d060cc;font-size:8px;letter-spacing:2px;}
-/* Minimap */
+/* ── Minimap ── */
 #mm{position:absolute;top:7px;right:8px;pointer-events:none;}
 #mc{width:88px;height:88px;border:2px solid #8b6914;border-radius:50%;background:#111;display:block;}
-/* Joystick */
+/* ── Joystick ── */
 #lc{position:absolute;bottom:16px;left:14px;pointer-events:all;}
-#jz{width:98px;height:98px;background:rgba(0,0,0,.28);border:2px solid rgba(255,255,255,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;touch-action:none;}
-#jk{width:36px;height:36px;background:radial-gradient(circle at 35% 35%,#f0d060,#8b6914 70%,#5a3d00);border-radius:50%;position:absolute;box-shadow:0 2px 8px rgba(0,0,0,.5);pointer-events:none;}
-/* Action buttons */
+#jz{width:98px;height:98px;background:rgba(0,0,0,.28);border:2px solid rgba(255,255,255,.14);border-radius:50%;position:relative;touch-action:none;}
+#jk{width:36px;height:36px;background:radial-gradient(circle at 35% 35%,#f0d060,#8b6914 70%,#5a3d00);border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);box-shadow:0 2px 8px rgba(0,0,0,.5);pointer-events:none;}
+/* ── Action buttons ── */
 #rc{position:absolute;bottom:16px;right:10px;pointer-events:all;display:grid;grid-template-columns:50px 50px;grid-template-rows:50px 50px;gap:7px;}
 .ab{width:50px;height:50px;border-radius:50%;border:2px solid;display:flex;align-items:center;justify-content:center;font-size:19px;cursor:pointer;touch-action:none;box-shadow:0 3px 8px rgba(0,0,0,.5);transition:transform .08s,filter .08s;}
-.ab:active{transform:scale(.84);filter:brightness(1.4);}
+.ab:active{transform:scale(.82);filter:brightness(1.5);}
 #bsw{background:rgba(160,30,30,.85);border-color:#e74c3c;}
 #bbw{background:rgba(30,80,160,.85);border-color:#3498db;}
 #brl{background:rgba(80,40,140,.85);border-color:#9b59b6;}
 #bin{background:rgba(30,130,50,.85);border-color:#2ecc71;}
-/* Bottom center */
+/* ── Bottom centre ── */
 #bc{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:9px;pointer-events:all;align-items:center;}
 .ub{width:42px;height:42px;background:rgba(0,0,0,.62);border:1.5px solid rgba(240,208,96,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;color:#f0d060;touch-action:none;box-shadow:0 2px 6px rgba(0,0,0,.4);transition:transform .08s;}
-.ub:active{transform:scale(.84);}
+.ub:active{transform:scale(.82);}
 #biv{width:50px;height:50px;font-size:20px;border-color:#f0d060;background:rgba(0,0,0,.72);}
-/* Weapon wheel */
+/* ── Weapon wheel ── */
 #wo{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:50;pointer-events:all;}
 #wo.on{display:block;}
 #ww{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:240px;height:240px;display:none;z-index:51;pointer-events:all;}
@@ -57,24 +56,36 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden;touch-action:no
 #wc{width:240px;height:240px;}
 #wctr{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:54px;height:54px;background:rgba(5,5,15,.92);border:2px solid #f0d060;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;pointer-events:none;}
 #wlb{position:absolute;bottom:-26px;left:50%;transform:translateX(-50%);color:#f0d060;font-size:10px;letter-spacing:1px;white-space:nowrap;text-shadow:0 0 8px #000;}
-/* Combat indicator bar above enemy */
-.ebar{position:fixed;pointer-events:none;z-index:25;}
-/* Dialogue */
+/* ── Dialogue (Pokémon style) ── */
 #dlg{position:fixed;bottom:0;left:0;width:100%;z-index:60;display:none;pointer-events:all;}
 #dlg.on{display:block;}
 #db{background:linear-gradient(180deg,#0d1020,#151530);border:3px solid #f0d060;border-bottom:none;border-radius:14px 14px 0 0;margin:0 5px;overflow:hidden;box-shadow:0 -6px 24px rgba(0,0,0,.8);}
 #dh{background:linear-gradient(90deg,#2d1800,#5c3600);padding:5px 12px;border-bottom:1px solid #8b6914;display:flex;align-items:center;gap:9px;}
 #dp{width:34px;height:34px;border:2px solid #f0d060;border-radius:6px;background:#222;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;}
 #dn{color:#f0d060;font-size:11px;letter-spacing:1px;font-weight:bold;}
-#djob{color:#aaa;font-size:9px;margin-left:4px;}
+#djob{color:#88bbff;font-size:9px;margin-left:4px;background:rgba(52,152,219,.25);border:1px solid #3498db;padding:1px 5px;border-radius:3px;}
 #dm{margin-left:auto;font-size:16px;}
 #dt{padding:10px 14px 7px;color:#e8e8d8;font-size:11px;line-height:1.7;min-height:54px;border-bottom:1px solid rgba(240,208,96,.12);}
 #dc{padding:5px 13px 4px;display:flex;flex-direction:column;gap:3px;}
 .dc{background:rgba(255,255,255,.06);border:1px solid rgba(240,208,96,.32);border-radius:4px;color:#f0d060;padding:5px 9px;font-size:10px;cursor:pointer;}
-.dc:active{background:rgba(240,208,96,.2);}
+.dc:active{background:rgba(240,208,96,.22);}
 #dct{text-align:right;padding:2px 13px 7px;color:#f0d060;font-size:9px;animation:bl 1s infinite;}
-@keyframes bl{0%,100%{opacity:1;}50%{opacity:.15;}}
-/* Panels */
+@keyframes bl{0%,100%{opacity:1}50%{opacity:.15}}
+/* ── Shop panel ── */
+#shop{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:min(90vw,360px);background:linear-gradient(180deg,#0d1a0d,#1a2a1a);border:2px solid #2ecc71;border-radius:12px;display:none;z-index:80;pointer-events:all;overflow:hidden;}
+#shop.on{display:block;}
+#shHead{background:linear-gradient(90deg,#0d2a0d,#1a4a1a);padding:10px 14px;display:flex;justify-content:space-between;align-items:center;}
+#shTitle{color:#2ecc71;font-size:13px;letter-spacing:2px;}
+#shGold{color:#f0d060;font-size:11px;}
+#shClose{color:#2ecc71;font-size:18px;background:none;border:none;cursor:pointer;}
+#shItems{padding:10px;display:grid;grid-template-columns:1fr 1fr;gap:8px;max-height:50vh;overflow-y:auto;}
+.shItem{background:rgba(46,204,113,.08);border:1px solid rgba(46,204,113,.3);border-radius:8px;padding:9px 8px;text-align:center;cursor:pointer;transition:border-color .15s;}
+.shItem:active{border-color:#2ecc71;background:rgba(46,204,113,.18);}
+.shItemIcon{font-size:22px;}
+.shItemName{color:#e8e8d8;font-size:9px;margin-top:2px;}
+.shItemPrice{color:#f0d060;font-size:10px;margin-top:3px;}
+.shItemDesc{color:#888;font-size:8px;margin-top:2px;line-height:1.3;}
+/* ── Panels ── */
 .pan{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:min(84vw,340px);border:2px solid #8b6914;border-radius:10px;display:none;z-index:70;pointer-events:all;overflow:hidden;}
 .pan.on{display:block;}
 .ph{background:linear-gradient(90deg,#2d1800,#5c3600);padding:9px 13px;display:flex;justify-content:space-between;align-items:center;}
@@ -88,49 +99,53 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden;touch-action:no
 .qtg.act{background:rgba(52,152,219,.3);color:#3498db;}
 .qtg.dn{background:rgba(46,204,113,.3);color:#2ecc71;}
 #sg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
-.sc{background:rgba(255,255,255,.06);border:1px solid rgba(240,208,96,.2);border-radius:8px;padding:9px 4px;text-align:center;cursor:pointer;transition:border-color .15s;}
+.sc{background:rgba(255,255,255,.06);border:1px solid rgba(240,208,96,.2);border-radius:8px;padding:9px 4px;text-align:center;cursor:pointer;}
 .sc:active,.sc.mx{border-color:#f0d060;}
 .si{font-size:20px;}.sn{color:#f0d060;font-size:8px;margin-top:2px;}.slv{color:#888;font-size:8px;}
 #spi{text-align:center;color:#f0d060;font-size:10px;padding:7px 0 3px;border-top:1px solid rgba(240,208,96,.15);margin-top:5px;}
-/* Pause */
+/* ── Pause ── */
 #pm{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:100;display:none;flex-direction:column;align-items:center;justify-content:center;gap:13px;}
 #pm.on{display:flex;}
 #pt{color:#f0d060;font-size:min(6vw,22px);letter-spacing:5px;text-shadow:0 0 24px #f0d060,0 0 48px #c03000;margin-bottom:8px;}
 .pb2{width:min(68vw,195px);padding:10px;background:rgba(240,208,96,.08);border:1px solid #8b6914;border-radius:6px;color:#f0d060;font-size:11px;letter-spacing:2px;cursor:pointer;text-align:center;}
 .pb2:active{background:rgba(240,208,96,.25);}
-/* Combat flash */
+/* ── Enemy HP ── */
+#eHP{position:fixed;top:28%;left:50%;transform:translateX(-50%);display:none;flex-direction:column;align-items:center;z-index:25;pointer-events:none;}
+#eHP.on{display:flex;}
+#eHPN{color:#ff6666;font-size:10px;letter-spacing:1px;margin-bottom:2px;}
+#eHPB{width:140px;height:7px;background:rgba(0,0,0,.7);border:1px solid #ff4444;border-radius:4px;overflow:hidden;}
+#eHPF{height:100%;background:linear-gradient(90deg,#8b0000,#ff4444);transition:width .15s;}
+/* ── Combo ── */
+#combo{position:fixed;top:50%;right:14px;transform:translateY(-50%);color:#f0d060;font-size:22px;font-weight:bold;text-shadow:0 0 14px #f0d060;z-index:30;opacity:0;transition:opacity .3s;pointer-events:none;}
+#combo.on{opacity:1;}
+/* ── Hit flash ── */
 #hf2{position:fixed;inset:0;pointer-events:none;z-index:20;opacity:0;background:rgba(220,30,30,.4);transition:opacity .06s;}
-/* Float text */
+/* ── Float text ── */
 .fd{position:fixed;pointer-events:none;font-size:17px;font-weight:bold;text-shadow:1px 1px 3px #000;z-index:35;animation:fu .9s forwards;}
-.fheal{color:#44ff88;}.fdmg{color:#ff4444;}
-@keyframes fu{0%{transform:translateY(0) scale(1.2);opacity:1;}100%{transform:translateY(-55px) scale(.8);opacity:0;}}
-/* Combo counter */
-#combo{position:fixed;top:50%;right:16px;transform:translateY(-50%);color:#f0d060;font-size:22px;font-weight:bold;text-shadow:0 0 12px #f0d060,0 0 24px #c03000;z-index:30;opacity:0;transition:opacity .3s;pointer-events:none;}
-#combo.show{opacity:1;}
-/* Notif */
+.fheal{color:#44ff88;}.fdmg{color:#ff4444;}.fcrit{color:#ffe000;font-size:22px;}
+@keyframes fu{0%{transform:translateY(0) scale(1.2);opacity:1}100%{transform:translateY(-55px) scale(.8);opacity:0}}
+/* ── Notif ── */
 #nf{position:fixed;top:52px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.82);border:1px solid #8b6914;border-radius:6px;color:#f0d060;padding:6px 14px;font-size:10px;letter-spacing:1px;z-index:80;pointer-events:none;opacity:0;transition:opacity .25s;white-space:nowrap;}
 #nf.on{opacity:1;}
-/* Loading */
-#ls{position:fixed;inset:0;background:radial-gradient(ellipse at center,#1a0800 0%,#000 100%);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+/* ── Mission popup ── */
+#missionPop{position:fixed;top:15%;left:50%;transform:translateX(-50%);background:linear-gradient(180deg,#0d1a30,#1a2a50);border:2px solid #3498db;border-radius:10px;padding:12px 16px;display:none;z-index:75;pointer-events:none;min-width:220px;text-align:center;}
+#missionPop.on{display:block;}
+#missionPop .mt{color:#88ccff;font-size:10px;letter-spacing:2px;}
+#missionPop .mn{color:#fff;font-size:12px;font-weight:bold;margin-top:4px;}
+#missionPop .md{color:#aaa;font-size:9px;margin-top:3px;line-height:1.4;}
+#missionPop .mr{color:#f0d060;font-size:10px;margin-top:6px;}
+/* ── Loading ── */
+#ls{position:fixed;inset:0;background:radial-gradient(ellipse at center,#1a0800,#000);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;}
 #lt{color:#f0d060;font-size:min(7vw,28px);letter-spacing:min(1.5vw,7px);text-shadow:0 0 30px #f0d060,0 0 60px #c03000;margin-bottom:4px;}
-#ls2{color:#8b6914;font-size:min(2.5vw,10px);letter-spacing:4px;margin-bottom:32px;}
+#ls2{color:#8b6914;font-size:10px;letter-spacing:4px;margin-bottom:32px;}
 #lb2{width:min(58vw,220px);height:3px;background:#222;border-radius:2px;overflow:hidden;}
 #lf{height:100%;background:linear-gradient(90deg,#c03000,#f0d060);width:0%;transition:width .1s;}
 #lm{color:#555;font-size:9px;margin-top:11px;letter-spacing:1px;}
-/* Enemy health bar */
-#enemyHP{position:fixed;top:30%;left:50%;transform:translateX(-50%);display:none;flex-direction:column;align-items:center;z-index:25;pointer-events:none;}
-#enemyHP.on{display:flex;}
-#ehpName{color:#ff6666;font-size:10px;letter-spacing:1px;margin-bottom:2px;}
-#ehpBar{width:140px;height:7px;background:rgba(0,0,0,.7);border:1px solid #ff4444;border-radius:4px;overflow:hidden;}
-#ehpFill{height:100%;background:linear-gradient(90deg,#8b0000,#ff4444);transition:width .15s;}
-/* NPC job tag */
-.jobtag{display:inline-block;background:rgba(52,152,219,.25);border:1px solid #3498db;color:#7fc8f8;font-size:8px;padding:1px 5px;border-radius:3px;margin-left:5px;}
 </style>
 </head>
 <body>
 <div id="rotWrap"><div class="rotIcon">📱</div><div class="rotTxt">ROTATE YOUR DEVICE<br>TO LANDSCAPE MODE</div></div>
 <div id="ls"><div id="lt">⚔ CURSE LAND</div><div id="ls2">MEDIEVAL RPG</div><div id="lb2"><div id="lf"></div></div><div id="lm">Loading…</div></div>
-
 <canvas id="gc"></canvas>
 
 <div id="hud">
@@ -138,14 +153,14 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden;touch-action:no
     <div class="br"><span class="bl">HP</span><div class="bt"><div id="hf"></div></div></div>
     <div class="br"><span class="bl">SP</span><div class="bt"><div id="sf"></div></div></div>
   </div>
-  <div id="tc"><div id="pn">BOY WARRIOR</div><div id="lb">LV 1 &nbsp;|&nbsp;<span id="gc2">50</span>💰</div><div id="zl">VILLAGE CENTER</div></div>
+  <div id="tc"><div id="pn">BOY WARRIOR</div><div id="lb">LV 1&nbsp;|&nbsp;<span id="gc2">50</span>💰</div><div id="zl">VILLAGE CENTER</div></div>
   <div id="mm"><canvas id="mc" width="88" height="88"></canvas></div>
   <div id="lc"><div id="jz"><div id="jk"></div></div></div>
   <div id="rc">
-    <div class="ab" id="bsw" title="Sword">⚔️</div>
-    <div class="ab" id="bbw" title="Bow">🏹</div>
-    <div class="ab" id="brl" title="Dodge">💨</div>
-    <div class="ab" id="bin" title="Talk">💬</div>
+    <div class="ab" id="bsw">⚔️</div>
+    <div class="ab" id="bbw">🏹</div>
+    <div class="ab" id="brl">💨</div>
+    <div class="ab" id="bin">💬</div>
   </div>
   <div id="bc">
     <div class="ub" id="bmp">🗺</div>
@@ -156,121 +171,146 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden;touch-action:no
 </div>
 
 <div id="combo"></div>
-<div id="enemyHP"><div id="ehpName">WOLF</div><div id="ehpBar"><div id="ehpFill" style="width:100%"></div></div></div>
-
+<div id="eHP"><div id="eHPN">WOLF</div><div id="eHPB"><div id="eHPF" style="width:100%"></div></div></div>
 <div id="wo"></div>
 <div id="ww"><canvas id="wc" width="240" height="240"></canvas><div id="wctr">⚔️</div><div id="wlb">SWORD</div></div>
 
+<!-- Dialogue box -->
 <div id="dlg">
   <div id="db">
-    <div id="dh"><div id="dp">👤</div><div id="dn">NPC</div><span id="djob" class="jobtag"></span><div id="dm">😐</div></div>
-    <div id="dt"></div>
-    <div id="dc"></div>
+    <div id="dh"><div id="dp">👤</div><div id="dn">NPC</div><span id="djob"></span><div id="dm">😐</div></div>
+    <div id="dt"></div><div id="dc"></div>
     <div id="dct">▼ TAP TO CONTINUE</div>
   </div>
 </div>
 
+<!-- Shop panel -->
+<div id="shop">
+  <div id="shHead"><span id="shTitle">🛒 NARUTO'S SHOP</span><span id="shGold">💰 50</span><button id="shClose">✕</button></div>
+  <div id="shItems"></div>
+</div>
+
+<!-- Mission popup -->
+<div id="missionPop">
+  <div class="mt">🎯 NEW MISSION</div>
+  <div class="mn" id="mpName"></div>
+  <div class="md" id="mpDesc"></div>
+  <div class="mr" id="mpReward"></div>
+</div>
+
 <div class="pan" id="qp"><div class="ph"><span>📜 QUESTS</span><button class="pc" id="qc">✕</button></div><div class="pb" id="ql"></div></div>
 <div class="pan" id="skp"><div class="ph"><span>✨ SKILLS</span><button class="pc" id="skc">✕</button></div><div class="pb"><div id="sg"></div><div id="spi">Skill Points: <span id="spc">3</span></div></div></div>
-
 <div id="pm"><div id="pt">⚔ PAUSED</div><div class="pb2" id="pr">▶ RESUME</div><div class="pb2" id="pq">📜 QUESTS</div><div class="pb2" id="ps">✨ SKILLS</div><div class="pb2" id="prs">↺ RESTART</div></div>
-<div id="hf2"></div>
-<div id="nf"></div>
+<div id="hf2"></div><div id="nf"></div>
 
+<!-- THREE.js r128 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 'use strict';
-// ══════════════════════════════════════════════════
-//  CURSE LAND v3 — Full Engine
-// ══════════════════════════════════════════════════
 const $=id=>document.getElementById(id);
 
-// ── RENDERER ──
+// ─── RENDERER ──────────────────────────────────────────────
 const canvas=$('gc');
 const renderer=new THREE.WebGLRenderer({canvas,antialias:false,powerPreference:'high-performance',alpha:false});
 renderer.setClearColor(0x87ceeb,1);
 renderer.shadowMap.enabled=true;
 renderer.shadowMap.type=THREE.BasicShadowMap;
-renderer.autoClear=true;
 
 function onResize(){
   const W=window.innerWidth,H=window.innerHeight;
   renderer.setPixelRatio(Math.min(window.devicePixelRatio,1.5));
   renderer.setSize(W,H);
-  cam.aspect=W/H; cam.updateProjectionMatrix();
+  cam.aspect=W/H;cam.updateProjectionMatrix();
 }
 window.addEventListener('resize',onResize);
 window.addEventListener('orientationchange',()=>setTimeout(onResize,300));
 
+// ─── SCENE ─────────────────────────────────────────────────
 const scene=new THREE.Scene();
 scene.background=new THREE.Color(0x87ceeb);
-scene.fog=new THREE.FogExp2(0x9dd4e8,0.008);
+scene.fog=new THREE.FogExp2(0x9dd4e8,0.007);
 
 const clock=new THREE.Clock();
-let paused=false,slowMo=1.0,gameTime=0;
+let paused=false,slowMo=1.0,GT=0;
 
-// ── CAMERA ──
-const cam=new THREE.PerspectiveCamera(58,window.innerWidth/window.innerHeight,0.2,300);
+// ─── CAMERA ────────────────────────────────────────────────
+const cam=new THREE.PerspectiveCamera(58,window.innerWidth/window.innerHeight,0.2,320);
 let camYaw=0,camPitch=0.40,camMode='third';
 const CAM_D=9;
 onResize();
 
-// ── LIGHTING ──
+// ─── LIGHTING ──────────────────────────────────────────────
 scene.add(new THREE.AmbientLight(0xd8ccb0,0.7));
 const sun=new THREE.DirectionalLight(0xffd090,1.15);
-sun.position.set(60,90,40);
-sun.castShadow=true;
+sun.position.set(60,90,40);sun.castShadow=true;
 sun.shadow.mapSize.set(512,512);
-sun.shadow.camera.near=1;sun.shadow.camera.far=220;
-sun.shadow.camera.left=-100;sun.shadow.camera.right=100;
-sun.shadow.camera.top=100;sun.shadow.camera.bottom=-100;
+sun.shadow.camera.near=1;sun.shadow.camera.far=240;
+sun.shadow.camera.left=sun.shadow.camera.bottom=-110;
+sun.shadow.camera.right=sun.shadow.camera.top=110;
 sun.shadow.bias=-0.001;
 scene.add(sun);
 scene.add(new THREE.HemisphereLight(0x87ceeb,0x4a7030,0.5));
 
-// ══════════════════════════════════════════════════
-//  SKYBOX — uses top/front/back/right/left/bottom.png
-//  Falls back to gradient sphere if images not found
-// ══════════════════════════════════════════════════
-(function buildSkybox(){
-  const loader=new THREE.CubeTextureLoader();
-  // Try loading from ./skybox/ folder
-  // Files: right.png, left.png, top.png, bottom.png, front.png, back.png
-  // THREE.js CubeTextureLoader order: px,nx,py,ny,pz,nz
-  // = right, left, top, bottom, front, back
-  try{
-    loader.setPath('./skybox/');
-    const cubeMap=loader.load(
-      ['right.png','left.png','top.png','bottom.png','front.png','back.png'],
-      ()=>{ scene.background=cubeMap; },
-      undefined,
-      ()=>{ buildFallbackSky(); }
-    );
-  } catch(e){ buildFallbackSky(); }
-})();
-
+// ─── SKYBOX ────────────────────────────────────────────────
+// Tries ./skybox/{right,left,top,bottom,front,back}.png
+// Falls back to gradient sphere dome
 function buildFallbackSky(){
-  // Gradient sky dome
-  const g=new THREE.SphereGeometry(240,16,8);
-  const pos=g.attributes.position;
-  const ca=[];
+  const g=new THREE.SphereGeometry(280,20,10);
+  const pos=g.attributes.position,ca=[];
   for(let i=0;i<pos.count;i++){
-    const t=Math.max(0,Math.min(1,(pos.getY(i)+240)/480));
-    ca.push(0.53+t*0.1, 0.72+t*0.06, 0.82-t*0.15);
+    const t=Math.max(0,Math.min(1,(pos.getY(i)+280)/560));
+    ca.push(0.52+t*.12,0.72+t*.06,0.85-t*.2);
   }
   g.setAttribute('color',new THREE.Float32BufferAttribute(ca,3));
   scene.add(new THREE.Mesh(g,new THREE.MeshBasicMaterial({vertexColors:true,side:THREE.BackSide})));
 }
 
-// ══════════════════════════════════════════════════
-//  MATERIALS
-// ══════════════════════════════════════════════════
+const cubeLoader=new THREE.CubeTextureLoader();
+cubeLoader.setPath('./skybox/');
+cubeLoader.load(
+  ['right.png','left.png','top.png','bottom.png','front.png','back.png'],
+  tex=>{scene.background=tex;},
+  undefined,
+  ()=>buildFallbackSky()
+);
+
+// ─── HORIZON TERRAIN ───────────────────────────────────────
+// Low-poly hills around world border — visible but low quality far away
+function buildHorizonTerrain(){
+  // Far mountain ring (purely visual, no colliders)
+  const hillMat=new THREE.MeshLambertMaterial({color:0x3a5a2a});
+  const hillMat2=new THREE.MeshLambertMaterial({color:0x4a6a38});
+  const angles=[0,18,36,54,72,90,108,126,144,162,180,198,216,234,252,270,288,306,324,342];
+  angles.forEach((a,i)=>{
+    const rad=a*Math.PI/180;
+    const dist=160+Math.random()*30;
+    const h=12+Math.random()*22;
+    const w=18+Math.random()*14;
+    const hill=new THREE.Mesh(
+      new THREE.ConeGeometry(w,h,i%3===0?6:5),
+      i%2===0?hillMat:hillMat2
+    );
+    hill.position.set(Math.cos(rad)*dist,h*.45,Math.sin(rad)*dist);
+    hill.rotation.y=Math.random()*Math.PI;
+    scene.add(hill); // not in chunk — permanent background
+  });
+  // Outer flat ground ring
+  const outerGnd=new THREE.Mesh(
+    new THREE.RingGeometry(105,220,32),
+    new THREE.MeshLambertMaterial({color:0x4a7030})
+  );
+  outerGnd.rotation.x=-Math.PI/2;outerGnd.position.y=-0.05;outerGnd.receiveShadow=true;
+  scene.add(outerGnd);
+}
+buildHorizonTerrain();
+
+// ─── MATERIALS ─────────────────────────────────────────────
 const M={
   gnd:  new THREE.MeshLambertMaterial({color:0x5a8840}),
-  gnd2: new THREE.MeshLambertMaterial({color:0x4a7830}),// darker forest floor
+  gnd2: new THREE.MeshLambertMaterial({color:0x4a7030}),
   dirt: new THREE.MeshLambertMaterial({color:0x8a7050}),
-  road: new THREE.MeshLambertMaterial({color:0xc0a060}),
-  path: new THREE.MeshLambertMaterial({color:0xa08840}),
+  road: new THREE.MeshLambertMaterial({color:0xb09050}), // ← slightly darker to avoid bleach
+  path: new THREE.MeshLambertMaterial({color:0x9a7c38}),
   hB:   new THREE.MeshLambertMaterial({color:0xcc9060}),
   hP:   new THREE.MeshLambertMaterial({color:0xddb880}),
   rR:   new THREE.MeshLambertMaterial({color:0x882800}),
@@ -286,6 +326,7 @@ const M={
   nG:   new THREE.MeshLambertMaterial({color:0x4a8a50}),
   nA:   new THREE.MeshLambertMaterial({color:0xaa4030}),
   nN:   new THREE.MeshLambertMaterial({color:0x8080a0}),
+  nNaruto:new THREE.MeshLambertMaterial({color:0xff8800}),// Naruto orange
   en:   new THREE.MeshLambertMaterial({color:0xcc2020}),
   en2:  new THREE.MeshLambertMaterial({color:0x8b1010}),
   pl:   new THREE.MeshLambertMaterial({color:0x3070c0}),
@@ -296,50 +337,30 @@ const M={
   ru:   new THREE.MeshLambertMaterial({color:0x707060}),
   fi:   new THREE.MeshLambertMaterial({color:0xff6600,emissive:0xff3300,emissiveIntensity:0.9}),
   fc:   new THREE.MeshLambertMaterial({color:0x6a4a20}),
-  wat:  new THREE.MeshLambertMaterial({color:0x2a7aaa,transparent:true,opacity:0.78}),
-  wat2: new THREE.MeshLambertMaterial({color:0x1a5a88,transparent:true,opacity:0.65}),
-  grass:new THREE.MeshLambertMaterial({color:0x3a7020}),
-  swordBlade:new THREE.MeshLambertMaterial({color:0xccccdd,emissive:0x222244,emissiveIntensity:0.3}),
+  wat:  null, // filled by water setup
+  blade:new THREE.MeshLambertMaterial({color:0xccccdd,emissive:0x222244,emissiveIntensity:0.3}),
+  narutoHair:new THREE.MeshLambertMaterial({color:0xf0e000}),
+  narutoScroll:new THREE.MeshLambertMaterial({color:0xf5f5f5}),
 };
 
-// ── HELPERS ──
-function bx(w,h,d,mat,x,y,z,sh=true){
-  const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);
-  m.position.set(x,y,z);if(sh){m.castShadow=true;m.receiveShadow=true;}return m;
-}
-function cy(rt,rb,h,seg,mat,x,y,z){
-  const m=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,seg),mat);
-  m.position.set(x,y,z);m.castShadow=true;m.receiveShadow=true;return m;
-}
-function sp(r,seg,mat,x,y,z){
-  const m=new THREE.Mesh(new THREE.SphereGeometry(r,seg,seg),mat);
-  m.position.set(x,y,z);m.castShadow=true;return m;
-}
-function cn(r,h,seg,mat,x,y,z){
-  const m=new THREE.Mesh(new THREE.ConeGeometry(r,h,seg),mat);
-  m.position.set(x,y,z);m.castShadow=true;return m;
-}
-function plane(w,d,mat,x,y,z){
-  const m=new THREE.Mesh(new THREE.PlaneGeometry(w,d),mat);
-  m.rotation.x=-Math.PI/2;m.position.set(x,y,z);m.receiveShadow=true;return m;
-}
+// ─── GEO HELPERS ───────────────────────────────────────────
+function bx(w,h,d,mat,x,y,z,sh=true){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);m.position.set(x,y,z);if(sh){m.castShadow=true;m.receiveShadow=true;}return m;}
+function cy(rt,rb,h,seg,mat,x,y,z){const m=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,seg),mat);m.position.set(x,y,z);m.castShadow=true;m.receiveShadow=true;return m;}
+function sp(r,seg,mat,x,y,z){const m=new THREE.Mesh(new THREE.SphereGeometry(r,seg,seg),mat);m.position.set(x,y,z);m.castShadow=true;return m;}
+function cn(r,h,seg,mat,x,y,z){const m=new THREE.Mesh(new THREE.ConeGeometry(r,h,seg),mat);m.position.set(x,y,z);m.castShadow=true;return m;}
+function pl(w,d,mat,x,y,z){const m=new THREE.Mesh(new THREE.PlaneGeometry(w,d),mat);m.rotation.x=-Math.PI/2;m.position.set(x,y,z);m.receiveShadow=true;return m;}
 
-// ── COLLIDERS ──
+// ─── COLLIDERS ─────────────────────────────────────────────
 const COL=[];
 function addC(x,z,rx,rz){COL.push({x,z,rx,rz});}
-function hitC(nx,nz,pr=0.55){
-  for(const c of COL){if(Math.abs(nx-c.x)<c.rx+pr&&Math.abs(nz-c.z)<c.rz+pr)return true;}
-  return false;
-}
+function hitC(nx,nz,pr=0.55){for(const c of COL){if(Math.abs(nx-c.x)<c.rx+pr&&Math.abs(nz-c.z)<c.rz+pr)return true;}return false;}
 
-// ══════════════════════════════════════════════════
-//  CHUNK / ZONE SYSTEM
-// ══════════════════════════════════════════════════
+// ─── CHUNKS ────────────────────────────────────────────────
 const CHUNKS={
-  village:{cx:0,  cz:0,   lR:65, uR:95,  loaded:false},
-  market: {cx:100,cz:0,   lR:75, uR:115, loaded:false},
-  forest: {cx:0,  cz:-100,lR:75, uR:115, loaded:false},
-  outer:  {cx:-100,cz:50, lR:75, uR:115, loaded:false},
+  village:{cx:0,  cz:0,   lR:65,uR:95,  loaded:false},
+  market: {cx:100,cz:0,   lR:75,uR:115, loaded:false},
+  forest: {cx:0,  cz:-100,lR:75,uR:115, loaded:false},
+  outer:  {cx:-100,cz:50, lR:75,uR:115, loaded:false},
 };
 const CM={village:[],market:[],forest:[],outer:[]};
 let npcs=[],enemies=[],waterMeshes=[];
@@ -347,753 +368,708 @@ let npcs=[],enemies=[],waterMeshes=[];
 function cDist(id,px,pz){const c=CHUNKS[id];return Math.hypot(px-c.cx,pz-c.cz);}
 function addM(id,o){CM[id].push(o);scene.add(o);return o;}
 
-function loadChunk(id){
-  if(CHUNKS[id].loaded)return; CHUNKS[id].loaded=true;
-  if(id==='village')bldVillage();
-  else if(id==='market')bldMarket();
-  else if(id==='forest')bldForest();
-  else if(id==='outer')bldOuter();
-}
+function loadChunk(id){if(CHUNKS[id].loaded)return;CHUNKS[id].loaded=true;if(id==='village')bldVillage();else if(id==='market')bldMarket();else if(id==='forest')bldForest();else if(id==='outer')bldOuter();}
 function unloadChunk(id){
   if(id==='village'||!CHUNKS[id].loaded)return;
-  CHUNKS[id].loaded=false;
-  CM[id].forEach(o=>{scene.remove(o);});CM[id]=[];
-  npcs=npcs.filter(n=>n.chunk!==id);
-  enemies=enemies.filter(e=>e.chunk!==id);
+  CHUNKS[id].loaded=false;CM[id].forEach(o=>scene.remove(o));CM[id]=[];
+  npcs=npcs.filter(n=>n.chunk!==id);enemies=enemies.filter(e=>e.chunk!==id);
 }
 let chkT=0;
-function tickChunks(px,pz,dt){
-  chkT+=dt; if(chkT<0.5)return; chkT=0;
-  for(const id in CHUNKS){
-    const d=cDist(id,px,pz);
-    if(!CHUNKS[id].loaded&&d<CHUNKS[id].lR)loadChunk(id);
-    else if(CHUNKS[id].loaded&&d>CHUNKS[id].uR&&id!=='village')unloadChunk(id);
-  }
-}
+function tickChunks(px,pz,dt){chkT+=dt;if(chkT<0.5)return;chkT=0;for(const id in CHUNKS){const d=cDist(id,px,pz);if(!CHUNKS[id].loaded&&d<CHUNKS[id].lR)loadChunk(id);else if(CHUNKS[id].loaded&&d>CHUNKS[id].uR&&id!=='village')unloadChunk(id);}}
 
-// ══════════════════════════════════════════════════
-//  GLB MODEL LOADER  (trees.glb, boy_warrior.glb)
-// ══════════════════════════════════════════════════
-// THREE r128 doesn't have GLTFLoader built-in — we use an inline minimal loader
-// that loads from ./models/ folder if available, otherwise uses procedural fallback.
-// This approach keeps the game fully functional without models.
-
+// ══════════════════════════════════════════════════════════
+//  GLB LOADER — correct CDN path for Three.js r128
+// ══════════════════════════════════════════════════════════
 let playerModelLoaded=false;
-let treeTemplate=null; // will hold cloned tree group
+let treeTemplate=null;
+let houseTemplate=null;
+let narutoTemplate=null;
 
-// Minimal GLTF loader injection (r128 compatible)
-const GLTF_CDN='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/examples/js/loaders/GLTFLoader.js';
+// CORRECT CDN for GLTFLoader r128
+const GLTF_CDN='https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js';
 
 function loadScript(src,cb){
-  const s=document.createElement('script');s.src=src;s.onload=cb;s.onerror=()=>cb(null);document.head.appendChild(s);
+  const s=document.createElement('script');
+  s.src=src;
+  s.onload=()=>cb(true);
+  s.onerror=()=>cb(false);
+  document.head.appendChild(s);
 }
 
-function tryLoadGLB(path,onSuccess,onFail){
-  if(typeof THREE.GLTFLoader==='undefined'){onFail();return;}
+// Load GLTFLoader, then load all models
+loadScript(GLTF_CDN,ok=>{
+  if(!ok||typeof THREE.GLTFLoader==='undefined'){
+    console.log('GLTFLoader unavailable — using procedural models');
+    return;
+  }
   const loader=new THREE.GLTFLoader();
-  loader.load(path,onSuccess,undefined,onFail);
-}
 
-// ══════════════════════════════════════════════════
-//  PLAYER GROUP (procedural — replaced by GLB if present)
-// ══════════════════════════════════════════════════
-const PG=new THREE.Group();
-scene.add(PG);
+  function tryLoad(path,onOk){
+    loader.load(path,
+      gltf=>{
+        gltf.scene.traverse(c=>{if(c.isMesh){c.castShadow=true;c.receiveShadow=true;}});
+        onOk(gltf.scene);
+      },
+      undefined,
+      err=>console.log('Could not load',path,'— using fallback')
+    );
+  }
 
-// Procedural boy warrior
-function buildProceduralPlayer(){
-  // Legs
-  const legL=bx(.3,0.9,.28,M.ar,-.2,.45,0);
-  const legR=bx(.3,0.9,.28,M.ar, .2,.45,0);
-  // Body + armour
-  const body=bx(.85,1.1,.55,M.pl,0,1.15,0);
-  const chest=bx(.88,.65,.58,M.ar,0,1.35,0);
-  // Head
-  const head=sp(.38,7,M.sk,0,1.92,0);
-  const helmet=bx(.45,.28,.45,M.ar,0,2.08,0);
-  // Sword arm
-  const arm=bx(.22,0.8,.22,M.ar,.58,1.15,0);
-  // Cape
-  const cape=bx(.82,.9,.08,M.rD,0,1.1,-.28);
-  [legL,legR,body,chest,head,helmet,arm,cape].forEach(m=>PG.add(m));
-
-  // Sword in hand
-  SW.add(bx(.09,1.0,.07,M.swordBlade,0,.38,0));
-  SW.add(bx(.42,.1,.08,M.wd,0,-.1,0));// crossguard
-  SW.add(bx(.08,.28,.08,M.wd,0,-.28,0));// grip
-  SW.position.set(.65,.85,.06);
-  PG.add(SW);
-
-  // Shield on left
-  const shield=bx(.06,.55,.45,M.ar,-.6,1.1,.05);
-  PG.add(shield);
-}
-
-const SW=new THREE.Group();
-buildProceduralPlayer();
-
-// Try to replace with GLB
-loadScript(GLTF_CDN,()=>{
-  tryLoadGLB('./models/boy_warrior.glb',gltf=>{
-    // remove procedural parts
+  // Player model
+  tryLoad('./models/boy_warrior.glb',model=>{
     while(PG.children.length>0)PG.remove(PG.children[0]);
-    const model=gltf.scene;
     model.scale.set(1,1,1);
-    model.traverse(c=>{if(c.isMesh){c.castShadow=true;c.receiveShadow=true;}});
     PG.add(model);
     playerModelLoaded=true;
-  },()=>{/* keep procedural */});
+    console.log('✅ boy_warrior.glb loaded');
+  });
 
-  // Load tree template
-  tryLoadGLB('./models/trees.glb',gltf=>{
-    treeTemplate=gltf.scene;
-    treeTemplate.traverse(c=>{if(c.isMesh){c.castShadow=true;c.receiveShadow=true;}});
-  },()=>{/* use procedural */});
+  // Tree model
+  tryLoad('./models/trees.glb',model=>{
+    treeTemplate=model;
+    console.log('✅ trees.glb loaded');
+  });
+
+  // House model
+  tryLoad('./models/house_1.glb',model=>{
+    houseTemplate=model;
+    // Place the special Naruto house
+    placeNarutoHouse();
+    console.log('✅ house_1.glb loaded');
+  });
+
+  // Naruto NPC model
+  tryLoad('./models/naruto.glb',model=>{
+    narutoTemplate=model;
+    // Re-place Naruto if house already placed
+    if(narutoHouseGroup){
+      placeNarutoNPC();
+    }
+    console.log('✅ naruto.glb loaded');
+  });
 });
 
-// ══════════════════════════════════════════════════
-//  TREE BUILDER (uses GLB if loaded, else procedural)
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
+//  WATER TEXTURE — animated with canvas fallback
+// ══════════════════════════════════════════════════════════
+function setupWaterMaterial(){
+  const texLoader=new THREE.TextureLoader();
+  // Try water.gif first
+  texLoader.load('./textures/water.gif',
+    tex=>{
+      tex.wrapS=tex.wrapT=THREE.RepeatWrapping;
+      tex.repeat.set(3,8);
+      M.wat=new THREE.MeshLambertMaterial({map:tex,transparent:true,opacity:0.82,color:0xaaddff});
+      // update any already-created water meshes
+      waterMeshes.forEach(w=>{if(w.material)w.material=M.wat;});
+      console.log('✅ water.gif loaded');
+    },
+    undefined,
+    ()=>{
+      // Fallback: animated canvas texture
+      const cv=document.createElement('canvas');cv.width=128;cv.height=256;
+      const ctx=cv.getContext('2d');
+      const tex2=new THREE.CanvasTexture(cv);
+      tex2.wrapS=tex2.wrapT=THREE.RepeatWrapping;
+      tex2.repeat.set(2,4);
+      M.wat=new THREE.MeshLambertMaterial({map:tex2,transparent:true,opacity:0.80,color:0x2299cc});
+      // Animate the canvas
+      function animCanvas(t){
+        ctx.clearRect(0,0,128,256);
+        ctx.fillStyle='#1a6aaa';ctx.fillRect(0,0,128,256);
+        for(let i=0;i<8;i++){
+          ctx.fillStyle=`rgba(120,200,255,${0.25+Math.sin(t*2+i)*.15})`;
+          ctx.fillRect(0,(i*32+(t*30)%256)%256,128,14);
+        }
+        tex2.needsUpdate=true;
+      }
+      // Store animator for use in game loop
+      window._animWaterCanvas=animCanvas;
+      waterMeshes.forEach(w=>{if(w.material)w.material=M.wat;});
+    }
+  );
+}
+// Set a placeholder until texture loads
+M.wat=new THREE.MeshLambertMaterial({color:0x2a7aaa,transparent:true,opacity:0.80});
+setupWaterMaterial();
+
+// ══════════════════════════════════════════════════════════
+//  PLAYER (procedural — replaced by GLB)
+// ══════════════════════════════════════════════════════════
+const PG=new THREE.Group();scene.add(PG);
+const SW=new THREE.Group();
+
+function buildProceduralPlayer(){
+  PG.add(bx(.3,.9,.28,M.ar,-.18,.45,0)); // legL
+  PG.add(bx(.3,.9,.28,M.ar, .18,.45,0)); // legR
+  PG.add(bx(.85,1.1,.55,M.pl,0,1.15,0));
+  PG.add(bx(.88,.65,.58,M.ar,0,1.35,0));
+  PG.add(sp(.38,7,M.sk,0,1.92,0));
+  PG.add(bx(.45,.28,.45,M.ar,0,2.08,0));
+  PG.add(bx(.22,.8,.22,M.ar,.58,1.15,0)); // sword arm [6]
+  PG.add(bx(.82,.9,.08,M.rD,0,1.1,-.28));
+  SW.add(bx(.09,1.0,.07,M.blade,0,.38,0));
+  SW.add(bx(.42,.1,.08,M.wd,0,-.1,0));
+  SW.add(bx(.08,.28,.08,M.wd,0,-.28,0));
+  SW.position.set(.65,.85,.06);PG.add(SW);
+  PG.add(bx(.06,.55,.45,M.ar,-.6,1.1,.05)); // shield
+}
+buildProceduralPlayer();
+
+// ══════════════════════════════════════════════════════════
+//  TREE BUILDER
+// ══════════════════════════════════════════════════════════
 function bldTree(cx,cz,h,chunk){
   let g;
   if(treeTemplate){
     g=treeTemplate.clone();
-    const s=0.8+Math.random()*.6;
-    g.scale.set(s,s+(h-3)*.12,s);
+    const s=0.7+Math.random()*.7;
+    g.scale.set(s,(h/4)*s,s);
   } else {
     g=new THREE.Group();
     g.add(cy(.18,.28,h,5,M.tk,0,h/2,0));
     const lr=1.4+Math.random()*.9;
     const lmat=[M.lf,M.lf2,M.lf3][Math.floor(Math.random()*3)];
-    g.add(sp(lr,5,lmat,0,h+lr*.45,0));
-    // extra foliage layer
-    g.add(sp(lr*.7,4,lmat,0,h+lr*.0,0));
+    g.add(sp(lr,6,lmat,0,h+lr*.45,0));
+    g.add(sp(lr*.7,5,lmat,0,h,0));
   }
-  g.position.set(cx,0,cz);
-  g.rotation.y=Math.random()*Math.PI*2;
-  addM(chunk,g);
-  addC(cx,cz,.42,.42);
+  g.position.set(cx,0,cz);g.rotation.y=Math.random()*Math.PI*2;
+  addM(chunk,g);addC(cx,cz,.42,.42);
 }
 
-// ══════════════════════════════════════════════════
-//  WATER RIVER SYSTEM
-//  Uses water.gif as texture, floating animation
-// ══════════════════════════════════════════════════
-function buildRiver(cx,cz,chunk){
-  // Create a flowing river using tiled texture or fallback animated material
-  const riverWidth=8;
-  const riverLen=80;
-
-  // Try to load water.gif texture
-  const texLoader=new THREE.TextureLoader();
-  let riverMat=M.wat;
-  texLoader.load('./textures/water.gif',tex=>{
-    tex.wrapS=tex.wrapT=THREE.RepeatWrapping;
-    tex.repeat.set(4,16);
-    riverMat.map=tex;
-    riverMat.needsUpdate=true;
-  },undefined,()=>{
-    // fallback: animated blue material (already set)
-  });
-
-  // River segments — follows the map curve (north side)
-  const riverPts=[
-    new THREE.Vector3(-40,0,-60),
-    new THREE.Vector3(-20,0,-75),
-    new THREE.Vector3(0,0,-85),
-    new THREE.Vector3(20,0,-80),
-    new THREE.Vector3(35,0,-70),
-    new THREE.Vector3(45,0,-55),
-  ];
-
-  for(let i=0;i<riverPts.length-1;i++){
-    const a=riverPts[i],b=riverPts[i+1];
-    const dx=b.x-a.x,dz=b.z-a.z,len=Math.hypot(dx,dz);
-    const waterMesh=new THREE.Mesh(
-      new THREE.PlaneGeometry(riverWidth,len,1,4),
-      new THREE.MeshLambertMaterial({color:0x2a7aaa,transparent:true,opacity:0.80})
-    );
-    waterMesh.rotation.x=-Math.PI/2;
-    waterMesh.rotation.z=-Math.atan2(dx,dz);
-    waterMesh.position.set((a.x+b.x)/2,.05,(a.z+b.z)/2);
-    waterMesh.receiveShadow=true;
-    waterMesh._waterPhase=Math.random()*Math.PI*2;
-    addM(chunk,waterMesh);
-    waterMeshes.push(waterMesh);
-    // Banks
-    const bankL=plane(2,len,M.dirt,(a.x+b.x)/2+Math.cos(-Math.atan2(dx,dz))*5,.02,(a.z+b.z)/2);
-    bankL.rotation.z=-Math.atan2(dx,dz);
-    addM(chunk,bankL);
+// ══════════════════════════════════════════════════════════
+//  WATER RIVER
+// ══════════════════════════════════════════════════════════
+function buildRiver(chunk){
+  // Fix negative literal issue
+  const pts=[[-40,-60],[-20,-75],[0,-85],[20,-80],[35,-70],[45,-55]];
+  for(let i=0;i<pts.length-1;i++){
+    const [x1,z1]=pts[i],[x2,z2]=pts[i+1];
+    const dx=x2-x1,dz=z2-z1,len=Math.hypot(dx,dz);
+    const wm=new THREE.Mesh(new THREE.PlaneGeometry(8,len,1,3),M.wat.clone());
+    wm.rotation.x=-Math.PI/2;wm.rotation.z=-Math.atan2(dx,dz);
+    wm.position.set((x1+x2)/2,.06,(z1+z2)/2);
+    wm.receiveShadow=true;wm._wPhase=Math.random()*Math.PI*2;
+    addM(chunk,wm);waterMeshes.push(wm);
+    // Bank dirt strips — use dirt plane instead of bleached road
+    const bankMat=new THREE.MeshLambertMaterial({color:0x7a6040});
+    const b1=new THREE.Mesh(new THREE.PlaneGeometry(3,len),bankMat);
+    b1.rotation.x=-Math.PI/2;b1.rotation.z=-Math.atan2(dx,dz);
+    b1.position.set((x1+x2)/2+Math.cos(-Math.atan2(dx,dz)+Math.PI/2)*5.5,.01,(z1+z2)/2+Math.sin(-Math.atan2(dx,dz)+Math.PI/2)*5.5);
+    addM(chunk,b1);
   }
 }
-
-function animateWater(t){
+function animWater(t){
   waterMeshes.forEach(w=>{
-    if(w.material&&w.material.map){
-      w.material.map.offset.y+=0.008;
-    }
-    // gentle bobbing
-    w.position.y=0.05+Math.sin(t*1.2+w._waterPhase)*0.04;
+    if(w.material&&w.material.map)w.material.map.offset.y=t*.12;
+    w.position.y=.06+Math.sin(t*1.1+w._wPhase)*.035;
+  });
+  if(window._animWaterCanvas)window._animWaterCanvas(t);
+}
+
+// ══════════════════════════════════════════════════════════
+//  ROAD (fixed — raised + dark edge to prevent bleaching)
+// ══════════════════════════════════════════════════════════
+function bldRoad(x1,z1,x2,z2,w,chunk,mat){
+  mat=mat||M.road;
+  const dx=x2-x1,dz=z2-z1,len=Math.hypot(dx,dz);
+  const ang=Math.atan2(dx,dz);
+  // Main road surface (raised slightly above ground)
+  const rm=bx(w,.08,len,mat,(x1+x2)/2,.04,(z1+z2)/2,false);
+  rm.rotation.y=ang;rm.receiveShadow=true;addM(chunk,rm);
+  // Dark edge strips to prevent colour bleed into terrain
+  const eMat=new THREE.MeshLambertMaterial({color:0x5a4520});
+  [-1,1].forEach(side=>{
+    const em=bx(.5,.04,len,eMat,(x1+x2)/2+Math.cos(ang+Math.PI/2)*side*(w/2+.25),.02,(z1+z2)/2+Math.sin(ang+Math.PI/2)*side*(w/2+.25),false);
+    em.rotation.y=ang;addM(chunk,em);
   });
 }
 
-// ══════════════════════════════════════════════════
-//  HOUSE
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
+//  HOUSE BUILDER
+// ══════════════════════════════════════════════════════════
 function bldHouse(cx,cz,sx,sz,chunk,rm){
   const g=new THREE.Group();
   g.add(bx(4*sx,3.2,4*sz,M.hB,0,1.6,0));
-  // upper trim
-  g.add(bx(4*sx+.1,.15,4*sz+.1,M.wd,0,3.25,0));
-  const rf=cn(3.0*Math.max(sx,sz),2.2,4,rm,0,4.3,0);
-  rf.rotation.y=Math.PI/4;g.add(rf);
-  g.add(bx(.85,1.65,.12,M.wd,0,.82,2*sz));// door
-  g.add(bx(.75,.75,.1,M.fn,-1.0,2.0,2*sz));// windows
-  g.add(bx(.75,.75,.1,M.fn, 1.0,2.0,2*sz));
-  // chimney
-  if(Math.random()>.4){
-    g.add(bx(.35,.6,.35,M.st,1.2*sx,4.5,0.8*sz));
+  g.add(bx(4*sx+.1,.15,4*sz+.1,M.wd,0,3.26,0));
+  const rf=cn(3*Math.max(sx,sz),2.2,4,rm,0,4.3,0);rf.rotation.y=Math.PI/4;g.add(rf);
+  g.add(bx(.85,1.65,.12,M.wd,0,.82,2*sz));
+  g.add(bx(.75,.75,.1,M.fn,-1,2,2*sz));g.add(bx(.75,.75,.1,M.fn,1,2,2*sz));
+  if(Math.random()>.4)g.add(bx(.35,.6,.35,M.st,1.2*sx,4.5,.8*sz));
+  g.position.set(cx,0,cz);addM(chunk,g);addC(cx,cz,2*sx,2*sz);
+}
+
+function bldRock(cx,cz,s,chunk){const m=sp(s,5,M.st,cx,s*.55,cz);m.scale.set(1+Math.random()*.3,.5+Math.random()*.3,1+Math.random()*.3);addM(chunk,m);if(s>.7)addC(cx,cz,s*.65,s*.65);}
+function bldFloor(cx,cz,w,d,mat,chunk,y=0){const m=pl(w,d,mat,cx,y,cz);addM(chunk,m);}
+
+// ══════════════════════════════════════════════════════════
+//  NARUTO HOUSE & NPC
+// ══════════════════════════════════════════════════════════
+let narutoHouseGroup=null;
+let narutoNPC=null;
+
+function buildProceduralNarutoNPC(px,pz){
+  const g=new THREE.Group();
+  // Orange jumpsuit body
+  g.add(bx(.7,1.3,.5,M.nNaruto,0,.65,0));
+  // Head
+  g.add(sp(.32,7,M.sk,0,1.44,0));
+  // Yellow spiky hair
+  g.add(sp(.36,5,M.narutoHair,0,1.72,0));
+  // Hair spikes
+  for(let i=0;i<5;i++){
+    const a=i*72*Math.PI/180;
+    const spike=cn(.06,.28,4,M.narutoHair,Math.cos(a)*.2,1.88,Math.sin(a)*.2);
+    spike.rotation.z=Math.cos(a)*.5;spike.rotation.x=Math.sin(a)*.5;
+    g.add(spike);
   }
-  g.position.set(cx,0,cz);
-  addM(chunk,g);
-  addC(cx,cz,2*sx,2*sz);
+  // Scroll on back
+  g.add(cy(.12,.12,.5,6,M.narutoScroll,-.18,1.2,-.32));
+  // Headband
+  g.add(bx(.68,.12,.06,new THREE.MeshLambertMaterial({color:0x444466}),0,1.55,.3));
+  g.position.set(px,0,pz);
+  scene.add(g);
+  return g;
 }
 
-function bldRock(cx,cz,s,chunk){
-  const m=sp(s,5,M.st,cx,s*.55,cz);
-  m.scale.set(1+Math.random()*.3,.5+Math.random()*.3,1+Math.random()*.3);
-  addM(chunk,m);
-  if(s>.7)addC(cx,cz,s*.65,s*.65);
+function buildProceduralNarutoHouse(px,pz){
+  const g=new THREE.Group();
+  // Main structure — larger special house
+  g.add(bx(7,4.5,6,M.hP,0,2.25,0));
+  // Trim
+  g.add(bx(7.2,.2,6.2,M.wd,0,4.6,0));
+  // Roof — double layer Japanese style
+  const rf1=cn(4.8,2.8,4,M.rD,0,6.2,0);rf1.rotation.y=Math.PI/4;g.add(rf1);
+  const rf2=cn(5.8,.6,4,M.rD,0,4.9,0);rf2.rotation.y=Math.PI/4;g.add(rf2);
+  // Door (bigger)
+  g.add(bx(1.2,2.4,.15,M.wd,0,1.2,3.1));
+  // Windows
+  [-2,2].forEach(ox=>g.add(bx(1,.9,.1,M.fn,ox,2.8,3.1)));
+  // Sign above door
+  const sign=bx(2.5,.5,.1,new THREE.MeshLambertMaterial({color:0xd4a030}),0,3.8,3.1);
+  g.add(sign);
+  // Porch pillars
+  [-2.5,2.5].forEach(ox=>{
+    g.add(cy(.18,.18,3,6,M.wd,ox,.2,3.2));
+    g.add(cy(.18,.18,3,6,M.wd,ox,.2,2.2));
+  });
+  // Porch roof
+  g.add(bx(6.5,.12,2.2,M.rD,0,3.2,2.6));
+  // Steps
+  g.add(bx(3,.2,1,M.st,0,.1,3.8));
+  g.add(bx(2.5,.4,.5,M.st,0,.2,4.0));
+  // Lanterns on pillars
+  [-2.5,2.5].forEach(ox=>{
+    const lan=new THREE.Group();
+    lan.add(cy(.18,.18,.35,6,new THREE.MeshLambertMaterial({color:0xff4400,emissive:0xff2200,emissiveIntensity:.6}),0,0,0));
+    const ll=new THREE.PointLight(0xff4400,1.2,5);
+    lan.add(ll);
+    lan.position.set(ox,3.4,3.2);
+    g.add(lan);
+  });
+  g.position.set(px,0,pz);
+  scene.add(g);
+  addC(px,pz,4,3.5);
+  return g;
 }
 
-function bldRoad(x1,z1,x2,z2,w,chunk,mat=M.road){
-  const dx=x2-x1,dz=z2-z1,len=Math.hypot(dx,dz);
-  const m=bx(w,.06,len,mat,(x1+x2)/2,.03,(z1+z2)/2,false);
-  m.rotation.y=Math.atan2(dx,dz);m.receiveShadow=true;
-  addM(chunk,m);
+function placeNarutoHouse(){
+  // House position: to the east of village center
+  const hx=35,hz=12;
+  if(houseTemplate){
+    narutoHouseGroup=houseTemplate.clone();
+    narutoHouseGroup.scale.set(1.2,1.2,1.2);
+    narutoHouseGroup.position.set(hx,0,hz);
+    scene.add(narutoHouseGroup);
+    addC(hx,hz,4,3.5);
+  } else {
+    narutoHouseGroup=buildProceduralNarutoHouse(hx,hz);
+  }
+  // Road from village to Naruto's house
+  bldRoad(16,hz,hx-4,hz,4,'village',M.path);
+  // Guard post sign area
+  bldFloor(hx,hz+5,12,10,M.dirt,'village',.01);
 }
 
-function bldPlane(cx,cz,w,d,mat,chunk,yo=0){
-  const m=plane(w,d,mat,cx,yo,cz);
-  addM(chunk,m);
+function placeNarutoNPC(){
+  const hx=35,hz=18; // in front of house
+  if(narutoTemplate){
+    const g=narutoTemplate.clone();
+    g.scale.set(1,1,1);
+    g.position.set(hx,0,hz);
+    scene.add(g);
+  } else {
+    buildProceduralNarutoNPC(hx,hz);
+  }
+  // Register as NPC
+  const narutoNPCData={
+    mesh:narutoTemplate?narutoTemplate.clone():buildProceduralNarutoNPC(hx,hz),
+    x:hx,z:hz,
+    name:'Naruto',job:'Shadow Clone Master',
+    mood:'good',pt:'🌀',
+    dlg:[
+      "Believe it! I am Naruto Uzumaki!",
+      "I heard you're the warrior this village needs.",
+      "I have missions that pay good coin!",
+      "Complete them and you can buy from my shop!",
+      "Dattebayo!"
+    ],
+    chunk:'village',di:0,
+    homeX:hx,homeZ:hz,
+    wanderTarget:{x:hx,z:hz},wanderTimer:4,
+    walkPhase:0,
+    isNaruto:true,
+  };
+  // remove the mesh we just added and use the narutoNPCData
+  npcs.push(narutoNPCData);
+  narutoNPC=narutoNPCData;
 }
 
-// ══════════════════════════════════════════════════
-//  VILLAGE CENTER
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
+//  SHOP SYSTEM
+// ══════════════════════════════════════════════════════════
+const SHOP_ITEMS=[
+  {id:'hp_potion',  icon:'🧪',name:'Health Potion',  price:20, desc:'Restores 40 HP instantly.',    effect:()=>{P.hp=Math.min(P.mhp,P.hp+40);notif('+40 HP restored!');}},
+  {id:'sp_potion',  icon:'⚡',name:'Stamina Drink',   price:15, desc:'Restores full stamina.',        effect:()=>{P.sp=P.msp;notif('Stamina fully restored!');}},
+  {id:'sword_up',   icon:'⚔️',name:'Sharp Stone',    price:50, desc:'+5 to sword damage.',           effect:()=>{P.skills.strength.lv=Math.min(5,P.skills.strength.lv+1);notif('Sword sharpened!');}},
+  {id:'bow_up',     icon:'🏹',name:'Eagle Feathers',  price:40, desc:'+5 bow range & damage.',        effect:()=>{P.skills.archery.lv=Math.min(5,P.skills.archery.lv+1);notif('Archery improved!');}},
+  {id:'armor_up',   icon:'🛡️',name:'Iron Plate',     price:60, desc:'+5 defense permanently.',       effect:()=>{P.skills.defense.lv=Math.min(5,P.skills.defense.lv+1);notif('Armor upgraded!');}},
+  {id:'scroll',     icon:'📜',name:'Ancient Scroll',  price:80, desc:'Unlocks magic skill LV1.',      effect:()=>{P.skills.magic.lv=Math.min(5,P.skills.magic.lv+1);notif('Magic unlocked!');}},
+  {id:'hp_max',     icon:'💖',name:'Max HP Up',       price:100,desc:'+25 max HP permanently.',       effect:()=>{P.mhp+=25;P.hp=Math.min(P.hp+25,P.mhp);notif('+25 Max HP!');}},
+  {id:'speed',      icon:'👟',name:'Wind Boots',      price:70, desc:'Move 20% faster permanently.',  effect:()=>{P.spd=Math.min(15,P.spd+1.5);notif('Speed increased!');}},
+];
+
+function openShop(){
+  const el=$('shItems');el.innerHTML='';
+  $('shGold').textContent='💰 '+P.gold;
+  SHOP_ITEMS.forEach(item=>{
+    const d=document.createElement('div');d.className='shItem';
+    d.innerHTML=`<div class="shItemIcon">${item.icon}</div><div class="shItemName">${item.name}</div><div class="shItemPrice">💰 ${item.price}</div><div class="shItemDesc">${item.desc}</div>`;
+    d.onclick=()=>{
+      if(P.gold<item.price){notif('Not enough gold! Need 💰'+item.price);return;}
+      P.gold-=item.price;$('gc2').textContent=P.gold;$('shGold').textContent='💰 '+P.gold;
+      item.effect();
+    };
+    el.appendChild(d);
+  });
+  $('shop').classList.add('on');
+}
+$('shClose').onclick=()=>$('shop').classList.remove('on');
+
+// ══════════════════════════════════════════════════════════
+//  NARUTO MISSIONS
+// ══════════════════════════════════════════════════════════
+const NARUTO_MISSIONS=[
+  {id:'nm1',title:'Shadow Clone Test',  desc:'Defeat 3 enemies in the forest.',  goal:'kill3forest',prog:0,target:3,reward:{gold:80,xp:60}, status:'locked'},
+  {id:'nm2',title:'Supply Run',          desc:'Reach the Market Area and return.', goal:'visitmarket',prog:0,target:1,reward:{gold:60,xp:40}, status:'locked'},
+  {id:'nm3',title:'Ramen Delivery',      desc:'Talk to 3 NPCs in the village.',    goal:'talk3npc',  prog:0,target:3,reward:{gold:100,xp:80},status:'locked'},
+  {id:'nm4',title:'Rasengan Training',   desc:'Defeat the Outer Land bandits (5).', goal:'kill5outer',prog:0,target:5,reward:{gold:150,xp:100},status:'locked'},
+];
+let activeMission=null;
+
+function startNextNarutoMission(){
+  const next=NARUTO_MISSIONS.find(m=>m.status==='locked');
+  if(!next)return;
+  next.status='active';activeMission=next;
+  $('mpName').textContent=next.title;
+  $('mpDesc').textContent=next.desc;
+  $('mpReward').textContent='Reward: 💰'+next.reward.gold+' XP:'+next.reward.xp;
+  $('missionPop').classList.add('on');
+  setTimeout(()=>$('missionPop').classList.remove('on'),3500);
+  notif('🎯 New Mission: '+next.title);
+  Q.push({id:next.id,title:'[Naruto] '+next.title,type:'naruto',desc:next.desc+' ('+next.prog+'/'+next.target+')',status:'active',reward:next.reward});
+}
+
+function checkMissionProgress(event,value){
+  if(!activeMission||activeMission.status!=='active')return;
+  let done=false;
+  const m=activeMission;
+  if(m.goal==='kill3forest'&&event==='killForest'){m.prog++;if(m.prog>=m.target)done=true;}
+  if(m.goal==='kill5outer'&&event==='killOuter'){m.prog++;if(m.prog>=m.target)done=true;}
+  if(m.goal==='visitmarket'&&event==='enterMarket'){m.prog=1;done=true;}
+  if(m.goal==='talk3npc'&&event==='talkNPC'){m.prog++;if(m.prog>=m.target)done=true;}
+  const qq=Q.find(q=>q.id===m.id);if(qq)qq.desc=m.desc+' ('+m.prog+'/'+m.target+')';
+  if(done){
+    m.status='complete';
+    P.gold+=m.reward.gold;P.xp+=m.reward.xp;
+    $('gc2').textContent=P.gold;
+    notif(`✅ Mission Complete! +💰${m.reward.gold} +${m.reward.xp}XP`);
+    checkLvUp();activeMission=null;
+    const qq2=Q.find(q=>q.id===m.id);if(qq2)qq2.status='complete';
+  }
+}
+
+// ══════════════════════════════════════════════════════════
+//  VILLAGE BUILD
+// ══════════════════════════════════════════════════════════
 function bldVillage(){
-  // Ground layers (no gaps)
-  bldPlane(0,0,130,130,M.gnd,'village');
-  bldPlane(0,0,24,24,M.dirt,'village',.02);
+  // Ground base
+  bldFloor(0,0,130,130,M.gnd,'village');
+  bldFloor(0,0,24,24,M.dirt,'village',.02);
 
-  // Circular ring road
-  const pts=[];
-  for(let a=0;a<=360;a+=4)pts.push(new THREE.Vector3(Math.cos(a*Math.PI/180)*16,.05,Math.sin(a*Math.PI/180)*16));
-  const tc=new THREE.CatmullRomCurve3(pts,true);
-  const tg=new THREE.TubeGeometry(tc,72,3.0,5,true);
-  addM('village',new THREE.Mesh(tg,M.road));
+  // Roads
+  bldRoad(0,16,0,-100,7,'village');
+  bldRoad(16,0,100,0,7,'village');
+  bldRoad(-16,8,-100,50,7,'village');
 
-  // Main roads to other zones
-  bldRoad(0,16,0,-100,7,'village');         // to forest (north)
-  bldRoad(16,0,100,0,7,'village');          // to market (east)
-  bldRoad(-16,8,-100,50,7,'village');       // to outer (west)
-  bldRoad(0,16,0,50,5,'village',M.path);    // south path
+  // Ring road as tube
+  const rPts=[];
+  for(let a=0;a<=360;a+=5)rPts.push(new THREE.Vector3(Math.cos(a*Math.PI/180)*16,.05,Math.sin(a*Math.PI/180)*16));
+  const rC=new THREE.CatmullRomCurve3(rPts,true);
+  const rG=new THREE.TubeGeometry(rC,72,3,5,true);
+  const rM=new THREE.Mesh(rG,M.road);rM.receiveShadow=true;addM('village',rM);
+  // edge trim for ring road
+  const rG2=new THREE.TubeGeometry(rC,72,3.4,4,true);
+  const rM2=new THREE.Mesh(rG2,new THREE.MeshLambertMaterial({color:0x5a4520}));
+  rM2.position.y=-.02;addM('village',rM2);
 
   // Fountain
   const fg=new THREE.Group();
   fg.add(cy(3.2,3.2,.55,16,M.st,0,.28,0));
   fg.add(cy(.28,.28,1.6,8,M.st,0,1.08,0));
-  fg.add(sp(.85,8,M.fn,0,2.2,0));
-  const wring=new THREE.Mesh(new THREE.CylinderGeometry(2.9,2.9,.12,16),M.wat);
-  wring._waterPhase=0; waterMeshes.push(wring);
-  fg.add(wring);
+  fg.add(sp(.85,8,new THREE.MeshLambertMaterial({color:0x70b0cc}),0,2.2,0));
+  const wring=pl(5.8,5.8,M.wat,0,.12,0);wring._wPhase=0;fg.add(wring);waterMeshes.push(wring);
   addM('village',fg);
 
-  // 9 houses in ring (match map: 5 small, 2 medium, 1 important, 1 townhall)
+  // 9 houses
   const hr=[
-    {a:0,  r:22,sx:1.0,sz:1.0,rm:M.rR},  // 1.1 small
-    {a:40, r:22,sx:1.0,sz:1.0,rm:M.rD},  // 1.2 small
-    {a:80, r:22,sx:1.0,sz:1.0,rm:M.rR},  // 1.3 small
-    {a:120,r:24,sx:1.0,sz:1.0,rm:M.rG},  // 1.4 small
-    {a:160,r:22,sx:1.0,sz:1.0,rm:M.rR},  // 1.5 small
-    {a:200,r:22,sx:1.0,sz:1.0,rm:M.rD},  // 1.6 small
-    {a:240,r:24,sx:1.2,sz:1.1,rm:M.rG},  // 1.7 medium important
-    {a:290,r:24,sx:1.2,sz:1.1,rm:M.rR},  // 1.8 medium important
-    {a:335,r:26,sx:1.5,sz:1.3,rm:M.rD},  // 1.9 town hall
+    {a:0,r:22,sx:1,sz:1,rm:M.rR},{a:40,r:22,sx:1,sz:1,rm:M.rD},{a:80,r:22,sx:1,sz:1,rm:M.rR},
+    {a:120,r:24,sx:1,sz:1,rm:M.rG},{a:160,r:22,sx:1,sz:1,rm:M.rR},{a:200,r:22,sx:1,sz:1,rm:M.rD},
+    {a:240,r:24,sx:1.2,sz:1.1,rm:M.rG},{a:290,r:24,sx:1.2,sz:1.1,rm:M.rR},{a:335,r:26,sx:1.5,sz:1.3,rm:M.rD},
   ];
-  hr.forEach(h=>{
-    const rad=h.a*Math.PI/180;
-    bldHouse(Math.cos(rad)*h.r,Math.sin(rad)*h.r,h.sx,h.sz,'village',h.rm);
-  });
+  hr.forEach(h=>{const rad=h.a*Math.PI/180;bldHouse(Math.cos(rad)*h.r,Math.sin(rad)*h.r,h.sx,h.sz,'village',h.rm);});
 
-  // Fences
+  // Fence
   for(let a=0;a<360;a+=10){
-    const rad=a*Math.PI/180;
-    addM('village',bx(.18,1.2,.18,M.fc,Math.cos(rad)*15,.6,Math.sin(rad)*15));
-    // horizontal rails
-    if(a%20===0){
-      const rad2=(a+10)*Math.PI/180;
-      const rail=bx(Math.hypot(Math.cos(rad2)*15-Math.cos(rad)*15,Math.sin(rad2)*15-Math.sin(rad)*15),.08,.1,M.fc,(Math.cos(rad)+Math.cos(rad2))*7.5,.9,(Math.sin(rad)+Math.sin(rad2))*7.5);
-      rail.rotation.y=-Math.atan2(Math.cos(rad2)-Math.cos(rad),Math.sin(rad2)-Math.sin(rad));
-      addM('village',rail);
-    }
+    const rad=a*Math.PI/180,r=14.5;
+    addM('village',bx(.18,1.2,.18,M.fc,Math.cos(rad)*r,.6,Math.sin(rad)*r));
   }
 
-  // Decorative trees in village
-  const vtrees=[{x:28,z:-8},{x:-30,z:-12},{x:24,z:28},{x:-26,z:26},{x:32,z:18},{x:-34,z:0}];
-  vtrees.forEach(t=>bldTree(t.x,t.z,3.5+Math.random()*1.5,'village'));
+  // Trees
+  [{x:28,z:-8},{x:-30,z:-12},{x:24,z:28},{x:-26,z:26},{x:32,z:18},{x:-34,z:0},{x:30,z:-22},{x:-28,z:20}]
+    .forEach(t=>bldTree(t.x,t.z,3.5+Math.random()*1.5,'village'));
 
   // Rocks
-  for(let i=0;i<6;i++)bldRock((Math.random()-.5)*80,(Math.random()-.5)*80,.4+Math.random()*.6,'village');
+  for(let i=0;i<6;i++)bldRock((Math.random()-.5)*75,(Math.random()-.5)*75,.4+Math.random()*.6,'village');
 
-  // Well near center
-  const well=new THREE.Group();
-  well.add(cy(1.0,1.0,.8,10,M.st,0,.4,0));
-  well.add(bx(.06,.9,.06,M.wd,-.9,.9,0));
-  well.add(bx(.06,.9,.06,M.wd, .9,.9,0));
-  well.add(bx(1.9,.06,.06,M.wd,0,1.35,0));
-  well.position.set(8,0,8);
-  addM('village',well);
+  // Well
+  const w=new THREE.Group();
+  w.add(cy(1,1,.8,10,M.st,0,.4,0));w.add(bx(.06,.9,.06,M.wd,-.9,.9,0));w.add(bx(.06,.9,.06,M.wd,.9,.9,0));w.add(bx(1.9,.06,.06,M.wd,0,1.35,0));
+  w.position.set(8,0,8);addM('village',w);
 
-  // NPCs with jobs
+  // Naruto house (placed here or by GLB callback)
+  placeNarutoHouse();
+
+  // Village NPCs
   const vn=[
-    {x:3,z:3,name:'Elder Maris',job:'Village Elder',mood:'good',pt:'👴',d:["Welcome to Curse Land, brave one.","The dark curse has plagued us for generations.","Three ancient runes must be gathered to break it.","Start by speaking with the Hermit in the Outer Land."]},
-    {x:-4,z:5,name:'Guard Bren',job:'Village Guard',mood:'angry',pt:'💂',d:["Halt! State your business!","Strangers have been disappearing near the forest.","I'm watching you, traveller."]},
-    {x:8,z:-5,name:'Villager Ada',job:'Baker',mood:'good',pt:'👩',d:["I bake bread for the whole village.","Oh, could you find my basket? I left it near the forest.","I'll reward you well if you bring it back!"]},
-    {x:-5,z:-4,name:'Smith Kurt',job:'Blacksmith',mood:'neutral',pt:'🔨',d:["I forge blades and armour every day.","Need a weapon sharpened? Come back later.","The ore from the outer ruins makes fine steel."]},
-    {x:4,z:9,name:'Child Pip',job:'Villager',mood:'good',pt:'🧒',d:["Are you a real knight?!","Papa says the curse came from a witch!","Please save us!"]},
-    {x:-8,z:3,name:'Farmer Tom',job:'Farmer',mood:'neutral',pt:'🌾',d:["My crops keep dying from the curse.","I tried planting near the river but the wolves attacked.","Strange lights appear over the forest at night."]},
-    {x:2,z:-10,name:'Wanderer Jin',job:'Traveller',mood:'good',pt:'🗺️',d:["I came from the Eastern Shore seeking adventure.","Dark omens hang over this land.","I mapped three rune locations — take this copy."]},
-    {x:-3,z:10,name:'Healer Lyra',job:'Healer',mood:'good',pt:'💊',d:["I tend the wounded every day.","Here, take this herb. It restores health in battle.","Beware the outer ruins — cursed knights roam there."]},
+    {x:3,z:3,name:'Elder Maris',job:'Village Elder',mood:'good',pt:'👴',d:["Welcome to Curse Land!","The dark curse plagues our land.","Three runes can break it forever.","Seek the Hermit in the Outer Land."]},
+    {x:-4,z:5,name:'Guard Bren',job:'Guard',mood:'angry',pt:'💂',d:["Halt! State your name!","Strangers are trouble.","Move along!"]},
+    {x:8,z:-5,name:'Villager Ada',job:'Baker',mood:'good',pt:'👩',d:["I bake bread for the village!","Please find my basket near the forest.","Reward will be fair, I promise!"]},
+    {x:-5,z:-4,name:'Smith Kurt',job:'Blacksmith',mood:'neutral',pt:'🔨',d:["Finest blades here.","Outer ruins ore makes great steel."]},
+    {x:4,z:9,name:'Child Pip',job:'Villager',mood:'good',pt:'🧒',d:["Are you a real knight?!","Please stop the wolves!"]},
+    {x:-8,z:3,name:'Farmer Tom',job:'Farmer',mood:'neutral',pt:'🌾',d:["Curse rotted half my crops.","Strange lights over the forest at night."]},
+    {x:2,z:-10,name:'Wanderer Jin',job:'Traveller',mood:'good',pt:'🗺️',d:["I seek adventure!","Dark omens follow this land."]},
+    {x:-3,z:10,name:'Healer Lyra',job:'Healer',mood:'good',pt:'💊',d:["Take this herb — it heals wounds.","Beware the ruins after dark."]},
   ];
   vn.forEach(n=>spawnNPC(n.x,n.z,n.name,n.job,n.mood,n.pt,n.d,'village'));
+  // Place Naruto NPC after a short delay (GLB might still be loading)
+  setTimeout(placeNarutoNPC,500);
 }
 
-// ══════════════════════════════════════════════════
-//  MARKET AREA
-// ══════════════════════════════════════════════════
 function bldMarket(){
-  bldPlane(100,0,95,95,M.gnd,'market');
-  bldPlane(100,0,40,40,M.dirt,'market',.02);
-  bldRoad(16,0,90,0,7,'market');// connecting road
-
-  // Open square flagstones
-  for(let i=0;i<16;i++){
-    for(let j=0;j<16;j++){
-      if((i+j)%2===0){
-        const fm=bx(2.4,.04,2.4,M.st,88+i*2.4-18,.01,j*2.4-18);
-        fm.receiveShadow=true; addM('market',fm);
-      }
-    }
-  }
-
-  // 5 stalls: 3 shops + 2 storage (positions match map)
-  const st=[
-    {x:90,z:-12,t:M.rR,name:'Blacksmith Shop',job:'Blacksmith'},
-    {x:100,z:-14,t:M.mk2,name:'General Trader',job:'Trader'},
-    {x:110,z:-12,t:M.mk,name:'Food Stall',job:'Food Vendor'},
-    {x:90,z:12,t:M.rD,name:'Storage Hut',job:'Storage Keeper'},
-    {x:110,z:12,t:M.rG,name:'Storage Hut 2',job:'Storage Keeper'},
-  ];
+  bldFloor(100,0,95,95,M.gnd,'market');
+  bldFloor(100,0,40,40,M.dirt,'market',.02);
+  bldRoad(16,0,90,0,7,'market');
+  for(let i=0;i<16;i++)for(let j=0;j<16;j++){if((i+j)%2===0){const fm=bx(2.4,.04,2.4,M.st,88+i*2.4-18,.01,j*2.4-18);fm.receiveShadow=true;addM('market',fm);}}
+  const st=[{x:90,z:-12,t:M.rR},{x:100,z:-14,t:M.mk2},{x:110,z:-12,t:M.mk},{x:90,z:12,t:M.rD},{x:110,z:12,t:M.rG}];
   st.forEach(s=>{
     const g=new THREE.Group();
     g.add(bx(5.5,3.2,4.5,M.hP,0,1.6,0));
-    g.add(bx(5.5+.1,.15,4.5+.1,M.wd,0,3.25,0));
+    g.add(bx(5.5,.15,4.5,M.wd,0,3.26,0));
     const rf=cn(3.8,2,4,s.t,0,4.2,0);rf.rotation.y=Math.PI/4;g.add(rf);
-    g.add(bx(4.5,.7,.5,M.wd,0,.35,2.4));// counter
-    g.add(bx(.65,.65,.1,M.fn,-.8,2.0,2.3));// window
+    g.add(bx(4.5,.7,.5,M.wd,0,.35,2.4));
     g.position.set(s.x,0,s.z);addM('market',g);addC(s.x,s.z,2.75,2.25);
   });
-
-  // Market decorations
   for(let i=0;i<4;i++)bldRock(96+(Math.random()-.5)*30,(Math.random()-.5)*30,.3+Math.random()*.5,'market');
-  bldTree(82,14,4,'market'); bldTree(118,14,4.5,'market');
-  bldTree(82,-14,3.5,'market'); bldTree(118,-14,4,'market');
-
-  // Market well
-  const w2=new THREE.Group();
-  w2.add(cy(1.0,1.0,.8,10,M.st,0,.4,0));w2.add(bx(1.9,.06,.06,M.wd,0,1.35,0));
-  w2.position.set(100,0,0); addM('market',w2);
-
+  [82,118].forEach(x=>{bldTree(x,14,4,'market');bldTree(x,-14,4,'market');});
   const mn=[
-    {x:94,z:-2,name:'Merchant Dax',job:'Merchant',mood:'good',pt:'🛒',d:["Finest goods in Curse Land!","Buy 3 items and get a healing herb free!","We also accept ore as payment."]},
-    {x:103,z:-3,name:'Trader Mia',job:'Trader',mood:'good',pt:'🪙',d:["Rare spices and cloths from the coast!","I also deal in information, if the price is right."]},
-    {x:110,z:-2,name:'Butcher Harg',job:'Butcher',mood:'angry',pt:'🥩',d:["DON'T touch the produce!","Buy something or I'll call the guard!"]},
-    {x:97,z:7,name:'Market Guard',job:'Guard',mood:'angry',pt:'⚔️',d:["No weapons drawn in this market.","One warning, stranger. Only one."]},
-    {x:107,z:-10,name:'Cloaked Figure',job:'Mysterious Merchant',mood:'neutral',pt:'🧙',d:["Psst… I have something... unusual.","Not for ordinary folk.","Cursed items, rare ingredients…","Come back when you have coin."]},
+    {x:94,z:-2,name:'Merchant Dax',job:'Merchant',mood:'good',pt:'🛒',d:["Finest goods here!","Buy 3 items, get a herb free!"]},
+    {x:103,z:-3,name:'Trader Mia',job:'Trader',mood:'good',pt:'🪙',d:["Rare items from the coast!"]},
+    {x:110,z:-2,name:'Butcher Harg',job:'Butcher',mood:'angry',pt:'🥩',d:["Don't touch!","Buy or leave!"]},
+    {x:97,z:7,name:'Market Guard',job:'Guard',mood:'angry',pt:'⚔️',d:["No weapons in the market."]},
+    {x:107,z:-10,name:'Cloaked Figure',job:'Mysterious',mood:'neutral',pt:'🧙',d:["I have unusual goods…","Not for ordinary folk."]},
   ];
   mn.forEach(n=>spawnNPC(n.x,n.z,n.name,n.job,n.mood,n.pt,n.d,'market'));
 }
 
-// ══════════════════════════════════════════════════
-//  FOREST AREA
-// ══════════════════════════════════════════════════
 function bldForest(){
-  bldPlane(0,-100,110,110,M.gnd2,'forest');
-
-  // Forest paths (curved, narrow)
+  bldFloor(0,-100,110,110,M.gnd2,'forest');
   bldRoad(0,-16,-5,-50,3,'forest',M.path);
   bldRoad(-5,-50,5,-75,3,'forest',M.path);
   bldRoad(5,-75,-3,-100,3,'forest',M.path);
-
-  // River running through/beside forest
-  buildRiver(0,-100,'forest');
-
-  // 50 trees (dense)
-  for(let i=0;i<52;i++){
-    const x=(Math.random()-.5)*92,z=-100+(Math.random()-.5)*92;
-    if(Math.abs(x)<6&&z>-55&&z<-14)continue; // keep path clear
-    bldTree(x,z,3.8+Math.random()*3,'forest');
-  }
-  // 12 rocks
+  buildRiver('forest');
+  for(let i=0;i<52;i++){const x=(Math.random()-.5)*92,z=-100+(Math.random()-.5)*92;if(Math.abs(x)<6&&z>-55&&z<-14)continue;bldTree(x,z,3.8+Math.random()*3,'forest');}
   for(let i=0;i<12;i++)bldRock((Math.random()-.5)*78,-100+(Math.random()-.5)*78,.6+Math.random()*1.4,'forest');
-
-  // Forest landmarks from map
-  // 3.1 Forest Camp
-  bldCamp(-18,-85,true);
-  // 3.2 Abandoned Hut
-  bldHouse(-30,-70,.75,.75,'forest',M.rG);
-  // 3.3 Old Watchtower
-  bldWatchtower(20,-80,'forest');
-  // 3.4 Hidden Cave
-  bldCave(-5,-95,'forest');
-  // 3.5 Wild Animal Area
-  for(let i=0;i<8;i++)spawnEnemy((Math.random()-.5)*60+10,-100+(Math.random()-.5)*70,'Wolf',30,'forest');
-
-  // Campfire center
-  const cg=new THREE.Group();
-  cg.add(sp(.5,6,M.st,0,.25,0));
-  cg.add(sp(.34,6,M.fi,0,.62,0));
-  cg.position.set(-14,0,-88); addM('forest',cg);
+  const cg=new THREE.Group();cg.add(sp(.5,6,M.st,0,.25,0));cg.add(sp(.34,6,M.fi,0,.62,0));cg.position.set(-14,0,-88);addM('forest',cg);
   const fl=new THREE.PointLight(0xff7700,2.5,12);fl.position.set(-14,1.5,-88);addM('forest',fl);
+  for(let i=0;i<6;i++)spawnEnemy((Math.random()-.5)*70,-100+(Math.random()-.5)*70,'Wolf',30,'forest');
+  spawnNPC(-14,-76,'Forest Scout','Scout','neutral','🌲',["The wolves are more aggressive lately.","Stay on the path."],'forest');
 }
 
-function bldWatchtower(cx,cz,chunk){
-  const g=new THREE.Group();
-  g.add(cy(.6,.7,8,6,M.wd,0,4,0));// tower
-  g.add(bx(3.5,.4,3.5,M.wd,0,8.2,0));// platform
-  g.add(bx(.1,1.5,.1,M.wd,-1.6,9,1.6));// railings
-  g.add(bx(.1,1.5,.1,M.wd, 1.6,9,1.6));
-  g.add(cn(2.2,1.8,5,M.rD,0,9.8,0));// roof
-  g.position.set(cx,0,cz); addM(chunk,g); addC(cx,cz,1.2,1.2);
-}
-
-function bldCave(cx,cz,chunk){
-  const g=new THREE.Group();
-  g.add(sp(3.5,6,M.st,0,2,0));
-  g.add(bx(2.5,2.5,2,new THREE.MeshLambertMaterial({color:0x111111}),0,1.25,-1.2));
-  g.position.set(cx,0,cz); addM(chunk,g);
-}
-
-// ══════════════════════════════════════════════════
-//  OUTER LAND
-// ══════════════════════════════════════════════════
 function bldOuter(){
-  bldPlane(-100,50,105,105,new THREE.MeshLambertMaterial({color:0x5a6840}),'outer');
+  bldFloor(-100,50,105,105,new THREE.MeshLambertMaterial({color:0x5a6840}),'outer');
   bldRoad(-16,8,-90,50,6,'outer',M.path);
-
-  // 4.1 Ancient Ruins
   bldRuin(-100,40);
-  // 4.2 Bandit Camp
-  bldCamp(-110,60,false);
-  bldCamp(-90,68,false);
-  // 4.3 Old Watch Post
-  bldWatchtower(-85,35,'outer');
-  // 4.4 Abandoned Cart
-  bldCart(-105,55,'outer');
-  // 4.5 Hidden Loot Area
-  bldRock(-115,48,2,'outer');
-
-  for(let i=0;i<15;i++)bldRock(-100+(Math.random()-.5)*88,50+(Math.random()-.5)*88,.5+Math.random()*1.5,'outer');
-
-  // Some trees
-  for(let i=0;i<16;i++)bldTree(-100+(Math.random()-.5)*80,50+(Math.random()-.5)*80,3+Math.random()*2,'outer');
-
-  // 6-10 stronger enemies (Bandits)
+  bldCamp(-110,60);bldCamp(-90,68);
+  for(let i=0;i<14;i++)bldRock(-100+(Math.random()-.5)*82,50+(Math.random()-.5)*82,.5+Math.random()*1.5,'outer');
+  for(let i=0;i<14;i++)bldTree(-100+(Math.random()-.5)*80,50+(Math.random()-.5)*80,3+Math.random()*2,'outer');
   for(let i=0;i<7;i++)spawnEnemy(-100+(Math.random()-.5)*72,50+(Math.random()-.5)*72,'Bandit',65,'outer');
-
-  spawnNPC(-100,50,'Hermit Gal','Hermit','neutral','🧙‍♂️',["I have dwelled here 40 years...","The Black Tower birthed the curse.","You need three runes: forest, market, outer land.","The runes glow at midnight. Seek them then."],'outer');
-  spawnNPC(-88,68,'Lost Knight','Cursed Knight','good','🛡️',["Thank the gods, a real warrior!","I've been wandering, cursed, for weeks.","Perhaps together we can find a cure."],'outer');
-  spawnNPC(-114,45,'Hermit Scout','Scout','neutral','🏹',["I watch this wasteland for the Elder.","Three rune fragments were hidden here by ancient mages.","The outer one is buried beneath the largest rock."],'outer');
+  spawnNPC(-100,50,'Hermit Gal','Hermit','neutral','🧙‍♂️',["The Black Tower birthed the curse.","Find three runes to break it.","The runes glow at midnight."],'outer');
+  spawnNPC(-88,68,'Lost Knight','Knight','good','🛡️',["Thank the gods, a warrior!","I've been cursed for weeks."],'outer');
+  spawnNPC(-114,45,'Scout Rei','Scout','neutral','🏹',["Watch the ruins at night.","Bandits camp there in numbers."],'outer');
 }
 
 function bldRuin(cx,cz){
   const g=new THREE.Group();
-  g.add(bx(7,2.5,.4,M.ru,0,1.25,3.5));
-  g.add(bx(7,1.5,.4,M.ru,0,.75,-3.5));
-  g.add(bx(.4,2.5,7,M.ru,3.5,1.25,0));
-  g.add(bx(.4,1.8,7,M.ru,-3.5,.9,0));
-  // Fallen pillars
-  for(let i=0;i<3;i++){
-    const pillar=cy(.3,.35,2.5+Math.random(),6,M.ru,(Math.random()-.5)*5,1,(Math.random()-.5)*5);
-    pillar.rotation.z=Math.random()*.4-.2;
-    g.add(pillar);
-  }
-  g.position.set(cx,0,cz); addM('outer',g); addC(cx,cz,4,4);
+  g.add(bx(7,2.5,.4,M.ru,0,1.25,3.5));g.add(bx(7,1.5,.4,M.ru,0,.75,-3.5));
+  g.add(bx(.4,2.5,7,M.ru,3.5,1.25,0));g.add(bx(.4,1.8,7,M.ru,-3.5,.9,0));
+  for(let i=0;i<3;i++){const p=cy(.3,.35,2+Math.random()*1.5,6,M.ru,(Math.random()-.5)*4,1,(Math.random()-.5)*4);p.rotation.z=Math.random()*.4-.2;g.add(p);}
+  g.position.set(cx,0,cz);addM('outer',g);addC(cx,cz,4,4);
 }
 
-function bldCamp(cx,cz,isForest){
-  const chunk=isForest?'forest':'outer';
+function bldCamp(cx,cz){
   const g=new THREE.Group();
   const fm=sp(.28,6,M.fi,0,.38,0);g.add(fm);
   for(let i=0;i<3;i++){const a=i*120*Math.PI/180;g.add(bx(.12,.8,.12,M.wd,Math.cos(a)*.55,.4,Math.sin(a)*.55));}
-  // Tent
-  const tent=cn(2.2,2,5,new THREE.MeshLambertMaterial({color:0x7a5a3a}),2,.9,0);
-  g.add(tent);
-  // Boxes
-  g.add(bx(.5,.5,.5,M.wd,-1.5,.25,1));
-  g.add(bx(.5,.5,.5,M.wd,-1.5,.25,-.5));
-  g.position.set(cx,0,cz); addM(chunk,g);
-  const fl=new THREE.PointLight(0xff7700,2.0,9);fl.position.set(cx,1.2,cz);addM(chunk,fl);
+  const tent=cn(2.2,2,5,new THREE.MeshLambertMaterial({color:0x7a5a3a}),2,.9,0);g.add(tent);
+  g.add(bx(.5,.5,.5,M.wd,-1.5,.25,1));g.add(bx(.5,.5,.5,M.wd,-1.5,.25,-.5));
+  g.position.set(cx,0,cz);addM('outer',g);
+  const fl=new THREE.PointLight(0xff7700,2,9);fl.position.set(cx,1.2,cz);addM('outer',fl);
 }
 
-function bldCart(cx,cz,chunk){
-  const g=new THREE.Group();
-  g.add(bx(2.5,.5,1.2,M.wd,0,.25,0));// bed
-  g.add(bx(.08,1.0,.08,M.wd,.9,.5,.5));
-  g.add(bx(.08,1.0,.08,M.wd,.9,.5,-.5));
-  g.add(bx(.08,1.0,.08,M.wd,-.9,.5,.5));
-  g.add(bx(.08,1.0,.08,M.wd,-.9,.5,-.5));
-  // wheels
-  [-.9,.9].forEach(ox=>{
-    [-.65,.65].forEach(oz=>{
-      g.add(cy(.32,.32,.08,10,M.tk,ox,.32,oz));
-    });
-  });
-  g.rotation.y=Math.random()*Math.PI;
-  g.position.set(cx,0,cz); addM(chunk,g);
-}
-
-// ══════════════════════════════════════════════════
-//  NPC SYSTEM
-// ══════════════════════════════════════════════════
+// ─── SPAWN NPC ───────────────────────────────────────────
 function spawnNPC(x,z,name,job,mood,pt,dlg,chunk){
   const g=new THREE.Group();
   const bm=mood==='good'?M.nG:mood==='angry'?M.nA:M.nN;
-  g.add(bx(.7,1.3,.5,bm,0,.65,0));
-  g.add(sp(.30,6,M.sk,0,1.44,0));
-  // Job accessories
-  if(job==='Blacksmith'){g.add(bx(.1,.6,.06,M.st,.45,.9,.28));} // hammer
-  if(job==='Healer'){g.add(bx(.06,.5,.06,M.lf3,.42,.8,.28));} // staff
-  if(job==='Baker'){g.add(bx(.28,.12,.28,new THREE.MeshLambertMaterial({color:0xd4a04a}),.4,.5,.28));} // bread
-  if(job==='Guard'){g.add(bx(.08,.85,.08,M.st,.4,.7,.28));} // spear
-  if(job==='Farmer'){g.add(bx(.06,.75,.06,M.wd,.4,.6,.28));} // tool
+  g.add(bx(.7,1.3,.5,bm,0,.65,0));g.add(sp(.30,6,M.sk,0,1.44,0));
+  if(job==='Blacksmith')g.add(bx(.1,.6,.06,M.st,.45,.9,.28));
+  if(job==='Healer')g.add(bx(.06,.5,.06,M.lf3,.42,.8,.28));
+  if(job==='Guard')g.add(bx(.08,.85,.08,M.st,.4,.7,.28));
   g.position.set(x,0,z);scene.add(g);
-
-  // NPC idle wander data
-  npcs.push({mesh:g,x,z,name,job,mood,pt,dlg,chunk,di:0,
-    homeX:x,homeZ:z,
-    wanderTarget:{x,z},wanderTimer:2+Math.random()*4,
-    workTimer:0,isBusy:false,
-    walkPhase:Math.random()*Math.PI*2
-  });
+  npcs.push({mesh:g,x,z,name,job,mood,pt,dlg,chunk,di:0,homeX:x,homeZ:z,wanderTarget:{x,z},wanderTimer:3+Math.random()*4,walkPhase:Math.random()*Math.PI*2});
 }
 
-// ══════════════════════════════════════════════════
-//  ENEMY SYSTEM
-// ══════════════════════════════════════════════════
+// ─── SPAWN ENEMY ─────────────────────────────────────────
 function spawnEnemy(x,z,type,hp,chunk){
   const g=new THREE.Group();
   const isWolf=type==='Wolf';
   if(isWolf){
-    // Wolf — low, elongated body
-    g.add(bx(1.1,.55,.55,M.en,0,.6,0));// body
-    g.add(bx(.42,.4,.4,M.en,0,.65,.65));// head
-    g.add(bx(.1,.35,.08,M.en2,.28,.4,-.55));// tail
-    g.add(bx(.12,.35,.12,M.en,.25,.22,.2));// leg FL
-    g.add(bx(.12,.35,.12,M.en,-.25,.22,.2));// leg FR
-    g.add(bx(.12,.35,.12,M.en,.25,.22,-.2));// leg BL
-    g.add(bx(.12,.35,.12,M.en,-.25,.22,-.2));// leg BR
+    g.add(bx(1.1,.55,.55,M.en,0,.6,0));g.add(bx(.42,.4,.4,M.en,0,.65,.65));
+    g.add(bx(.1,.35,.08,M.en2,.28,.4,-.55));
+    g.add(bx(.12,.35,.12,M.en,.25,.22,.2));g.add(bx(.12,.35,.12,M.en,-.25,.22,.2));
+    g.add(bx(.12,.35,.12,M.en,.25,.22,-.2));g.add(bx(.12,.35,.12,M.en,-.25,.22,-.2));
   } else {
-    // Bandit — humanoid
-    g.add(bx(.8,1.3,.5,M.en,0,.65,0));
-    g.add(sp(.32,5,M.en,0,1.46,0));
-    g.add(bx(.08,.7,.06,M.st,.5,.7,.1));// weapon
-    g.add(bx(.32,.45,.06,new THREE.MeshLambertMaterial({color:0x555544}),-.45,.8,.08));// shield
+    g.add(bx(.8,1.3,.5,M.en,0,.65,0));g.add(sp(.32,5,M.en,0,1.46,0));
+    g.add(bx(.08,.7,.06,M.st,.5,.7,.1));g.add(bx(.32,.45,.06,M.rG,-.45,.8,.08));
   }
-  g.position.set(x,0,z); scene.add(g);
-
-  enemies.push({
-    mesh:g,x,z,type,hp,mhp:hp,chunk,
-    alive:true,
-    state:'patrol',// patrol | chase | attack | hurt | dead
-    patrolCenter:{x,z},
-    patrolA:Math.random()*Math.PI*2,
-    aggroR:type==='Wolf'?14:12,
-    atkR:type==='Wolf'?1.8:2.2,
-    atkT:0,
-    hurtT:0,
-    isWolf,
-    walkPhase:Math.random()*Math.PI*2,
-    lastHitT:0,
-  });
+  g.position.set(x,0,z);scene.add(g);
+  enemies.push({mesh:g,x,z,type,hp,mhp:hp,chunk,alive:true,state:'patrol',patrolCenter:{x,z},patrolA:Math.random()*Math.PI*2,aggroR:isWolf?14:12,atkR:isWolf?1.8:2.2,atkT:0,hurtT:0,isWolf,walkPhase:Math.random()*Math.PI*2});
 }
 
-// ══════════════════════════════════════════════════
-//  PLAYER STATE
-// ══════════════════════════════════════════════════
+// ─── PLAYER STATE ────────────────────────────────────────
 const P={
-  pos:{x:0,z:5},y:0,
-  vel:{x:0,z:0},
-  hp:100,mhp:100,
-  sp:100,msp:100,
+  pos:{x:0,z:5},
+  hp:100,mhp:100,sp:100,msp:100,
   spd:8.5,lv:1,xp:0,gold:50,
-  weapon:'sword',alive:true,
-  state:'idle',// idle|walk|attack|hurt|dodge|dead
-  atkT:0,hurtInvincible:0,
-  comboCount:0,comboTimer:0,
-  rollCooldown:0,
-  facing:0,// yaw the player is facing
-  skills:{
-    strength: {lv:1,max:5,icon:'⚔️',name:'Strength'},
-    defense:  {lv:1,max:5,icon:'🛡️',name:'Defense'},
-    archery:  {lv:1,max:5,icon:'🏹',name:'Archery'},
-    agility:  {lv:1,max:5,icon:'💨',name:'Agility'},
-    magic:    {lv:0,max:5,icon:'✨',name:'Magic'},
-    herb:     {lv:0,max:5,icon:'🌿',name:'Herbalism'},
-  },
-  sp2:3,// skill points
+  weapon:'sword',alive:true,state:'idle',
+  atkT:0,hurtInv:0,comboCount:0,comboT:0,rollCD:0,facing:0,
+  skills:{strength:{lv:1,max:5,icon:'⚔️',name:'Strength'},defense:{lv:1,max:5,icon:'🛡️',name:'Defense'},archery:{lv:1,max:5,icon:'🏹',name:'Archery'},agility:{lv:1,max:5,icon:'💨',name:'Agility'},magic:{lv:0,max:5,icon:'✨',name:'Magic'},herb:{lv:0,max:5,icon:'🌿',name:'Herb'}},
+  sp2:3,
 };
 
-// ══════════════════════════════════════════════════
-//  QUESTS
-// ══════════════════════════════════════════════════
 const Q=[
   {id:'q1',title:"Ada's Lost Basket",type:'delivery',desc:'Find the basket near the forest path.',status:'active',reward:{xp:30,gold:15}},
   {id:'q2',title:'Wolf Hunt',type:'hunting',desc:'Slay 3 wolves in the forest.',status:'active',prog:0,goal:3,reward:{xp:60,gold:30}},
   {id:'q3',title:'The Black Tower',type:'story',desc:'Speak with the Hermit in the Outer Land.',status:'active',reward:{xp:100,gold:50}},
-  {id:'q4',title:'Market Delivery',type:'delivery',desc:'Deliver a message to the Cloaked Figure.',status:'active',reward:{xp:40,gold:20}},
 ];
 
-// ══════════════════════════════════════════════════
-//  COMBAT SYSTEM — IMPROVED
-// ══════════════════════════════════════════════════
-const ATK_RANGE={sword:3.4,bow:24,throwable:18,potion:0};
-const ATK_CD={sword:.55,bow:1.1,throwable:.8,potion:0};
-let atkT=0,atkAnimT=0;
-
-function getAtkDmg(){
-  const base=8+P.skills.strength.lv*4;
-  const isCrit=Math.random()<.15+P.skills.archery.lv*.02;
-  const bowBonus=(P.weapon==='bow'?P.skills.archery.lv*3:0);
-  return {dmg:Math.round(base+bowBonus+(isCrit?base*.5:0)),crit:isCrit};
-}
+// ─── COMBAT ──────────────────────────────────────────────
+const WPN_RANGE={sword:3.4,bow:24,throwable:18,potion:0};
+const WPN_CD={sword:.55,bow:1.1,throwable:.8,potion:0};
+let focusEnemy=null;
 
 function doAttack(){
-  if(atkT>0||!P.alive||P.state==='dead')return;
-  atkT=ATK_CD[P.weapon]||.55;
-  atkAnimT=.35;
-  P.state='attack';
-
-  const range=ATK_RANGE[P.weapon]||3.4;
-
-  // Arc sweep for sword (hits multiple enemies in cone)
-  const sweepAngle=P.weapon==='sword'?Math.PI/2.2:Math.PI/18;
-
+  if(P.atkT>0||!P.alive||P.state==='dead')return;
+  P.atkT=WPN_CD[P.weapon]||.55;P.state='attack';
+  const range=WPN_RANGE[P.weapon]||3.4;
+  const sweep=P.weapon==='sword'?Math.PI/2.2:Math.PI/18;
+  const base=8+P.skills.strength.lv*4;
   let hitAny=false;
-  const atkDmg=getAtkDmg();
-
   enemies.forEach(e=>{
     if(!e.alive)return;
-    const dx=e.x-P.pos.x, dz=e.z-P.pos.z;
-    const dist=Math.hypot(dx,dz);
+    const dx=e.x-P.pos.x,dz=e.z-P.pos.z,dist=Math.hypot(dx,dz);
     if(dist>range)return;
-    // Angle check for sword sweep
     if(P.weapon==='sword'){
-      const atkDir=P.facing;
-      const toEnemy=Math.atan2(-dx,-dz);
-      let ang=Math.abs(atkDir-toEnemy);
+      let ang=Math.abs(P.facing-Math.atan2(-dx,-dz));
       if(ang>Math.PI)ang=Math.PI*2-ang;
-      if(ang>sweepAngle)return;
+      if(ang>sweep)return;
     }
-    hitAny=true;
-    e.hp-=atkDmg.dmg;
-    e.lastHitT=0;
-    e.state='hurt'; e.hurtT=.3;
-    spawnFloat((atkDmg.crit?'💥':'-')+atkDmg.dmg,e.mesh.position,false,atkDmg.crit);
-    // Knockback
-    if(dist>.1){
-      const kbF=1.5;e.x+=(-dx/dist)*kbF;e.z+=(-dz/dist)*kbF;
-    }
+    const crit=Math.random()<.15;
+    const dmg=Math.round(base+(crit?base*.5:0)+(P.weapon==='bow'?P.skills.archery.lv*3:0));
+    e.hp-=dmg;e.state='hurt';e.hurtT=.3;hitAny=true;
+    spawnFloat((crit?'💥':'-')+dmg,e.mesh.position,false,crit);
+    if(dist>.1){e.x+=(-dx/dist)*1.5;e.z+=(-dz/dist)*1.5;}
     if(e.hp<=0)killE(e);
+    // Naruto mission progress
+    if(e.chunk==='forest')checkMissionProgress('killForest');
+    if(e.chunk==='outer')checkMissionProgress('killOuter');
   });
-
-  // Combo system
   if(hitAny&&P.weapon==='sword'){
-    P.comboCount++;P.comboTimer=1.8;
-    if(P.comboCount>=2){
-      $('combo').textContent=P.comboCount+'x COMBO!';
-      $('combo').classList.add('show');
-      if(P.comboCount>=4)notif('⚡ PERFECT COMBO x'+P.comboCount+'!');
-    }
+    P.comboCount++;P.comboT=1.8;
+    if(P.comboCount>=2){$('combo').textContent=P.comboCount+'x COMBO!';$('combo').classList.add('on');}
+    if(P.comboCount>=4)notif('⚡ PERFECT COMBO x'+P.comboCount+'!');
   }
-
-  // Sword swing animation
-  if(P.weapon==='sword'){
-    SW.rotation.z=-Math.PI/2.5;
-    SW.rotation.x=-0.6;
-    setTimeout(()=>{SW.rotation.z=0;SW.rotation.x=0;},300);
-    // Slash particle (simple box flash)
-    const slash=bx(.8,.1,.8,new THREE.MeshLambertMaterial({color:0xffffff,transparent:true,opacity:.7}),
-      P.pos.x-Math.sin(P.facing)*2, .8, P.pos.z-Math.cos(P.facing)*2, false);
-    scene.add(slash);
-    setTimeout(()=>scene.remove(slash),120);
-  }
-
-  if(!hitAny&&P.weapon!=='potion')notif('No target in range!');
+  // Sword anim
+  SW.rotation.z=-Math.PI/2.5;SW.rotation.x=-.6;setTimeout(()=>{SW.rotation.z=0;SW.rotation.x=0;},300);
+  // Slash flash
+  const sl=bx(.8,.1,.8,new THREE.MeshLambertMaterial({color:0xffffff,transparent:true,opacity:.65}),P.pos.x-Math.sin(P.facing)*2,.8,P.pos.z-Math.cos(P.facing)*2,false);
+  scene.add(sl);setTimeout(()=>scene.remove(sl),110);
+  if(!hitAny&&P.weapon!=='potion')notif('Miss! No target in range.');
 }
 
 function killE(e){
   e.alive=false;e.state='dead';
   const xg=20+P.skills.defense.lv*2,gg=5+Math.floor(Math.random()*14);
-  P.xp+=xg;P.gold+=gg;
-  $('gc2').textContent=P.gold;
-  notif(`+${xg} XP  +${gg}💰`);
-  checkLvUp();
-  // Death animation — fall over
-  e.mesh.rotation.z=Math.PI/2;
-  setTimeout(()=>scene.remove(e.mesh),2000);
-  // Hunting quest
+  P.xp+=xg;P.gold+=gg;$('gc2').textContent=P.gold;
+  notif(`+${xg}XP  +${gg}💰`);checkLvUp();
+  e.mesh.rotation.z=Math.PI/2;setTimeout(()=>scene.remove(e.mesh),2000);
   const hq=Q.find(q=>q.id==='q2');
-  if(hq&&hq.status==='active'&&e.type==='Wolf'){
-    hq.prog=(hq.prog||0)+1;
-    if(hq.prog>=hq.goal){hq.status='complete';notif('✅ Quest Complete: Wolf Hunt!');}
-    else notif(`Wolf slain! ${hq.prog}/${hq.goal}`);
-  }
+  if(hq&&hq.status==='active'&&e.type==='Wolf'){hq.prog=(hq.prog||0)+1;if(hq.prog>=3){hq.status='complete';notif('✅ Quest: Wolf Hunt complete!');}}
 }
 
 function checkLvUp(){
   if(P.xp>=P.lv*100){
     P.xp-=P.lv*100;P.lv++;P.sp2+=2;P.mhp+=12;P.hp=P.mhp;
-    $('lb').innerHTML=`LV ${P.lv} &nbsp;|&nbsp;<span id="gc2">${P.gold}</span>💰`;
-    notif(`🎉 Level Up! Now LV${P.lv}!`);
-    // Flash
-    PG.traverse(c=>{if(c.isMesh){const oc=c.material.color.clone();c.material.color.set(0xffd700);setTimeout(()=>c.material.color.copy(oc),400);}});
+    $('lb').innerHTML=`LV ${P.lv}&nbsp;|&nbsp;<span id="gc2">${P.gold}</span>💰`;
+    notif('🎉 Level Up! LV'+P.lv+'!');
   }
 }
 
 function playerHit(dmg){
-  if(!P.alive||P.hurtInvincible>0||P.state==='dodge')return;
-  const red=Math.max(1,dmg-P.skills.defense.lv*2);
-  P.hp=Math.max(0,P.hp-red);
-  P.state='hurt'; P.hurtInvincible=.6;
-  const f=$('hf2');f.style.opacity='1';setTimeout(()=>f.style.opacity='0',140);
-  spawnFloat('-'+red,PG.position,false,false);
+  if(!P.alive||P.hurtInv>0||P.state==='dodge')return;
+  const r=Math.max(1,dmg-P.skills.defense.lv*2);
+  P.hp=Math.max(0,P.hp-r);P.hurtInv=.6;
+  $('hf2').style.opacity='1';setTimeout(()=>$('hf2').style.opacity='0',140);
+  spawnFloat('-'+r,PG.position,false,false);
   if(P.hp<=0){P.alive=false;P.state='dead';notif('💀 You died… respawning');setTimeout(respawn,2400);}
 }
-
-function respawn(){
-  P.hp=P.mhp;P.alive=true;P.state='idle';
-  P.pos.x=0;P.pos.z=5;
-  notif('↩ Respawned at Village!');
-}
+function respawn(){P.hp=P.mhp;P.alive=true;P.state='idle';P.pos.x=0;P.pos.z=5;notif('↩ Respawned!');}
 
 function spawnFloat(txt,wp,heal,crit){
   const v=new THREE.Vector3(wp.x,wp.y+1.4,wp.z);v.project(cam);
   const el=document.createElement('div');
-  el.className='fd '+(heal?'fheal':'fdmg');
+  el.className='fd '+(heal?'fheal':crit?'fcrit':'fdmg');
   el.textContent=txt;
-  if(crit)el.style.fontSize='22px';
   el.style.left=((v.x+1)/2*window.innerWidth)+'px';
   el.style.top=((-v.y+1)/2*window.innerHeight)+'px';
   document.body.appendChild(el);setTimeout(()=>el.remove(),920);
@@ -1102,183 +1078,109 @@ function spawnFloat(txt,wp,heal,crit){
 function drainSP(a){P.sp=Math.max(0,P.sp-a);}
 function regenSP(dt){if(P.sp<P.msp)P.sp=Math.min(P.msp,P.sp+12*dt);}
 
-// ── Show enemy HP bar ──
-let focusEnemy=null;
-function updateEnemyHPBar(){
-  if(!focusEnemy||!focusEnemy.alive){$('enemyHP').classList.remove('on');return;}
-  $('enemyHP').classList.add('on');
-  $('ehpName').textContent=focusEnemy.type.toUpperCase();
-  $('ehpFill').style.width=(focusEnemy.hp/focusEnemy.mhp*100)+'%';
+// ─── ENEMY HP BAR ────────────────────────────────────────
+function updEHPBar(){
+  if(!focusEnemy||!focusEnemy.alive){$('eHP').classList.remove('on');return;}
+  $('eHP').classList.add('on');
+  $('eHPN').textContent=focusEnemy.type.toUpperCase();
+  $('eHPF').style.width=(focusEnemy.hp/focusEnemy.mhp*100)+'%';
 }
 
-// ══════════════════════════════════════════════════
-//  ENEMY AI — FIXED & IMPROVED
-// ══════════════════════════════════════════════════
-function updateEnemies(dt,t){
-  const px=P.pos.x,pz=P.pos.z;
-  let nearestD=Infinity;
-
+// ─── ENEMY AI ────────────────────────────────────────────
+function updEnemies(dt){
+  const px=P.pos.x,pz=P.pos.z;let nd=Infinity;
   enemies.forEach(e=>{
     if(!e.alive||e.state==='dead')return;
-    const dx=px-e.x, dz=pz-e.z, dist=Math.hypot(dx,dz);
-    if(dist>70)return; // cull
-
-    // Hurt cooldown
-    if(e.state==='hurt'){e.hurtT-=dt;if(e.hurtT<=0)e.state='chase';}
-    e.lastHitT+=dt;
-
-    // State machine
-    if(dist<e.aggroR){
-      e.state=(dist<e.atkR)?'attack':'chase';
-    } else if(e.state!=='hurt'){
-      e.state='patrol';
+    const dx=px-e.x,dz=pz-e.z,d=Math.hypot(dx,dz);
+    if(d>70)return;
+    if(e.state==='hurt'){e.hurtT-=dt;if(e.hurtT<=0){e.state=d<e.aggroR?'chase':'patrol';}}
+    if(e.state!=='hurt'){
+      if(d<e.atkR)e.state='attack';
+      else if(d<e.aggroR)e.state='chase';
+      else e.state='patrol';
     }
-
     if(e.state==='patrol'){
       e.patrolA+=dt*.5;
-      const px2=e.patrolCenter.x+Math.cos(e.patrolA)*5;
-      const pz2=e.patrolCenter.z+Math.sin(e.patrolA)*5;
-      const spd=1.8*dt;
-      const mvx=(px2-e.x),mvz=(pz2-e.z);
-      const mlen=Math.hypot(mvx,mvz)||1;
-      const nx=e.x+mvx/mlen*spd, nz=e.z+mvz/mlen*spd;
+      const tx=e.patrolCenter.x+Math.cos(e.patrolA)*5,tz=e.patrolCenter.z+Math.sin(e.patrolA)*5;
+      const mvd=Math.hypot(tx-e.x,tz-e.z)||1;
+      const spd=1.8*dt,nx=e.x+(tx-e.x)/mvd*spd,nz=e.z+(tz-e.z)/mvd*spd;
       if(!hitC(nx,nz,.4)){e.x=nx;e.z=nz;}
-      // Wolf walk anim
-      if(e.isWolf){e.walkPhase+=dt*6;animateWolfLegs(e,t);}
+      if(e.isWolf){e.walkPhase+=dt*5;animWolfLegs(e);}
     }
-
-    if(e.state==='chase'&&dist>.5){
+    if(e.state==='chase'&&d>.5){
       const spd=(e.isWolf?4.2:3.5)*dt;
-      const nx=e.x+dx/dist*spd, nz=e.z+dz/dist*spd;
+      const nx=e.x+dx/d*spd,nz=e.z+dz/d*spd;
       if(!hitC(nx,nz,.4)){e.x=nx;e.z=nz;}
       e.mesh.lookAt(px,0,pz);
-      if(e.isWolf){e.walkPhase+=dt*9;animateWolfLegs(e,t);}
+      if(e.isWolf){e.walkPhase+=dt*9;animWolfLegs(e);}
     }
-
     if(e.state==='attack'){
       e.atkT-=dt;
       if(e.atkT<=0){
-        playerHit(e.isWolf?8:12);
-        e.atkT=e.isWolf?1.4:1.8;
-        // Attack animation — lunge
-        e.mesh.position.set(e.x+dx/dist*.5,0,e.z+dz/dist*.5);
-        setTimeout(()=>{e.mesh.position.set(e.x,0,e.z);},180);
+        playerHit(e.isWolf?8:12);e.atkT=e.isWolf?1.4:1.8;
+        // Lunge anim
+        const lx=e.x+dx/d*.5,lz=e.z+dz/d*.5;
+        e.mesh.position.set(lx,0,lz);
+        setTimeout(()=>{e.mesh.position.set(e.x,0,e.z);},160);
       }
     }
-
-    e.mesh.position.x=e.x; e.mesh.position.z=e.z;
-
-    // Track nearest for HP bar
-    if(dist<nearestD&&dist<20){nearestD=dist;focusEnemy=e;}
+    e.mesh.position.x=e.x;e.mesh.position.z=e.z;
+    if(d<nd){nd=d;focusEnemy=e;}
   });
-  if(nearestD>20)focusEnemy=null;
-  updateEnemyHPBar();
+  if(nd>22)focusEnemy=null;
+  updEHPBar();
 }
 
-function animateWolfLegs(e,t){
-  // Animate wolf legs with walking motion
-  const stride=Math.sin(e.walkPhase);
+function animWolfLegs(e){
+  const s=Math.sin(e.walkPhase);
   if(e.mesh.children.length>=7){
-    e.mesh.children[2].position.z=.2+stride*.18;  // FL
-    e.mesh.children[3].position.z=.2-stride*.18;  // FR
-    e.mesh.children[4].position.z=-.2-stride*.18; // BL
-    e.mesh.children[5].position.z=-.2+stride*.18; // BR
+    e.mesh.children[3].position.z=.2+s*.18;
+    e.mesh.children[4].position.z=.2-s*.18;
+    e.mesh.children[5].position.z=-.2-s*.18;
+    e.mesh.children[6].position.z=-.2+s*.18;
   }
 }
 
-// ══════════════════════════════════════════════════
-//  NPC AI — JOBS & MOVEMENT
-// ══════════════════════════════════════════════════
-function updateNPCs(dt,t){
+// ─── NPC AI ──────────────────────────────────────────────
+function updNPCs(dt){
   npcs.forEach(n=>{
     const d=Math.hypot(n.x-P.pos.x,n.z-P.pos.z);
     n.mesh.visible=d<65;
     if(!n.mesh.visible)return;
-
-    // Face player when nearby
     if(d<22)n.mesh.lookAt(P.pos.x,0,P.pos.z);
-
-    // Job-based idle animation
     n.walkPhase=(n.walkPhase||0)+dt;
-    const bob=Math.sin(n.walkPhase*1.5)*.04;
-    n.mesh.position.y=bob;
-
-    // Wander logic (short wander near home)
+    n.mesh.position.y=Math.sin(n.walkPhase*1.5)*.04;
     n.wanderTimer-=dt;
-    if(n.wanderTimer<=0&&!inDlg){
+    if(n.wanderTimer<=0&&!inDlg&&d>6){
       n.wanderTimer=3+Math.random()*5;
-      if(d>6){// don't wander toward player
-        const angle=Math.random()*Math.PI*2;
-        const wdist=2+Math.random()*4;
-        n.wanderTarget={x:n.homeX+Math.cos(angle)*wdist, z:n.homeZ+Math.sin(angle)*wdist};
-      }
+      const a=Math.random()*Math.PI*2,r=2+Math.random()*3;
+      n.wanderTarget={x:n.homeX+Math.cos(a)*r,z:n.homeZ+Math.sin(a)*r};
     }
-    // Move toward wander target
-    const wdx=n.wanderTarget.x-n.x, wdz=n.wanderTarget.z-n.z;
-    const wdist=Math.hypot(wdx,wdz);
-    if(wdist>.4&&d>5){
-      const spd=1.2*dt;
-      n.x+=wdx/wdist*spd; n.z+=wdz/wdist*spd;
-      n.mesh.position.x=n.x; n.mesh.position.z=n.z;
-    }
+    const wdx=n.wanderTarget.x-n.x,wdz=n.wanderTarget.z-n.z,wd=Math.hypot(wdx,wdz);
+    if(wd>.4&&d>5){const spd=1.1*dt;n.x+=wdx/wd*spd;n.z+=wdz/wd*spd;n.mesh.position.x=n.x;n.mesh.position.z=n.z;}
   });
 }
 
-// ══════════════════════════════════════════════════
-//  PLAYER ANIMATION
-// ══════════════════════════════════════════════════
-function animatePlayer(dt,t,moving){
+// ─── PLAYER ANIMATION ────────────────────────────────────
+function animPlayer(dt,t,moving){
   if(!playerModelLoaded){
-    // Procedural walk animation
     if(moving&&P.state!=='attack'){
       PG.position.y=Math.abs(Math.sin(t*8))*.08;
-      // Leg swing
-      const children=PG.children;
-      if(children[0]){children[0].rotation.x=Math.sin(t*8)*.35;} // legL
-      if(children[1]){children[1].rotation.x=-Math.sin(t*8)*.35;} // legR
-    } else {
-      PG.position.y=0;
-      if(PG.children[0])PG.children[0].rotation.x=0;
-      if(PG.children[1])PG.children[1].rotation.x=0;
-    }
-    // Attack animation
-    if(P.state==='attack'){
-      atkAnimT-=dt;
-      if(atkAnimT>0){
-        const arm=PG.children[6];
-        if(arm)arm.rotation.x=-Math.sin((1-atkAnimT/.35)*Math.PI)*1.2;
-      } else {
-        const arm=PG.children[6];
-        if(arm)arm.rotation.x=0;
-        if(P.state==='attack')P.state='idle';
-      }
-    }
-    // Hurt flash
-    if(P.hurtInvincible>0){
-      const flash=Math.floor(t*12)%2;
-      PG.visible=flash===0;
-    } else PG.visible=true;
+      if(PG.children[0])PG.children[0].rotation.x=Math.sin(t*8)*.35;
+      if(PG.children[1])PG.children[1].rotation.x=-Math.sin(t*8)*.35;
+    } else {PG.position.y=0;if(PG.children[0])PG.children[0].rotation.x=0;if(PG.children[1])PG.children[1].rotation.x=0;}
+    if(P.hurtInv>0){PG.visible=Math.floor(t*12)%2===0;}else PG.visible=true;
   }
 }
 
-// ══════════════════════════════════════════════════
-//  WEAPON WHEEL
-// ══════════════════════════════════════════════════
-const WS=[
-  {name:'Sword',   icon:'⚔️',col:'#cc2222'},
-  {name:'Bow',     icon:'🏹',col:'#2255cc'},
-  {name:'Throwable',icon:'💣',col:'#cc6600'},
-  {name:'Potion',  icon:'🧪',col:'#22cc55'},
-];
+// ─── WEAPON WHEEL ────────────────────────────────────────
+const WS=[{name:'Sword',icon:'⚔️',col:'#cc2222'},{name:'Bow',icon:'🏹',col:'#2255cc'},{name:'Throwable',icon:'💣',col:'#cc6600'},{name:'Potion',icon:'🧪',col:'#22cc55'}];
 let selW=0,wOpen=false;
-
 function drawWheel(hov){
-  const cv=$('wc'),ctx=cv.getContext('2d');
-  ctx.clearRect(0,0,240,240);
+  const cv=$('wc'),ctx=cv.getContext('2d');ctx.clearRect(0,0,240,240);
   const CX=120,CY=120,OR=108,IR=34;
   WS.forEach((w,i)=>{
-    const sA=((i*90-45)*Math.PI/180)-Math.PI/2;
-    const eA=((i*90+45)*Math.PI/180)-Math.PI/2;
+    const sA=((i*90-45)*Math.PI/180)-Math.PI/2,eA=((i*90+45)*Math.PI/180)-Math.PI/2;
     ctx.beginPath();ctx.moveTo(CX,CY);ctx.arc(CX,CY,OR,sA,eA);ctx.closePath();
     ctx.fillStyle=i===hov?w.col+'dd':w.col+'55';ctx.fill();
     ctx.strokeStyle=i===hov?'#f0d060':'#ffffff33';ctx.lineWidth=i===hov?2.5:1;ctx.stroke();
@@ -1287,11 +1189,9 @@ function drawWheel(hov){
     ctx.fillStyle=i===hov?'#f0d060':'#aaa';ctx.font='8px sans-serif';ctx.textAlign='center';
     ctx.fillText(w.name,CX+Math.cos(mA)*90,CY+Math.sin(mA)*90+3);ctx.textAlign='left';
   });
-  ctx.beginPath();ctx.arc(CX,CY,IR,0,Math.PI*2);
-  ctx.fillStyle='rgba(5,5,15,.9)';ctx.fill();
+  ctx.beginPath();ctx.arc(CX,CY,IR,0,Math.PI*2);ctx.fillStyle='rgba(5,5,15,.9)';ctx.fill();
   ctx.strokeStyle='#f0d060aa';ctx.lineWidth=2;ctx.stroke();
-  $('wctr').textContent=WS[selW].icon;
-  $('wlb').textContent=WS[selW].name.toUpperCase();
+  $('wctr').textContent=WS[selW].icon;$('wlb').textContent=WS[selW].name.toUpperCase();
 }
 function openWheel(){wOpen=true;slowMo=.18;$('ww').classList.add('on');$('wo').classList.add('on');drawWheel(selW);}
 function closeWheel(){wOpen=false;slowMo=1;$('ww').classList.remove('on');$('wo').classList.remove('on');P.weapon=WS[selW].name.toLowerCase();}
@@ -1301,22 +1201,17 @@ $('biv').addEventListener('touchend',e=>{e.preventDefault();clearTimeout(wHT);if
 $('biv').addEventListener('mousedown',()=>{wHT=setTimeout(openWheel,180);});
 $('biv').addEventListener('mouseup',()=>{clearTimeout(wHT);if(wOpen)closeWheel();});
 function wSlot(mx,my){const r=$('wc').getBoundingClientRect();const dx=mx-(r.left+120),dy=my-(r.top+120);if(Math.hypot(dx,dy)<30)return selW;return Math.floor(((Math.atan2(dy,dx)*180/Math.PI+90+360)%360+45)/90)%4;}
-$('wc').addEventListener('touchmove',e=>{const t=e.changedTouches[0];const i=wSlot(t.clientX,t.clientY);selW=i;drawWheel(i);},{passive:true});
-$('wc').addEventListener('mousemove',e=>{if(!wOpen)return;const i=wSlot(e.clientX,e.clientY);selW=i;drawWheel(i);});
+$('wc').addEventListener('touchmove',e=>{const t=e.changedTouches[0];selW=wSlot(t.clientX,t.clientY);drawWheel(selW);},{passive:true});
+$('wc').addEventListener('mousemove',e=>{if(!wOpen)return;selW=wSlot(e.clientX,e.clientY);drawWheel(selW);});
 
-// ══════════════════════════════════════════════════
-//  JOYSTICK
-// ══════════════════════════════════════════════════
-const jz=$('jz'),jk=$('jk');
-const JMAX=33;
-let jA=false,jTID=-1,jDX=0,jDZ=0,jO={x:0,y:0};
-jz.addEventListener('touchstart',e=>{e.preventDefault();const t=e.changedTouches[0];jTID=t.identifier;jA=true;const r=jz.getBoundingClientRect();jO={x:r.left+r.width/2,y:r.top+r.height/2};},{passive:false});
-jz.addEventListener('touchmove',e=>{e.preventDefault();for(const t of e.changedTouches){if(t.identifier!==jTID)continue;let dx=t.clientX-jO.x,dy=t.clientY-jO.y;const d=Math.hypot(dx,dy);if(d>JMAX){dx*=JMAX/d;dy*=JMAX/d;}jk.style.transform=`translate(${dx}px,${dy}px)`;jDX=dx/JMAX;jDZ=dy/JMAX;}},{passive:false});
-function rj(){jA=false;jDX=0;jDZ=0;jk.style.transform='translate(0,0)';}
-jz.addEventListener('touchend',rj);jz.addEventListener('touchcancel',rj);
-const KB={};
-window.addEventListener('keydown',e=>{KB[e.code]=true;});
-window.addEventListener('keyup',e=>{KB[e.code]=false;});
+// ─── JOYSTICK ────────────────────────────────────────────
+const jzEl=$('jz'),jkEl=$('jk');
+const JMAX=33;let jA=false,jTID=-1,jDX=0,jDZ=0,jO={x:0,y:0};
+jzEl.addEventListener('touchstart',e=>{e.preventDefault();const t=e.changedTouches[0];jTID=t.identifier;jA=true;const r=jzEl.getBoundingClientRect();jO={x:r.left+r.width/2,y:r.top+r.height/2};},{passive:false});
+jzEl.addEventListener('touchmove',e=>{e.preventDefault();for(const t of e.changedTouches){if(t.identifier!==jTID)continue;let dx=t.clientX-jO.x,dy=t.clientY-jO.y;const d=Math.hypot(dx,dy);if(d>JMAX){dx*=JMAX/d;dy*=JMAX/d;}jkEl.style.transform=`translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px))`;jDX=dx/JMAX;jDZ=dy/JMAX;}},{passive:false});
+function rj(){jA=false;jDX=0;jDZ=0;jkEl.style.transform='translate(-50%,-50%)';}
+jzEl.addEventListener('touchend',rj);jzEl.addEventListener('touchcancel',rj);
+const KB={};window.addEventListener('keydown',e=>KB[e.code]=true);window.addEventListener('keyup',e=>KB[e.code]=false);
 
 // Camera drag
 let cDID=-1,cLX=0,cLY=0;
@@ -1328,101 +1223,100 @@ canvas.addEventListener('mousedown',e=>{mD=true;cLX=e.clientX;cLY=e.clientY;});
 canvas.addEventListener('mousemove',e=>{if(!mD)return;camYaw-=(e.clientX-cLX)*.005;camPitch=Math.max(.08,Math.min(1.15,camPitch+(e.clientY-cLY)*.004));cLX=e.clientX;cLY=e.clientY;});
 canvas.addEventListener('mouseup',()=>mD=false);
 
-// ── Dialogue ──
+// ─── DIALOGUE ────────────────────────────────────────────
 let aNPC=null,inDlg=false,typT=null;
+let talkCount=0;
 function openDlg(npc){
   aNPC=npc;inDlg=true;
   $('dp').textContent=npc.pt;$('dn').textContent=npc.name;
-  $('djob').textContent=npc.job;
+  $('djob').textContent=npc.job||'';
   $('dm').textContent=npc.mood==='good'?'😊':npc.mood==='angry'?'😠':'😐';
-  $('dlg').classList.add('on');typeT(npc.dlg[0]);bldChoices(npc);
-  // Complete story quest if it's the Hermit
-  if(npc.name==='Hermit Gal'){const sq=Q.find(q=>q.id==='q3');if(sq&&sq.status==='active'){sq.status='complete';setTimeout(()=>notif('✅ Quest Complete: The Black Tower!'),1000);}}
+  $('dlg').classList.add('on');typeT(npc.dlg[0]);
+  // Build choices — Naruto gets special options
+  const choices=npc.isNaruto?['Get Mission','Open Shop','Ask more','Farewell']:['Ask more','Trade','Farewell'];
+  bldChoices(npc,choices);
+  // Quest progress
+  talkCount++;checkMissionProgress('talkNPC');
+  if(npc.name==='Hermit Gal'){const sq=Q.find(q=>q.id==='q3');if(sq&&sq.status==='active'){sq.status='complete';setTimeout(()=>notif('✅ Quest: Black Tower complete!'),1000);}}
 }
 function closeDlg(){inDlg=false;aNPC=null;$('dlg').classList.remove('on');$('dc').innerHTML='';}
 function typeT(t){const el=$('dt');el.textContent='';clearTimeout(typT);let i=0;const nx=()=>{if(i<t.length){el.textContent+=t[i++];typT=setTimeout(nx,28);}};nx();}
-function bldChoices(npc){
+function bldChoices(npc,choices){
   const el=$('dc');el.innerHTML='';
-  const choices=['Ask more','Trade','Farewell'];
   choices.forEach(c=>{
     const b=document.createElement('div');b.className='dc';b.textContent=c;
     b.onclick=()=>{
       if(c==='Farewell')closeDlg();
       else if(c==='Ask more'){npc.di=(npc.di+1)%npc.dlg.length;typeT(npc.dlg[npc.di]);}
+      else if(c==='Open Shop'){closeDlg();openShop();}
+      else if(c==='Get Mission'){closeDlg();startNextNarutoMission();}
       else typeT("I don't have anything to trade right now.");
     };el.appendChild(b);
   });
 }
 $('dlg').addEventListener('click',e=>{if(e.target.classList.contains('dc'))return;if(!aNPC)return;aNPC.di=(aNPC.di+1)%aNPC.dlg.length;typeT(aNPC.dlg[aNPC.di]);});
 
-// ── Quest/Skill ──
+// ─── QUEST/SKILL ─────────────────────────────────────────
 function renderQ(){const el=$('ql');el.innerHTML='';Q.forEach(q=>{const d=document.createElement('div');d.className='qi';const pg=q.type==='hunting'?` (${q.prog||0}/${q.goal})`:'';d.innerHTML=`<div class="qt">${q.title}</div><div class="qd">${q.desc}${pg}</div><span class="qtg ${q.status==='complete'?'dn':'act'}">${q.status.toUpperCase()}</span>`;el.appendChild(d);});}
 $('qc').onclick=()=>$('qp').classList.remove('on');
-function renderSk(){const el=$('sg');el.innerHTML='';for(const k in P.skills){const s=P.skills[k];const d=document.createElement('div');d.className='sc'+(s.lv>=s.max?' mx':'');d.innerHTML=`<div class="si">${s.icon}</div><div class="sn">${s.name}</div><div class="slv">${s.lv}/${s.max}</div>`;d.onclick=()=>{if(P.sp2>0&&s.lv<s.max){s.lv++;P.sp2--;renderSk();notif(`${s.name} upgraded → LV${s.lv}!`);}};el.appendChild(d);}$('spc').textContent=P.sp2;}
+function renderSk(){const el=$('sg');el.innerHTML='';for(const k in P.skills){const s=P.skills[k];const d=document.createElement('div');d.className='sc'+(s.lv>=s.max?' mx':'');d.innerHTML=`<div class="si">${s.icon}</div><div class="sn">${s.name}</div><div class="slv">${s.lv}/${s.max}</div>`;d.onclick=()=>{if(P.sp2>0&&s.lv<s.max){s.lv++;P.sp2--;renderSk();notif(s.name+' → LV'+s.lv+'!');}};el.appendChild(d);}$('spc').textContent=P.sp2;}
 $('skc').onclick=()=>$('skp').classList.remove('on');
 
-// ── Pause ──
+// ─── PAUSE ───────────────────────────────────────────────
 $('bps').addEventListener('click',()=>{paused=!paused;$('pm').classList.toggle('on',paused);});
 $('pr').onclick=()=>{paused=false;$('pm').classList.remove('on');};
 $('pq').onclick=()=>{renderQ();$('qp').classList.add('on');$('pm').classList.remove('on');paused=false;};
 $('ps').onclick=()=>{renderSk();$('skp').classList.add('on');$('pm').classList.remove('on');paused=false;};
 $('prs').onclick=()=>location.reload();
 
-// ── Action buttons ──
+// ─── BUTTONS ─────────────────────────────────────────────
 $('bsw').addEventListener('click',()=>{P.weapon='sword';doAttack();});
 $('bbw').addEventListener('click',()=>{P.weapon='bow';if(P.sp>=10){drainSP(10);doAttack();}else notif('Not enough stamina!');});
 $('brl').addEventListener('click',()=>{
-  if(P.rollCooldown>0){notif('Dodge on cooldown!');return;}
+  if(P.rollCD>0){notif('Cooldown!');return;}
   if(P.sp<18){notif('Not enough stamina!');return;}
-  drainSP(18);P.state='dodge';P.rollCooldown=1.2;
-  // Roll in facing direction
-  const rdx=-Math.sin(P.facing)*3.5,rdz=-Math.cos(P.facing)*3.5;
-  P.pos.x+=rdx; P.pos.z+=rdz;
-  PG.rotation.x=.6; setTimeout(()=>{PG.rotation.x=0;P.state='idle';},350);
-  notif('Dodge Roll!');
+  drainSP(18);P.state='dodge';P.rollCD=1.2;
+  P.pos.x+=-Math.sin(P.facing)*3.5;P.pos.z+=-Math.cos(P.facing)*3.5;
+  PG.rotation.x=.6;setTimeout(()=>{PG.rotation.x=0;P.state='idle';},350);notif('Dodge Roll!');
 });
 $('bin').addEventListener('click',()=>{
   if(inDlg){closeDlg();return;}
   let best=null,bd=Infinity;
   npcs.forEach(n=>{const d=Math.hypot(n.x-P.pos.x,n.z-P.pos.z);if(d<bd){bd=d;best=n;}});
-  if(best&&bd<5.5)openDlg(best);else notif('No one nearby to talk to.');
+  if(best&&bd<5.5)openDlg(best);else notif('No one nearby.');
 });
 $('bcm').addEventListener('click',()=>{camMode=camMode==='third'?'first':'third';$('bcm').textContent=camMode==='first'?'🔍':'👁';notif(camMode==='first'?'First-Person':'Third-Person');});
 $('bmp').addEventListener('click',()=>{renderQ();$('qp').classList.add('on');});
 
-// ══════════════════════════════════════════════════
-//  MINIMAP
-// ══════════════════════════════════════════════════
+// ─── MINIMAP ─────────────────────────────────────────────
 const mmCv=$('mc'),mmCtx=mmCv.getContext('2d');
 const MSZ=88;
 function drawMM(){
-  mmCtx.clearRect(0,0,MSZ,MSZ);
-  mmCtx.save();
+  mmCtx.clearRect(0,0,MSZ,MSZ);mmCtx.save();
   mmCtx.beginPath();mmCtx.arc(MSZ/2,MSZ/2,MSZ/2,0,Math.PI*2);mmCtx.clip();
   mmCtx.fillStyle='#1a3010';mmCtx.fillRect(0,0,MSZ,MSZ);
-  const sc=MSZ/260, ox=MSZ/2-P.pos.x*sc, oz=MSZ/2-P.pos.z*sc;
+  const sc=MSZ/260,ox=MSZ/2-P.pos.x*sc,oz=MSZ/2-P.pos.z*sc;
   const zc={village:'#4a7a30cc',market:'#a07030cc',forest:'#1a4a10cc',outer:'#5a6030cc'};
   for(const id in CHUNKS){const c=CHUNKS[id];mmCtx.fillStyle=zc[id];mmCtx.fillRect(ox+c.cx*sc-26,oz+c.cz*sc-26,52,52);}
   mmCtx.strokeStyle='#c0a06077';mmCtx.lineWidth=2.5;
   [[0,0,100,0],[0,0,0,-100],[0,0,-100,50]].forEach(([x1,z1,x2,z2])=>{mmCtx.beginPath();mmCtx.moveTo(ox+x1*sc,oz+z1*sc);mmCtx.lineTo(ox+x2*sc,oz+z2*sc);mmCtx.stroke();});
-  // River on map
-  mmCtx.strokeStyle='#4488aacc';mmCtx.lineWidth=2;
-  mmCtx.beginPath();mmCtx.moveTo(ox-40*sc,oz-60*sc);mmCtx.bezierCurveTo(ox+0,oz-85*sc,ox+45*sc,oz-55*sc,ox+45*sc,oz-55*sc);mmCtx.stroke();
+  // River
+  mmCtx.strokeStyle='#4488aacc';mmCtx.lineWidth=2;mmCtx.beginPath();mmCtx.moveTo(ox-40*sc,oz-60*sc);mmCtx.bezierCurveTo(ox+0,oz-85*sc,ox+45*sc,oz-55*sc,ox+45*sc,oz-55*sc);mmCtx.stroke();
+  // Naruto house marker
+  mmCtx.fillStyle='#ff8800';mmCtx.fillRect(ox+35*sc-2,oz+12*sc-2,5,5);
   mmCtx.fillStyle='#ff4444';enemies.forEach(e=>{if(!e.alive)return;mmCtx.fillRect(ox+e.x*sc-1.5,oz+e.z*sc-1.5,3,3);});
   mmCtx.fillStyle='#44ff88';npcs.forEach(n=>{mmCtx.fillRect(ox+n.x*sc-1.5,oz+n.z*sc-1.5,3,3);});
   mmCtx.fillStyle='#f0d060';mmCtx.beginPath();mmCtx.arc(MSZ/2,MSZ/2,4,0,Math.PI*2);mmCtx.fill();
-  mmCtx.strokeStyle='#f0d060';mmCtx.lineWidth=1.5;
-  mmCtx.beginPath();mmCtx.moveTo(MSZ/2,MSZ/2);mmCtx.lineTo(MSZ/2-Math.sin(camYaw)*9,MSZ/2-Math.cos(camYaw)*9);mmCtx.stroke();
-  mmCtx.restore();
-  mmCtx.strokeStyle='#8b6914';mmCtx.lineWidth=2;mmCtx.beginPath();mmCtx.arc(MSZ/2,MSZ/2,MSZ/2-1,0,Math.PI*2);mmCtx.stroke();
+  mmCtx.strokeStyle='#f0d060';mmCtx.lineWidth=1.5;mmCtx.beginPath();mmCtx.moveTo(MSZ/2,MSZ/2);mmCtx.lineTo(MSZ/2-Math.sin(camYaw)*9,MSZ/2-Math.cos(camYaw)*9);mmCtx.stroke();
+  mmCtx.restore();mmCtx.strokeStyle='#8b6914';mmCtx.lineWidth=2;mmCtx.beginPath();mmCtx.arc(MSZ/2,MSZ/2,MSZ/2-1,0,Math.PI*2);mmCtx.stroke();
 }
 
-// ── Zone label ──
+// ─── ZONE LABEL ──────────────────────────────────────────
 const ZN={village:'VILLAGE CENTER',market:'MARKET AREA',forest:'FOREST AREA',outer:'OUTER LAND'};
 let lastZ='village';
 function getZ(x,z){let best='village',bd=Infinity;for(const id in CHUNKS){const c=CHUNKS[id];const d=Math.hypot(x-c.cx,z-c.cz);if(d<bd){bd=d;best=id;}}return best;}
 
-// ── LOD ──
+// ─── LOD ─────────────────────────────────────────────────
 let lodT=0;
 function updLOD(dt){
   lodT+=dt;if(lodT<.6)return;lodT=0;
@@ -1430,10 +1324,9 @@ function updLOD(dt){
   scene.traverse(o=>{
     if(!o.isMesh)return;
     const d=Math.hypot(o.position.x-px,o.position.z-pz);
-    // LOW POLY visible but no shadow
-    if(d>140){o.visible=false;}
+    if(d>150)o.visible=false;
     else if(d>80){o.visible=true;o.castShadow=false;o.receiveShadow=false;}
-    else if(d>40){o.visible=true;o.castShadow=false;o.receiveShadow=true;}
+    else if(d>45){o.visible=true;o.castShadow=false;o.receiveShadow=true;}
     else{o.visible=true;o.castShadow=true;o.receiveShadow=true;}
   });
 }
@@ -1441,79 +1334,52 @@ function updLOD(dt){
 let nfT=null;
 function notif(msg){const el=$('nf');el.textContent=msg;el.classList.add('on');clearTimeout(nfT);nfT=setTimeout(()=>el.classList.remove('on'),2600);}
 
-// ══════════════════════════════════════════════════
-//  MAIN LOOP
-// ══════════════════════════════════════════════════
+// ─── MAIN LOOP ───────────────────────────────────────────
 let fr=0;
 function loop(){
   requestAnimationFrame(loop);
   const rawDt=Math.min(clock.getDelta(),.05);
   const dt=paused?0:rawDt*slowMo;
-  const t=(gameTime+=dt);
-
+  const t=(GT+=dt);
   if(!paused){
-    // Input
     let mx=0,mz=0;
     if(jA){mx=jDX;mz=jDZ;}
-    if(KB['KeyW']||KB['ArrowUp'])mz=-1;
-    if(KB['KeyS']||KB['ArrowDown'])mz=1;
-    if(KB['KeyA']||KB['ArrowLeft'])mx=-1;
-    if(KB['KeyD']||KB['ArrowRight'])mx=1;
-    if(KB['Space'])doAttack();
-    if(KB['KeyE'])$('bin').click();
-    if(KB['ShiftLeft']&&P.rollCooldown<=0)$('brl').click();
-
+    if(KB['KeyW']||KB['ArrowUp'])mz=-1;if(KB['KeyS']||KB['ArrowDown'])mz=1;
+    if(KB['KeyA']||KB['ArrowLeft'])mx=-1;if(KB['KeyD']||KB['ArrowRight'])mx=1;
+    if(KB['Space'])doAttack();if(KB['KeyE'])$('bin').click();if(KB['ShiftLeft']&&P.rollCD<=0)$('brl').click();
     const moving=(mx!==0||mz!==0)&&P.alive&&P.state!=='dead';
-
-    // Movement
     if(moving&&P.state!=='attack'){
-      const spd=P.spd*(P.sp>5?1:.45)*dt*(P.state==='dodge'?.5:1);
+      const spd=P.spd*(P.sp>5?1:.45)*dt;
       const sy=Math.sin(camYaw),cy2=Math.cos(camYaw);
-      const wx=(-sy*(-mz)+cy2*mx),wz=(-cy2*(-mz)-sy*mx);
+      const wx=-sy*(-mz)+cy2*mx,wz=-cy2*(-mz)-sy*mx;
       const len=Math.hypot(wx,wz)||1;
-      const nx=P.pos.x+(wx/len)*spd, nz=P.pos.z+(wz/len)*spd;
-      const B=98;
-      if(!hitC(nx,P.pos.z)&&Math.abs(nx)<B)P.pos.x=nx;
-      if(!hitC(P.pos.x,nz)&&Math.abs(nz)<B)P.pos.z=nz;
-      P.facing=Math.atan2(-(wx/len),-(wz/len));
-      PG.rotation.y=P.facing;
+      const nx=P.pos.x+(wx/len)*spd,nz=P.pos.z+(wz/len)*spd;
+      if(!hitC(nx,P.pos.z)&&Math.abs(nx)<98)P.pos.x=nx;
+      if(!hitC(P.pos.x,nz)&&Math.abs(nz)<98)P.pos.z=nz;
+      P.facing=Math.atan2(-(wx/len),-(wz/len));PG.rotation.y=P.facing;
       if(P.sp>0&&P.state!=='dodge')drainSP(4*dt);
       if(P.state==='idle')P.state='walk';
-    } else if(P.state==='walk'){ P.state='idle'; }
-
+    } else if(P.state==='walk')P.state='idle';
     regenSP(dt);
-    if(atkT>0)atkT-=dt;
-    if(P.hurtInvincible>0)P.hurtInvincible-=dt;
-    if(P.rollCooldown>0)P.rollCooldown-=dt;
-
-    // Combo decay
-    if(P.comboTimer>0){P.comboTimer-=dt;if(P.comboTimer<=0){P.comboCount=0;$('combo').classList.remove('show');}}
-
-    PG.position.set(P.pos.x,P.y,P.pos.z);
-    animatePlayer(dt,t,moving);
-
-    updateEnemies(dt,t);
-    updateNPCs(dt,t);
-    animateWater(t);
-
+    if(P.atkT>0)P.atkT-=dt;if(P.hurtInv>0)P.hurtInv-=dt;if(P.rollCD>0)P.rollCD-=dt;
+    if(P.comboT>0){P.comboT-=dt;if(P.comboT<=0){P.comboCount=0;$('combo').classList.remove('on');}}
+    PG.position.set(P.pos.x,0,P.pos.z);
+    animPlayer(dt,t,moving);
+    updEnemies(dt);updNPCs(dt,t);animWater(t);
     fr++;
     if(fr%28===0)tickChunks(P.pos.x,P.pos.z,.44);
     updLOD(dt);
-    if(fr%60===0){const z=getZ(P.pos.x,P.pos.z);if(z!==lastZ){lastZ=z;$('zl').textContent=ZN[z];}}
-
+    if(fr%55===0){
+      const z=getZ(P.pos.x,P.pos.z);
+      if(z!==lastZ){lastZ=z;$('zl').textContent=ZN[z];if(z==='market')checkMissionProgress('enterMarket');}
+    }
     // Camera
     if(camMode==='third'){
-      cam.position.set(
-        P.pos.x+Math.sin(camYaw)*Math.cos(camPitch)*CAM_D,
-        Math.sin(camPitch)*CAM_D+1.8,
-        P.pos.z+Math.cos(camYaw)*Math.cos(camPitch)*CAM_D
-      );
+      cam.position.set(P.pos.x+Math.sin(camYaw)*Math.cos(camPitch)*CAM_D,Math.sin(camPitch)*CAM_D+1.8,P.pos.z+Math.cos(camYaw)*Math.cos(camPitch)*CAM_D);
       cam.lookAt(P.pos.x,1.3,P.pos.z);
     } else {
-      cam.position.set(P.pos.x,1.65,P.pos.z);
-      cam.rotation.order='YXZ';cam.rotation.y=camYaw;cam.rotation.x=-camPitch*.35;
+      cam.position.set(P.pos.x,1.65,P.pos.z);cam.rotation.order='YXZ';cam.rotation.y=camYaw;cam.rotation.x=-camPitch*.35;
     }
-
     $('hf').style.width=(P.hp/P.mhp*100)+'%';
     $('sf').style.width=(P.sp/P.msp*100)+'%';
     drawMM();
@@ -1521,27 +1387,24 @@ function loop(){
   renderer.render(scene,cam);
 }
 
-// ══════════════════════════════════════════════════
-//  BOOT
-// ══════════════════════════════════════════════════
-const TIPS=['Hold ⚙️ to open the weapon wheel.','Drag right side of screen to rotate camera.','Talk to Elder Maris for the main quest.','Upgrade Strength to deal more damage.','Wolves roam the forest — be careful!'];
+// ─── BOOT ────────────────────────────────────────────────
+const TIPS=['Hold ⚙️ to open the weapon wheel.','Talk to Naruto for special missions!','Buy items from Naruto\'s shop.','Drag right side to rotate camera.','Upgrade skills to become stronger.'];
 $('lm').textContent=TIPS[Math.floor(Math.random()*TIPS.length)];
 
 async function boot(){
   const f=$('lf');
   const steps=[
-    ['Sculpting terrain…',  ()=>{loadChunk('village');},20],
-    ['Building village…',   ()=>{},40],
-    ['Growing forest…',     ()=>{loadChunk('forest');},60],
-    ['Opening market…',     ()=>{},78],
-    ['Placing bandits…',    ()=>{},90],
-    ['Starting world…',     ()=>{loop();},100],
+    ['Building terrain…',  ()=>loadChunk('village'),20],
+    ['Placing houses…',    ()=>{},40],
+    ['Growing forest…',    ()=>loadChunk('forest'),60],
+    ['Opening market…',    ()=>{},78],
+    ['Spawning enemies…',  ()=>{},90],
+    ['Starting game…',     ()=>loop(),100],
   ];
-  for(const[msg,fn,pct]of steps){$('lm').textContent=msg;fn();f.style.width=pct+'%';await new Promise(r=>setTimeout(r,350));}
+  for(const[msg,fn,pct]of steps){$('lm').textContent=msg;fn();f.style.width=pct+'%';await new Promise(r=>setTimeout(r,340));}
   await new Promise(r=>setTimeout(r,200));
-  const ls=$('ls');ls.style.transition='opacity .8s';ls.style.opacity='0';
-  setTimeout(()=>ls.style.display='none',850);
-  notif('⚔ Welcome to Curse Land!');
+  const ls=$('ls');ls.style.transition='opacity .8s';ls.style.opacity='0';setTimeout(()=>ls.style.display='none',850);
+  notif('⚔ Welcome to Curse Land! Find Naruto for missions!');
 }
 boot();
 </script>
