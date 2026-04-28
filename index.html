@@ -134,6 +134,15 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden;touch-action:no
 #missionPop .mn{color:#fff;font-size:12px;font-weight:bold;margin-top:4px;}
 #missionPop .md{color:#aaa;font-size:9px;margin-top:3px;line-height:1.4;}
 #missionPop .mr{color:#f0d060;font-size:10px;margin-top:6px;}
+/* ── Crosshair attack pointer ── */
+#xhair{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:15;width:36px;height:36px;}
+#xhair svg{width:100%;height:100%;}
+#xhair.hit{animation:xhit .2s forwards;}
+@keyframes xhit{0%{transform:translate(-50%,-50%) scale(1.8)}100%{transform:translate(-50%,-50%) scale(1)}}
+/* ── Weapon display badge ── */
+#wpnBadge{position:fixed;bottom:72px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.7);border:1.5px solid #8b6914;border-radius:8px;padding:3px 10px;display:flex;align-items:center;gap:6px;pointer-events:none;z-index:12;}
+#wpnIcon{font-size:16px;}#wpnName{color:#f0d060;font-size:9px;letter-spacing:1px;}
+/* ── Bridge indicator ── */
 /* ── Loading ── */
 #ls{position:fixed;inset:0;background:radial-gradient(ellipse at center,#1a0800,#000);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;}
 #lt{color:#f0d060;font-size:min(7vw,28px);letter-spacing:min(1.5vw,7px);text-shadow:0 0 30px #f0d060,0 0 60px #c03000;margin-bottom:4px;}
@@ -202,6 +211,19 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden;touch-action:no
 <div class="pan" id="skp"><div class="ph"><span>✨ SKILLS</span><button class="pc" id="skc">✕</button></div><div class="pb"><div id="sg"></div><div id="spi">Skill Points: <span id="spc">3</span></div></div></div>
 <div id="pm"><div id="pt">⚔ PAUSED</div><div class="pb2" id="pr">▶ RESUME</div><div class="pb2" id="pq">📜 QUESTS</div><div class="pb2" id="ps">✨ SKILLS</div><div class="pb2" id="prs">↺ RESTART</div></div>
 <div id="hf2"></div><div id="nf"></div>
+<!-- Crosshair -->
+<div id="xhair">
+  <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="18" cy="18" r="14" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" fill="none"/>
+    <circle cx="18" cy="18" r="3" fill="rgba(255,80,80,0.9)"/>
+    <line x1="18" y1="2" x2="18" y2="10" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"/>
+    <line x1="18" y1="26" x2="18" y2="34" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"/>
+    <line x1="2" y1="18" x2="10" y2="18" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"/>
+    <line x1="26" y1="18" x2="34" y2="18" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"/>
+  </svg>
+</div>
+<!-- Weapon badge -->
+<div id="wpnBadge"><span id="wpnIcon">⚔️</span><span id="wpnName">SWORD</span></div>
 
 <!-- THREE.js r128 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -278,28 +300,41 @@ cubeLoader.load(
 // Low-poly hills around world border — visible but low quality far away
 function buildHorizonTerrain(){
   // Far mountain ring (purely visual, no colliders)
-  const hillMat=new THREE.MeshLambertMaterial({color:0x3a5a2a});
-  const hillMat2=new THREE.MeshLambertMaterial({color:0x4a6a38});
-  const angles=[0,18,36,54,72,90,108,126,144,162,180,198,216,234,252,270,288,306,324,342];
+  const hillMat=new THREE.MeshLambertMaterial({color:0x2a4a1a});
+  const hillMat2=new THREE.MeshLambertMaterial({color:0x3a5a28});
+  const hillMat3=new THREE.MeshLambertMaterial({color:0x708070});// grey rocky peaks
+  // Fallback cone hills — shown until mountain.glb loads
+  // Varied: some steep rocky (grey), some grassy (green)
+  const angles=[0,22,44,66,88,110,132,154,176,198,220,242,264,286,308,330];
+  window._fallbackHills=[];
   angles.forEach((a,i)=>{
     const rad=a*Math.PI/180;
-    const dist=160+Math.random()*30;
-    const h=12+Math.random()*22;
-    const w=18+Math.random()*14;
+    const dist=155+Math.random()*35;
+    const h=18+Math.random()*28;
+    const w=14+Math.random()*18;
+    const rocky=i%3===0;
     const hill=new THREE.Mesh(
-      new THREE.ConeGeometry(w,h,i%3===0?6:5),
-      i%2===0?hillMat:hillMat2
+      new THREE.ConeGeometry(w,h,rocky?5:6),
+      rocky?hillMat3:(i%2===0?hillMat:hillMat2)
     );
-    hill.position.set(Math.cos(rad)*dist,h*.45,Math.sin(rad)*dist);
+    hill.position.set(Math.cos(rad)*dist,h*.44,Math.sin(rad)*dist);
     hill.rotation.y=Math.random()*Math.PI;
-    scene.add(hill); // not in chunk — permanent background
+    hill._isGround=true; // never hide
+    scene.add(hill);
+    window._fallbackHills.push(hill);
+    // Snow caps on tall hills
+    if(h>30){
+      const snow=new THREE.Mesh(new THREE.ConeGeometry(w*.3,h*.25,5),new THREE.MeshLambertMaterial({color:0xeeeeff}));
+      snow.position.set(Math.cos(rad)*dist,h*.44+h*.55,Math.sin(rad)*dist);
+      scene.add(snow);
+    }
   });
   // Outer flat ground ring
   const outerGnd=new THREE.Mesh(
     new THREE.RingGeometry(105,220,32),
     new THREE.MeshLambertMaterial({color:0x4a7030})
   );
-  outerGnd.rotation.x=-Math.PI/2;outerGnd.position.y=-0.05;outerGnd.receiveShadow=true;
+  outerGnd.rotation.x=-Math.PI/2;outerGnd.position.y=-0.05;outerGnd.receiveShadow=true;outerGnd._isGround=true;
   scene.add(outerGnd);
 }
 buildHorizonTerrain();
@@ -415,19 +450,32 @@ loadScript(GLTF_CDN,ok=>{
     );
   }
 
-  // Player model
+  // Player model — scale to ~1.8 world units tall
   tryLoad('./models/boy_warrior.glb',model=>{
     while(PG.children.length>0)PG.remove(PG.children[0]);
-    model.scale.set(1,1,1);
+    // Auto-fit: measure bounding box and scale to 1.8 height
+    const bb=new THREE.Box3().setFromObject(model);
+    const sz=new THREE.Vector3();bb.getSize(sz);
+    const targetH=1.8;
+    const sc=sz.y>0?targetH/sz.y:1;
+    model.scale.set(sc,sc,sc);
+    // Re-center at ground
+    const bb2=new THREE.Box3().setFromObject(model);
+    model.position.y=-bb2.min.y;
     PG.add(model);
     playerModelLoaded=true;
-    console.log('✅ boy_warrior.glb loaded');
+    console.log('✅ boy_warrior.glb loaded, scale='+sc.toFixed(3));
   });
 
-  // Tree model
+  // Tree model — auto-scale to sensible tree size
   tryLoad('./models/trees.glb',model=>{
+    const bb=new THREE.Box3().setFromObject(model);
+    const sz=new THREE.Vector3();bb.getSize(sz);
+    const targetH=4.5; // 4.5 world units tall
+    const sc=sz.y>0?targetH/sz.y:1;
+    model.scale.set(sc,sc,sc);
     treeTemplate=model;
-    console.log('✅ trees.glb loaded');
+    console.log('✅ trees.glb loaded, scale='+sc.toFixed(3));
   });
 
   // House model
@@ -438,14 +486,58 @@ loadScript(GLTF_CDN,ok=>{
     console.log('✅ house_1.glb loaded');
   });
 
-  // Naruto NPC model
+  // Naruto NPC model — auto-scale to NPC height
   tryLoad('./models/naruto.glb',model=>{
+    const bb=new THREE.Box3().setFromObject(model);
+    const sz=new THREE.Vector3();bb.getSize(sz);
+    const targetH=1.6;
+    const sc=sz.y>0?targetH/sz.y:1;
+    model.scale.set(sc,sc,sc);
+    // Ground-align
+    const bb2=new THREE.Box3().setFromObject(model);
+    model.position.y=-bb2.min.y;
     narutoTemplate=model;
-    // Re-place Naruto if house already placed
-    if(narutoHouseGroup){
-      placeNarutoNPC();
-    }
-    console.log('✅ naruto.glb loaded');
+    if(narutoHouseGroup) placeNarutoNPC();
+    console.log('✅ naruto.glb loaded, scale='+sc.toFixed(3));
+  });
+
+  // Weapon models
+  tryLoad('./weapon model/minecraft_sword.glb',model=>{
+    const bb=new THREE.Box3().setFromObject(model);
+    const sz=new THREE.Vector3();bb.getSize(sz);
+    const sc=(sz.y>0?1.0/sz.y:1);
+    model.scale.set(sc,sc,sc);
+    window._swordModel=model;
+    console.log('✅ minecraft_sword.glb loaded');
+  });
+  tryLoad('./weapon model/hammer.glb',model=>{
+    const bb=new THREE.Box3().setFromObject(model);
+    const sz=new THREE.Vector3();bb.getSize(sz);
+    const sc=(sz.y>0?1.0/sz.y:1);
+    model.scale.set(sc,sc,sc);
+    window._hammerModel=model;
+    console.log('✅ hammer.glb loaded');
+  });
+
+  // Mountain model
+  tryLoad('./models/mountain.glb',model=>{
+    // Place mountains around the world border
+    const positions=[
+      {x:120,z:-80,s:18},{x:-120,z:-60,s:22},{x:80,z:120,s:16},
+      {x:-110,z:100,s:20},{x:130,z:30,s:14},{x:-80,z:-130,s:24},
+    ];
+    positions.forEach(p=>{
+      const m=model.clone();
+      const bb=new THREE.Box3().setFromObject(m);
+      const sz=new THREE.Vector3();bb.getSize(sz);
+      const sc=sz.y>0?p.s/sz.y:1;
+      m.scale.set(sc,sc,sc);
+      m.position.set(p.x,0,p.z);
+      m.rotation.y=Math.random()*Math.PI*2;
+      m.traverse(c=>{if(c.isMesh){c.castShadow=true;c.receiveShadow=true;}});
+      scene.add(m);
+    });
+    console.log('✅ mountain.glb loaded');
   });
 });
 
@@ -473,13 +565,33 @@ function setupWaterMaterial(){
       tex2.wrapS=tex2.wrapT=THREE.RepeatWrapping;
       tex2.repeat.set(2,4);
       M.wat=new THREE.MeshLambertMaterial({map:tex2,transparent:true,opacity:0.80,color:0x2299cc});
-      // Animate the canvas
+      // Animate the canvas — realistic water shimmer
       function animCanvas(t){
         ctx.clearRect(0,0,128,256);
-        ctx.fillStyle='#1a6aaa';ctx.fillRect(0,0,128,256);
-        for(let i=0;i<8;i++){
-          ctx.fillStyle=`rgba(120,200,255,${0.25+Math.sin(t*2+i)*.15})`;
-          ctx.fillRect(0,(i*32+(t*30)%256)%256,128,14);
+        // Deep water base
+        const grad=ctx.createLinearGradient(0,0,128,0);
+        grad.addColorStop(0,'#0a4a7a');grad.addColorStop(.5,'#1a6aaa');grad.addColorStop(1,'#0a4a7a');
+        ctx.fillStyle=grad;ctx.fillRect(0,0,128,256);
+        // Moving light streaks (flow lines)
+        for(let i=0;i<12;i++){
+          const yy=((i*22+t*45)%256);
+          const alpha=0.12+Math.sin(t*1.8+i*.7)*.08;
+          ctx.fillStyle=`rgba(100,200,255,${alpha})`;
+          ctx.beginPath();ctx.ellipse(20+Math.sin(t+i)*30,yy,35,3,0,0,Math.PI*2);ctx.fill();
+          ctx.beginPath();ctx.ellipse(80+Math.cos(t*.7+i)*25,yy+8,28,2.5,0,0,Math.PI*2);ctx.fill();
+        }
+        // White foam highlights
+        for(let i=0;i<5;i++){
+          const yy=((i*50+t*20)%256);
+          ctx.fillStyle=`rgba(255,255,255,${0.06+Math.sin(t*2.5+i)*.04})`;
+          ctx.fillRect(Math.sin(t+i*2)*30+40,yy,50,2);
+        }
+        // Surface sparkles
+        for(let i=0;i<6;i++){
+          const sx=(Math.sin(t*3+i*1.4)*55+64);
+          const sy=((i*40+t*60)%256);
+          ctx.fillStyle=`rgba(200,240,255,${0.5+Math.sin(t*4+i)*.3})`;
+          ctx.fillRect(sx,sy,2,2);
         }
         tex2.needsUpdate=true;
       }
@@ -490,7 +602,8 @@ function setupWaterMaterial(){
   );
 }
 // Set a placeholder until texture loads
-M.wat=new THREE.MeshLambertMaterial({color:0x2a7aaa,transparent:true,opacity:0.80});
+// Water placeholder — DoubleSide so it never disappears from below
+M.wat=new THREE.MeshLambertMaterial({color:0x1a6a9a,transparent:true,opacity:0.85,side:THREE.DoubleSide});
 setupWaterMaterial();
 
 // ══════════════════════════════════════════════════════════
@@ -559,6 +672,35 @@ function buildRiver(chunk){
     addM(chunk,b1);
   }
 }
+// ── BRIDGE BUILDER ──────────────────────────────────────────
+function bldBridge(x1,z1,x2,z2,chunk){
+  const dx=x2-x1,dz=z2-z1,len=Math.hypot(dx,dz);
+  const ang=Math.atan2(dx,dz);
+  const cx=(x1+x2)/2,cz=(z1+z2)/2;
+  // Deck
+  const deck=bx(3.5,.18,len,new THREE.MeshLambertMaterial({color:0x8a5a2a}),cx,.22,cz);
+  deck.rotation.y=ang;deck.castShadow=true;deck.receiveShadow=true;
+  addM(chunk,deck);
+  // Railings
+  const rMat=new THREE.MeshLambertMaterial({color:0x6a3a1a});
+  [-1.4,1.4].forEach(side=>{
+    const rx=cx+Math.cos(ang+Math.PI/2)*side;
+    const rz=cz+Math.sin(ang+Math.PI/2)*side;
+    const rail=bx(.14,.5,len,rMat,rx,.55,rz);
+    rail.rotation.y=ang;addM(chunk,rail);
+    // Posts
+    for(let i=0;i<=Math.floor(len/2);i++){
+      const t2=i/Math.floor(len/2);
+      const px2=x1+dx*t2+Math.cos(ang+Math.PI/2)*side;
+      const pz2=z1+dz*t2+Math.sin(ang+Math.PI/2)*side;
+      const post=bx(.18,.75,.18,rMat,px2,.37,pz2);
+      post.castShadow=true;addM(chunk,post);
+    }
+  });
+  // Collision boards (walkable, not blocking)
+  // Bridge over river at crossing point - passable
+}
+
 function animWater(t){
   waterMeshes.forEach(w=>{
     if(w.material&&w.material.map)w.material.map.offset.y=t*.12;
@@ -600,7 +742,7 @@ function bldHouse(cx,cz,sx,sz,chunk,rm){
 }
 
 function bldRock(cx,cz,s,chunk){const m=sp(s,5,M.st,cx,s*.55,cz);m.scale.set(1+Math.random()*.3,.5+Math.random()*.3,1+Math.random()*.3);addM(chunk,m);if(s>.7)addC(cx,cz,s*.65,s*.65);}
-function bldFloor(cx,cz,w,d,mat,chunk,y=0){const m=pl(w,d,mat,cx,y,cz);addM(chunk,m);}
+function bldFloor(cx,cz,w,d,mat,chunk,y=0){const m=pl(w,d,mat,cx,y,cz);m._isGround=true;addM(chunk,m);}
 
 // ══════════════════════════════════════════════════════════
 //  NARUTO HOUSE & NPC
@@ -693,17 +835,20 @@ function placeNarutoHouse(){
 
 function placeNarutoNPC(){
   const hx=35,hz=18; // in front of house
+  // Remove old Naruto mesh if re-calling
+  if(narutoNPC&&narutoNPC.mesh){scene.remove(narutoNPC.mesh);npcs=npcs.filter(n=>!n.isNaruto);}
+  let mesh;
   if(narutoTemplate){
-    const g=narutoTemplate.clone();
-    g.scale.set(1,1,1);
-    g.position.set(hx,0,hz);
-    scene.add(g);
+    mesh=narutoTemplate.clone();
+    // Already scaled in loader
+    mesh.position.set(hx,0,hz);
+    scene.add(mesh);
   } else {
-    buildProceduralNarutoNPC(hx,hz);
+    mesh=buildProceduralNarutoNPC(hx,hz);
   }
   // Register as NPC
   const narutoNPCData={
-    mesh:narutoTemplate?narutoTemplate.clone():buildProceduralNarutoNPC(hx,hz),
+    mesh:mesh,
     x:hx,z:hz,
     name:'Naruto',job:'Shadow Clone Master',
     mood:'good',pt:'🌀',
@@ -908,6 +1053,8 @@ function bldForest(){
   bldRoad(-5,-50,5,-75,3,'forest',M.path);
   bldRoad(5,-75,-3,-100,3,'forest',M.path);
   buildRiver('forest');
+  // Bridge over the river — crossing point between pts[2] and [3]
+  bldBridge(-2,-82,8,-76,'forest');
   for(let i=0;i<52;i++){const x=(Math.random()-.5)*92,z=-100+(Math.random()-.5)*92;if(Math.abs(x)<6&&z>-55&&z<-14)continue;bldTree(x,z,3.8+Math.random()*3,'forest');}
   for(let i=0;i<12;i++)bldRock((Math.random()-.5)*78,-100+(Math.random()-.5)*78,.6+Math.random()*1.4,'forest');
   const cg=new THREE.Group();cg.add(sp(.5,6,M.st,0,.25,0));cg.add(sp(.34,6,M.fi,0,.62,0));cg.position.set(-14,0,-88);addM('forest',cg);
@@ -994,16 +1141,17 @@ const Q=[
 ];
 
 // ─── COMBAT ──────────────────────────────────────────────
-const WPN_RANGE={sword:3.4,bow:24,throwable:18,potion:0};
-const WPN_CD={sword:.55,bow:1.1,throwable:.8,potion:0};
+const WPN_RANGE={sword:3.4,bow:24,throwable:18,potion:0,'minecraft sword':4.0,hammer:3.8};
+const WPN_CD={sword:.55,bow:1.1,throwable:.8,potion:0,'minecraft sword':.45,hammer:.9};
 let focusEnemy=null;
 
 function doAttack(){
   if(P.atkT>0||!P.alive||P.state==='dead')return;
-  P.atkT=WPN_CD[P.weapon]||.55;P.state='attack';
+  P.atkT=WPN_CD[P.weapon]||.55;// attack no longer blocks movement
   const range=WPN_RANGE[P.weapon]||3.4;
   const sweep=P.weapon==='sword'?Math.PI/2.2:Math.PI/18;
-  const base=8+P.skills.strength.lv*4;
+  const wBonus=P.weapon==='hammer'?12:P.weapon==='minecraft sword'?8:0;
+  const base=8+P.skills.strength.lv*4+wBonus;
   let hitAny=false;
   enemies.forEach(e=>{
     if(!e.alive)return;
@@ -1031,6 +1179,8 @@ function doAttack(){
   }
   // Sword anim
   SW.rotation.z=-Math.PI/2.5;SW.rotation.x=-.6;setTimeout(()=>{SW.rotation.z=0;SW.rotation.x=0;},300);
+  // Flash crosshair
+  const xh=$('xhair');xh.classList.remove('hit');void xh.offsetWidth;xh.classList.add('hit');
   // Slash flash
   const sl=bx(.8,.1,.8,new THREE.MeshLambertMaterial({color:0xffffff,transparent:true,opacity:.65}),P.pos.x-Math.sin(P.facing)*2,.8,P.pos.z-Math.cos(P.facing)*2,false);
   scene.add(sl);setTimeout(()=>scene.remove(sl),110);
@@ -1164,7 +1314,7 @@ function updNPCs(dt){
 // ─── PLAYER ANIMATION ────────────────────────────────────
 function animPlayer(dt,t,moving){
   if(!playerModelLoaded){
-    if(moving&&P.state!=='attack'){
+    if(moving){
       PG.position.y=Math.abs(Math.sin(t*8))*.08;
       if(PG.children[0])PG.children[0].rotation.x=Math.sin(t*8)*.35;
       if(PG.children[1])PG.children[1].rotation.x=-Math.sin(t*8)*.35;
@@ -1174,7 +1324,12 @@ function animPlayer(dt,t,moving){
 }
 
 // ─── WEAPON WHEEL ────────────────────────────────────────
-const WS=[{name:'Sword',icon:'⚔️',col:'#cc2222'},{name:'Bow',icon:'🏹',col:'#2255cc'},{name:'Throwable',icon:'💣',col:'#cc6600'},{name:'Potion',icon:'🧪',col:'#22cc55'}];
+const WS=[
+  {name:'Sword',       icon:'⚔️',col:'#cc2222', key:'sword'},
+  {name:'Bow',         icon:'🏹',col:'#2255cc', key:'bow'},
+  {name:'M.Sword',     icon:'🗡️',col:'#8833cc', key:'minecraft sword'},
+  {name:'Hammer',      icon:'🔨',col:'#cc8800', key:'hammer'},
+];
 let selW=0,wOpen=false;
 function drawWheel(hov){
   const cv=$('wc'),ctx=cv.getContext('2d');ctx.clearRect(0,0,240,240);
@@ -1194,7 +1349,12 @@ function drawWheel(hov){
   $('wctr').textContent=WS[selW].icon;$('wlb').textContent=WS[selW].name.toUpperCase();
 }
 function openWheel(){wOpen=true;slowMo=.18;$('ww').classList.add('on');$('wo').classList.add('on');drawWheel(selW);}
-function closeWheel(){wOpen=false;slowMo=1;$('ww').classList.remove('on');$('wo').classList.remove('on');P.weapon=WS[selW].name.toLowerCase();}
+function closeWheel(){wOpen=false;slowMo=1;$('ww').classList.remove('on');$('wo').classList.remove('on');P.weapon=WS[selW].name.toLowerCase();updateWpnBadge();}
+function updateWpnBadge(){
+  const icons={sword:'⚔️',bow:'🏹',throwable:'💣',potion:'🧪','minecraft sword':'⚔️',hammer:'🔨'};
+  $('wpnIcon').textContent=icons[P.weapon]||'⚔️';
+  $('wpnName').textContent=P.weapon.toUpperCase();
+}
 let wHT=null;
 $('biv').addEventListener('touchstart',e=>{e.preventDefault();wHT=setTimeout(openWheel,180);},{passive:false});
 $('biv').addEventListener('touchend',e=>{e.preventDefault();clearTimeout(wHT);if(wOpen)closeWheel();},{passive:false});
@@ -1270,8 +1430,18 @@ $('ps').onclick=()=>{renderSk();$('skp').classList.add('on');$('pm').classList.r
 $('prs').onclick=()=>location.reload();
 
 // ─── BUTTONS ─────────────────────────────────────────────
-$('bsw').addEventListener('click',()=>{P.weapon='sword';doAttack();});
-$('bbw').addEventListener('click',()=>{P.weapon='bow';if(P.sp>=10){drainSP(10);doAttack();}else notif('Not enough stamina!');});
+$('bsw').addEventListener('touchstart',e=>{e.preventDefault();P.weapon='sword';updateWpnBadge();doAttack();},{passive:false});
+$('bsw').addEventListener('click',()=>{P.weapon='sword';updateWpnBadge();doAttack();});
+$('bbw').addEventListener('touchstart',e=>{e.preventDefault();P.weapon='bow';updateWpnBadge();if(P.sp>=10){drainSP(10);doAttack();}else notif('Not enough stamina!');},{passive:false});
+$('bbw').addEventListener('click',()=>{P.weapon='bow';updateWpnBadge();if(P.sp>=10){drainSP(10);doAttack();}else notif('Not enough stamina!');});
+$('brl').addEventListener('touchstart',e=>{
+  e.preventDefault();
+  if(P.rollCD>0){notif('Cooldown!');return;}
+  if(P.sp<18){notif('Not enough stamina!');return;}
+  drainSP(18);P.state='dodge';P.rollCD=1.2;
+  P.pos.x+=-Math.sin(P.facing)*3.5;P.pos.z+=-Math.cos(P.facing)*3.5;
+  PG.rotation.x=.6;setTimeout(()=>{PG.rotation.x=0;P.state='idle';},350);notif('Dodge Roll!');
+},{passive:false});
 $('brl').addEventListener('click',()=>{
   if(P.rollCD>0){notif('Cooldown!');return;}
   if(P.sp<18){notif('Not enough stamina!');return;}
@@ -1323,8 +1493,11 @@ function updLOD(dt){
   const px=P.pos.x,pz=P.pos.z;
   scene.traverse(o=>{
     if(!o.isMesh)return;
+    // Never hide ground planes (they are flat PlaneGeometry — identified by rotation)
+    const isGround=(o.geometry&&o.geometry.type==='PlaneGeometry')||o._isGround;
+    if(isGround){o.visible=true;return;}
     const d=Math.hypot(o.position.x-px,o.position.z-pz);
-    if(d>150)o.visible=false;
+    if(d>150){o.visible=false;}
     else if(d>80){o.visible=true;o.castShadow=false;o.receiveShadow=false;}
     else if(d>45){o.visible=true;o.castShadow=false;o.receiveShadow=true;}
     else{o.visible=true;o.castShadow=true;o.receiveShadow=true;}
@@ -1348,7 +1521,7 @@ function loop(){
     if(KB['KeyA']||KB['ArrowLeft'])mx=-1;if(KB['KeyD']||KB['ArrowRight'])mx=1;
     if(KB['Space'])doAttack();if(KB['KeyE'])$('bin').click();if(KB['ShiftLeft']&&P.rollCD<=0)$('brl').click();
     const moving=(mx!==0||mz!==0)&&P.alive&&P.state!=='dead';
-    if(moving&&P.state!=='attack'){
+    if(moving){
       const spd=P.spd*(P.sp>5?1:.45)*dt;
       const sy=Math.sin(camYaw),cy2=Math.cos(camYaw);
       const wx=-sy*(-mz)+cy2*mx,wz=-cy2*(-mz)-sy*mx;
@@ -1359,11 +1532,29 @@ function loop(){
       P.facing=Math.atan2(-(wx/len),-(wz/len));PG.rotation.y=P.facing;
       if(P.sp>0&&P.state!=='dodge')drainSP(4*dt);
       if(P.state==='idle')P.state='walk';
-    } else if(P.state==='walk')P.state='idle';
+    } else if(P.state==='walk'||P.state==='idle')P.state='idle';
     regenSP(dt);
     if(P.atkT>0)P.atkT-=dt;if(P.hurtInv>0)P.hurtInv-=dt;if(P.rollCD>0)P.rollCD-=dt;
     if(P.comboT>0){P.comboT-=dt;if(P.comboT<=0){P.comboCount=0;$('combo').classList.remove('on');}}
     PG.position.set(P.pos.x,0,P.pos.z);
+    // Attach equipped weapon model to hand if loaded
+    if(P.weapon==='minecraft sword'&&window._swordModel&&!window._swordAttached){
+      window._swordAttached=true;
+      while(SW.children.length>0)SW.remove(SW.children[0]);
+      const wm=window._swordModel.clone();wm.position.set(0,.3,0);SW.add(wm);
+    } else if(P.weapon==='hammer'&&window._hammerModel&&!window._hammerAttached){
+      window._hammerAttached=true;
+      while(SW.children.length>0)SW.remove(SW.children[0]);
+      const wm=window._hammerModel.clone();wm.position.set(0,.3,0);SW.add(wm);
+    } else if((P.weapon==='sword')&&window._swordAttached){
+      window._swordAttached=false;window._hammerAttached=false;
+      while(SW.children.length>0)SW.remove(SW.children[0]);
+      // restore procedural sword
+      const blade=new THREE.Mesh(new THREE.BoxGeometry(.09,1.0,.07),M.blade);blade.position.y=.38;
+      const guard=new THREE.Mesh(new THREE.BoxGeometry(.42,.1,.08),M.wd);guard.position.y=-.1;
+      const grip=new THREE.Mesh(new THREE.BoxGeometry(.08,.28,.08),M.wd);grip.position.y=-.28;
+      SW.add(blade);SW.add(guard);SW.add(grip);
+    }
     animPlayer(dt,t,moving);
     updEnemies(dt);updNPCs(dt,t);animWater(t);
     fr++;
