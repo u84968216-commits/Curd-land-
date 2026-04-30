@@ -48,14 +48,19 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden;touch-action:no
 .ub{width:42px;height:42px;background:rgba(0,0,0,.62);border:1.5px solid rgba(240,208,96,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;color:#f0d060;touch-action:none;box-shadow:0 2px 6px rgba(0,0,0,.4);transition:transform .08s;}
 .ub:active{transform:scale(.82);}
 #biv{width:50px;height:50px;font-size:20px;border-color:#f0d060;background:rgba(0,0,0,.72);}
-/* ── Weapon wheel ── */
-#wo{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:50;pointer-events:all;}
+/* ── Weapon selector (tap-to-open, tap-item-to-select) ── */
+#wo{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;z-index:50;pointer-events:all;}
 #wo.on{display:block;}
-#ww{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:240px;height:240px;display:none;z-index:51;pointer-events:all;}
+#ww{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:min(88vw,320px);background:linear-gradient(180deg,#0a0a1a,#1a1a32);border:2px solid #f0d060;border-radius:14px;display:none;z-index:51;pointer-events:all;overflow:hidden;}
 #ww.on{display:block;}
-#wc{width:240px;height:240px;}
-#wctr{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:54px;height:54px;background:rgba(5,5,15,.92);border:2px solid #f0d060;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;pointer-events:none;}
-#wlb{position:absolute;bottom:-26px;left:50%;transform:translateX(-50%);color:#f0d060;font-size:10px;letter-spacing:1px;white-space:nowrap;text-shadow:0 0 8px #000;}
+#wwTitle{color:#f0d060;font-size:11px;letter-spacing:3px;text-align:center;padding:10px 0 6px;border-bottom:1px solid rgba(240,208,96,.2);}
+#wwGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px;}
+.wwItem{background:rgba(255,255,255,.06);border:2px solid rgba(240,208,96,.25);border-radius:10px;padding:12px 8px;text-align:center;cursor:pointer;transition:all .15s;}
+.wwItem:active,.wwItem.sel{border-color:#f0d060;background:rgba(240,208,96,.15);}
+.wwItemIcon{font-size:26px;}
+.wwItemName{color:#f0d060;font-size:9px;margin-top:5px;letter-spacing:1px;}
+.wwItemAmmo{color:#888;font-size:8px;margin-top:2px;}
+#wwClose{width:100%;padding:10px;background:rgba(220,30,30,.2);border:none;border-top:1px solid rgba(240,208,96,.2);color:#f0d060;font-size:11px;cursor:pointer;letter-spacing:2px;}
 /* ── Dialogue (Pokémon style) ── */
 #dlg{position:fixed;bottom:0;left:0;width:100%;z-index:60;display:none;pointer-events:all;}
 #dlg.on{display:block;}
@@ -134,11 +139,16 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden;touch-action:no
 #missionPop .mn{color:#fff;font-size:12px;font-weight:bold;margin-top:4px;}
 #missionPop .md{color:#aaa;font-size:9px;margin-top:3px;line-height:1.4;}
 #missionPop .mr{color:#f0d060;font-size:10px;margin-top:6px;}
-/* ── Crosshair attack pointer ── */
-#xhair{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:15;width:36px;height:36px;}
-#xhair svg{width:100%;height:100%;}
-#xhair.hit{animation:xhit .2s forwards;}
-@keyframes xhit{0%{transform:translate(-50%,-50%) scale(1.8)}100%{transform:translate(-50%,-50%) scale(1)}}
+/* ── Modern Crosshair ── */
+#xhair{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:15;width:40px;height:40px;}
+.xh-ring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:22px;height:22px;border:1.5px solid rgba(255,255,255,0.55);border-radius:50%;}
+.xh-dot{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:4px;height:4px;background:rgba(255,80,80,0.95);border-radius:50%;box-shadow:0 0 4px rgba(255,80,80,0.8);}
+.xh-line{position:absolute;background:rgba(255,255,255,0.65);}
+.xh-t,.xh-b{width:1.5px;height:7px;left:50%;transform:translateX(-50%);}
+.xh-l,.xh-r{height:1.5px;width:7px;top:50%;transform:translateY(-50%);}
+.xh-t{top:2px;}.xh-b{bottom:2px;}.xh-l{left:2px;}.xh-r{right:2px;}
+#xhair.hit .xh-ring{border-color:rgba(255,80,80,0.9);transform:translate(-50%,-50%) scale(1.5);transition:transform .15s,border-color .15s;}
+#xhair.hit .xh-dot{background:rgba(255,220,0,0.99);box-shadow:0 0 8px yellow;}
 /* ── Weapon display badge ── */
 #wpnBadge{position:fixed;bottom:72px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.7);border:1.5px solid #8b6914;border-radius:8px;padding:3px 10px;display:flex;align-items:center;gap:6px;pointer-events:none;z-index:12;}
 #wpnIcon{font-size:16px;}#wpnName{color:#f0d060;font-size:9px;letter-spacing:1px;}
@@ -174,6 +184,7 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden;touch-action:no
   <div id="bc">
     <div class="ub" id="bmp">🗺</div>
     <div class="ub" id="biv">⚙️</div>
+    <div class="ub" id="bjp" style="background:rgba(0,100,200,.7);border-color:#4af;">🦘</div>
     <div class="ub" id="bcm">👁</div>
     <div class="ub" id="bps">⏸</div>
   </div>
@@ -182,7 +193,11 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden;touch-action:no
 <div id="combo"></div>
 <div id="eHP"><div id="eHPN">WOLF</div><div id="eHPB"><div id="eHPF" style="width:100%"></div></div></div>
 <div id="wo"></div>
-<div id="ww"><canvas id="wc" width="240" height="240"></canvas><div id="wctr">⚔️</div><div id="wlb">SWORD</div></div>
+<div id="ww">
+  <div id="wwTitle">⚔ SELECT WEAPON</div>
+  <div id="wwGrid"></div>
+  <button id="wwClose">CLOSE</button>
+</div>
 
 <!-- Dialogue box -->
 <div id="dlg">
@@ -211,16 +226,14 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden;touch-action:no
 <div class="pan" id="skp"><div class="ph"><span>✨ SKILLS</span><button class="pc" id="skc">✕</button></div><div class="pb"><div id="sg"></div><div id="spi">Skill Points: <span id="spc">3</span></div></div></div>
 <div id="pm"><div id="pt">⚔ PAUSED</div><div class="pb2" id="pr">▶ RESUME</div><div class="pb2" id="pq">📜 QUESTS</div><div class="pb2" id="ps">✨ SKILLS</div><div class="pb2" id="prs">↺ RESTART</div></div>
 <div id="hf2"></div><div id="nf"></div>
-<!-- Crosshair -->
+<!-- Modern Crosshair -->
 <div id="xhair">
-  <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="18" cy="18" r="14" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" fill="none"/>
-    <circle cx="18" cy="18" r="3" fill="rgba(255,80,80,0.9)"/>
-    <line x1="18" y1="2" x2="18" y2="10" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"/>
-    <line x1="18" y1="26" x2="18" y2="34" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"/>
-    <line x1="2" y1="18" x2="10" y2="18" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"/>
-    <line x1="26" y1="18" x2="34" y2="18" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"/>
-  </svg>
+  <div class="xh-ring"></div>
+  <div class="xh-dot"></div>
+  <div class="xh-line xh-t"></div>
+  <div class="xh-line xh-b"></div>
+  <div class="xh-line xh-l"></div>
+  <div class="xh-line xh-r"></div>
 </div>
 <!-- Weapon badge -->
 <div id="wpnBadge"><span id="wpnIcon">⚔️</span><span id="wpnName">SWORD</span></div>
@@ -462,6 +475,7 @@ loadScript(GLTF_CDN,ok=>{
     // Re-center at ground
     const bb2=new THREE.Box3().setFromObject(model);
     model.position.y=-bb2.min.y;
+    model.rotation.y=Math.PI; // face forward
     PG.add(model);
     playerModelLoaded=true;
     console.log('✅ boy_warrior.glb loaded, scale='+sc.toFixed(3));
@@ -471,9 +485,12 @@ loadScript(GLTF_CDN,ok=>{
   tryLoad('./models/trees.glb',model=>{
     const bb=new THREE.Box3().setFromObject(model);
     const sz=new THREE.Vector3();bb.getSize(sz);
-    const targetH=4.5; // 4.5 world units tall
+    const targetH=3.5; // 3.5 world units tall
     const sc=sz.y>0?targetH/sz.y:1;
     model.scale.set(sc,sc,sc);
+    // ground-align tree template
+    const tbb2=new THREE.Box3().setFromObject(model);
+    model.position.y=-tbb2.min.y;
     treeTemplate=model;
     console.log('✅ trees.glb loaded, scale='+sc.toFixed(3));
   });
@@ -490,12 +507,13 @@ loadScript(GLTF_CDN,ok=>{
   tryLoad('./models/naruto.glb',model=>{
     const bb=new THREE.Box3().setFromObject(model);
     const sz=new THREE.Vector3();bb.getSize(sz);
-    const targetH=1.6;
+    const targetH=1.65;
     const sc=sz.y>0?targetH/sz.y:1;
     model.scale.set(sc,sc,sc);
     // Ground-align
     const bb2=new THREE.Box3().setFromObject(model);
     model.position.y=-bb2.min.y;
+    model.rotation.y=Math.PI;
     narutoTemplate=model;
     if(narutoHouseGroup) placeNarutoNPC();
     console.log('✅ naruto.glb loaded, scale='+sc.toFixed(3));
@@ -517,6 +535,48 @@ loadScript(GLTF_CDN,ok=>{
     model.scale.set(sc,sc,sc);
     window._hammerModel=model;
     console.log('✅ hammer.glb loaded');
+  });
+
+  // NPC house models
+  tryLoad('./models/house_2.glb',model=>{
+    const bb=new THREE.Box3().setFromObject(model);
+    const sz=new THREE.Vector3();bb.getSize(sz);
+    const sc=sz.y>0?4.5/sz.y:1;
+    model.scale.set(sc,sc,sc);
+    const bb2=new THREE.Box3().setFromObject(model);
+    model.position.y=-bb2.min.y;
+    window._house2=model;
+    // Replace village NPC houses with GLB
+    placeNPCHouses();
+    console.log('✅ house_2.glb loaded');
+  });
+  tryLoad('./models/house_3.glb',model=>{
+    const bb=new THREE.Box3().setFromObject(model);
+    const sz=new THREE.Vector3();bb.getSize(sz);
+    const sc=sz.y>0?4.5/sz.y:1;
+    model.scale.set(sc,sc,sc);
+    const bb2=new THREE.Box3().setFromObject(model);
+    model.position.y=-bb2.min.y;
+    window._house3=model;
+    placeNPCHouses();
+    console.log('✅ house_3.glb loaded');
+  });
+  // Castle model
+  tryLoad('./models/castle.glb',model=>{
+    const bb=new THREE.Box3().setFromObject(model);
+    const sz=new THREE.Vector3();bb.getSize(sz);
+    const sc=sz.y>0?25/sz.y:1;
+    model.scale.set(sc,sc,sc);
+    const bb2=new THREE.Box3().setFromObject(model);
+    model.position.y=-bb2.min.y;
+    model.position.set(-80,-80);// castle in outer land
+    model.position.x=-80;model.position.z=-80;
+    model.traverse(c=>{if(c.isMesh){c.castShadow=true;c.receiveShadow=true;}});
+    scene.add(model);
+    addC(-80,-80,14,14); // castle collider
+    // Spawn boss inside
+    spawnBoss(-80,-72);
+    console.log('✅ castle.glb loaded');
   });
 
   // Mountain model
@@ -636,8 +696,9 @@ function bldTree(cx,cz,h,chunk){
   let g;
   if(treeTemplate){
     g=treeTemplate.clone();
-    const s=0.7+Math.random()*.7;
-    g.scale.set(s,(h/4)*s,s);
+    // Template already scaled to 3.5 units - just add slight variation
+    const s=0.75+Math.random()*.5;
+    g.scale.multiplyScalar(s);
   } else {
     g=new THREE.Group();
     g.add(cy(.18,.28,h,5,M.tk,0,h/2,0));
@@ -672,6 +733,94 @@ function buildRiver(chunk){
     addM(chunk,b1);
   }
 }
+// ── RIVER SYSTEM — flows from mountain, through forest, to edge ─────────
+// River channel: carved path with banks, flowing water texture, depth illusion
+const RIVER_PATH=[
+  // Start near mountain (north)
+  {x:5,z:-135},
+  {x:2,z:-118},
+  {x:-5,z:-105},
+  {x:-10,z:-92},
+  {x:-8,z:-78},
+  {x:-3,z:-65},
+  {x:2,z:-55},
+  // Through forest
+  {x:-5,z:-42},
+  {x:-12,z:-30},
+  {x:-18,z:-18},
+  // Exit west
+  {x:-30,z:-8},
+  {x:-50,z:0},
+];
+
+function buildProperRiver(chunk){
+  const riverW=5.5;
+  const bankMat=new THREE.MeshLambertMaterial({color:0x6a5030});
+  const bedMat=new THREE.MeshLambertMaterial({color:0x1a4a1a}); // dark muddy bed
+
+  for(let i=0;i<RIVER_PATH.length-1;i++){
+    const a=RIVER_PATH[i],b=RIVER_PATH[i+1];
+    const dx=b.x-a.x,dz=b.z-a.z,len=Math.hypot(dx,dz);
+    const ang=Math.atan2(dx,dz);
+    const cx=(a.x+b.x)/2,cz=(a.z+b.z)/2;
+
+    // River bed (sunken -0.15)
+    const bed=new THREE.Mesh(new THREE.PlaneGeometry(riverW,len),bedMat);
+    bed.rotation.x=-Math.PI/2;bed.rotation.z=-ang+Math.PI/2;
+    bed.position.set(cx,-0.12,cz);bed._isGround=true;
+    scene.add(bed);if(chunk)CM[chunk].push(bed);
+
+    // Water surface
+    const wm=new THREE.Mesh(new THREE.PlaneGeometry(riverW-0.6,len),M.wat?M.wat.clone():new THREE.MeshLambertMaterial({color:0x1a6a9a,transparent:true,opacity:0.85}));
+    wm.rotation.x=-Math.PI/2;wm.rotation.z=-ang+Math.PI/2;
+    wm.position.set(cx,-0.04,cz);
+    wm._wPhase=i*0.3;
+    scene.add(wm);if(chunk)CM[chunk].push(wm);waterMeshes.push(wm);
+
+    // Left bank
+    const lbMat=bankMat.clone();
+    const lb=new THREE.Mesh(new THREE.PlaneGeometry(3,len),lbMat);
+    lb.rotation.x=-Math.PI/2;lb.rotation.z=-ang+Math.PI/2;
+    const perp={x:Math.cos(ang-Math.PI/2),z:Math.sin(ang-Math.PI/2)};
+    lb.position.set(cx+perp.x*(riverW/2+1.5),-0.01,cz+perp.z*(riverW/2+1.5));
+    lb._isGround=true;scene.add(lb);if(chunk)CM[chunk].push(lb);
+
+    // Right bank
+    const rb=lb.clone();
+    rb.position.set(cx-perp.x*(riverW/2+1.5),-0.01,cz-perp.z*(riverW/2+1.5));
+    rb._isGround=true;scene.add(rb);if(chunk)CM[chunk].push(rb);
+
+    // River rocks along banks
+    if(i%2===0){
+      const rk=sp(0.3+Math.random()*0.4,5,M.st,
+        cx+perp.x*(riverW/2+0.3)+dx/len*(Math.random()-.5)*len*.4,
+        0.1,
+        cz+perp.z*(riverW/2+0.3)+dz/len*(Math.random()-.5)*len*.4
+      );
+      scene.add(rk);if(chunk)CM[chunk].push(rk);
+    }
+  }
+  // Waterfall at mountain base (visual)
+  buildWaterfall(5,-130,chunk);
+}
+
+function buildWaterfall(cx,cz,chunk){
+  // Tall thin water column
+  const wfMat=new THREE.MeshLambertMaterial({color:0x88ccee,transparent:true,opacity:0.7});
+  for(let i=0;i<3;i++){
+    const wf=new THREE.Mesh(new THREE.BoxGeometry(1.2-i*0.2,8+i,0.3),wfMat);
+    wf.position.set(cx+i*0.4,-4+4,cz);
+    wf._wPhase=i*1.1;wf._isWaterfall=true;
+    scene.add(wf);if(chunk)CM[chunk].push(wf);waterMeshes.push(wf);
+  }
+  // Splash pool
+  const pool=new THREE.Mesh(new THREE.CircleGeometry(3.5,10),
+    new THREE.MeshLambertMaterial({color:0x2288aa,transparent:true,opacity:0.8})
+  );
+  pool.rotation.x=-Math.PI/2;pool.position.set(cx,.02,cz+2);
+  pool._isGround=true;scene.add(pool);if(chunk)CM[chunk].push(pool);
+}
+
 // ── BRIDGE BUILDER ──────────────────────────────────────────
 function bldBridge(x1,z1,x2,z2,chunk){
   const dx=x2-x1,dz=z2-z1,len=Math.hypot(dx,dz);
@@ -703,8 +852,16 @@ function bldBridge(x1,z1,x2,z2,chunk){
 
 function animWater(t){
   waterMeshes.forEach(w=>{
-    if(w.material&&w.material.map)w.material.map.offset.y=t*.12;
-    w.position.y=.06+Math.sin(t*1.1+w._wPhase)*.035;
+    if(!w)return;
+    if(w._isWaterfall){
+      // waterfall drip animation
+      w.position.y=Math.sin(t*3+w._wPhase)*0.1;
+      if(w.material){w.material.opacity=0.5+Math.sin(t*2+w._wPhase)*.2;}
+    } else {
+      if(w.material&&w.material.map)w.material.map.offset.y=t*.15;
+      // gentle bob
+      w.position.y=-0.04+Math.sin(t*0.8+w._wPhase)*.02;
+    }
   });
   if(window._animWaterCanvas)window._animWaterCanvas(t);
 }
@@ -944,6 +1101,128 @@ function checkMissionProgress(event,value){
   }
 }
 
+// ── NPC HOUSE PLACEMENT (uses house_2 / house_3 GLB) ────────
+let npcHousesPlaced=false;
+const NPC_HOUSE_POSITIONS=[
+  {x:22,z:-18,rot:0.3},{x:-20,z:20,rot:2.1},{x:28,z:20,rot:5.5},
+  {x:-24,z:-14,rot:1.0},{x:18,z:-28,rot:4.2},{x:-28,z:8,rot:3.8},
+];
+function placeNPCHouses(){
+  if(npcHousesPlaced)return;
+  if(!window._house2&&!window._house3)return;
+  npcHousesPlaced=true;
+  NPC_HOUSE_POSITIONS.forEach((p,i)=>{
+    const template=i%2===0?window._house2:window._house3;
+    if(!template)return;
+    const m=template.clone();
+    m.position.set(p.x,0,p.z);
+    m.rotation.y=p.rot;
+    scene.add(m);
+    CM['village'].push(m);
+    addC(p.x,p.z,2.5,2.5);
+  });
+}
+
+// ── CASTLE FALLBACK (procedural) ────────────────────────────
+let castleBuilt=false;
+function buildProceduralCastle(cx,cz){
+  if(castleBuilt)return;castleBuilt=true;
+  const g=new THREE.Group();
+  const stoneM=new THREE.MeshLambertMaterial({color:0x606070});
+  const darkM=new THREE.MeshLambertMaterial({color:0x404050});
+  const roofM=new THREE.MeshLambertMaterial({color:0x303040});
+
+  // Main keep
+  g.add(bx(14,16,14,stoneM,0,8,0));
+  // Battlements
+  for(let a=0;a<360;a+=30){
+    const rad=a*Math.PI/180;
+    g.add(bx(1.5,2,1.5,darkM,Math.cos(rad)*7,17,Math.sin(rad)*7));
+  }
+  // 4 Corner towers
+  [[-6,-6],[6,-6],[-6,6],[6,6]].forEach(([tx,tz])=>{
+    g.add(cy(2.5,2.5,20,8,stoneM,tx,10,tz));
+    g.add(cn(2.8,4,6,roofM,tx,21,tz));
+    // Tower battlements
+    for(let a=0;a<360;a+=45){
+      const r=a*Math.PI/180;
+      g.add(bx(.8,1.2,.8,darkM,tx+Math.cos(r)*2.4,20.5,tz+Math.sin(r)*2.4));
+    }
+  });
+  // Gate arch
+  g.add(bx(4,6,.5,darkM,0,3,-7.1));
+  g.add(bx(1.5,8,.5,stoneM,-2.75,4,-7.1));
+  g.add(bx(1.5,8,.5,stoneM, 2.75,4,-7.1));
+  // Drawbridge
+  g.add(bx(3.5,.3,4,new THREE.MeshLambertMaterial({color:0x7a5a2a}),0,.15,-9));
+  // Wall sections
+  [[-9,0,0,-9],[9,0,0,-9],[-9,0,0,9],[9,0,0,9]].forEach(([wx,_,_2,wz])=>{
+    g.add(bx(1,8,12,stoneM,wx,4,wz-(wz>0?-3:3)));
+  });
+
+  g.position.set(cx,0,cz);
+  scene.add(g);
+  addC(cx,cz,14,14);
+  // Red torch lights
+  const tl=new THREE.PointLight(0xff4400,2.5,20);tl.position.set(cx,12,cz);scene.add(tl);
+  // Spawn boss
+  spawnBoss(cx,cz-5);
+}
+
+// ── BOSS ─────────────────────────────────────────────────────
+let bossEntity=null;
+function spawnBoss(x,z){
+  const g=new THREE.Group();
+  const bMat=new THREE.MeshLambertMaterial({color:0x330011,emissive:0x220000,emissiveIntensity:0.4});
+  const bAr=new THREE.MeshLambertMaterial({color:0x111122,emissive:0x110022,emissiveIntensity:0.3});
+  // Large body
+  g.add(bx(1.8,2.4,1.0,bMat,0,1.2,0));
+  // Armour plates
+  g.add(bx(2.0,.9,1.1,bAr,0,2.0,0));
+  // Massive head with horns
+  g.add(sp(.65,8,bMat,0,2.95,0));
+  const hornMat=new THREE.MeshLambertMaterial({color:0x880000});
+  [-.35,.35].forEach(hx=>{
+    const horn=cn(.12,.8,5,hornMat,hx,3.5,0);horn.rotation.z=hx>0?-.4:.4;g.add(horn);
+  });
+  // Great sword
+  const gsMat=new THREE.MeshLambertMaterial({color:0x884422,emissive:0x441100,emissiveIntensity:.5});
+  g.add(bx(.22,3.2,.18,gsMat,.95,1.2,.15));
+  g.add(bx(.9,.22,.2,M.wd,.95,-.3,.15));
+  // Glow eyes
+  const eyeMat=new THREE.MeshLambertMaterial({color:0xff0000,emissive:0xff0000,emissiveIntensity:1});
+  g.add(sp(.1,5,eyeMat,-.22,3.0,.62));g.add(sp(.1,5,eyeMat,.22,3.0,.62));
+
+  g.position.set(x,0,z);scene.add(g);
+  const bossLight=new THREE.PointLight(0xff0022,2,15);bossLight.position.set(x,4,z);scene.add(bossLight);
+
+  bossEntity={
+    mesh:g,light:bossLight,x,z,
+    hp:500,mhp:500,alive:true,state:'idle',
+    aggroR:30,atkR:3.5,atkT:0,
+    phase:1,// phase 2 at 50% HP
+    walkPhase:0,patrolA:0
+  };
+  enemies.push({...bossEntity,type:'Dark Lord',chunk:'outer',isWolf:false,hurtT:0,patrolCenter:{x,z}});
+  notif('⚠ The Dark Lord stirs in the castle!');
+}
+
+// ── BOSS HP BAR (big bar at top when boss is in range) ───────
+function updateBossBar(){
+  if(!bossEntity||!bossEntity.alive)return;
+  const d=Math.hypot(bossEntity.x-P.pos.x,bossEntity.z-P.pos.z);
+  if(d>40){$('eHP').classList.remove('on');return;}
+  $('eHP').classList.add('on');
+  $('eHPN').textContent='☠ DARK LORD  '+bossEntity.hp+'/'+bossEntity.mhp;
+  $('eHPF').style.width=(bossEntity.hp/bossEntity.mhp*100)+'%';
+  $('eHPF').style.background=bossEntity.hp<bossEntity.mhp*.5?'linear-gradient(90deg,#600,#f00)':'linear-gradient(90deg,#8b0000,#ff4444)';
+  // Phase 2 enrage
+  if(bossEntity.hp<bossEntity.mhp*.5&&bossEntity.phase===1){
+    bossEntity.phase=2;notif('⚠ Dark Lord ENRAGED — Phase 2!');
+    bossEntity.mesh.traverse(c=>{if(c.isMesh)c.material.emissiveIntensity=0.9;});
+  }
+}
+
 // ══════════════════════════════════════════════════════════
 //  VILLAGE BUILD
 // ══════════════════════════════════════════════════════════
@@ -957,16 +1236,14 @@ function bldVillage(){
   bldRoad(16,0,100,0,7,'village');
   bldRoad(-16,8,-100,50,7,'village');
 
-  // Ring road as tube
-  const rPts=[];
-  for(let a=0;a<=360;a+=5)rPts.push(new THREE.Vector3(Math.cos(a*Math.PI/180)*16,.05,Math.sin(a*Math.PI/180)*16));
-  const rC=new THREE.CatmullRomCurve3(rPts,true);
-  const rG=new THREE.TubeGeometry(rC,72,3,5,true);
-  const rM=new THREE.Mesh(rG,M.road);rM.receiveShadow=true;addM('village',rM);
-  // edge trim for ring road
-  const rG2=new THREE.TubeGeometry(rC,72,3.4,4,true);
-  const rM2=new THREE.Mesh(rG2,new THREE.MeshLambertMaterial({color:0x5a4520}));
-  rM2.position.y=-.02;addM('village',rM2);
+  // Circular cobblestone area in center (flat, no raised tube)
+  const centerPave=new THREE.Mesh(
+    new THREE.CircleGeometry(18,24),
+    new THREE.MeshLambertMaterial({color:0xaa9060})
+  );
+  centerPave.rotation.x=-Math.PI/2;centerPave.position.y=0.01;
+  centerPave._isGround=true;centerPave.receiveShadow=true;
+  addM('village',centerPave);
 
   // Fountain
   const fg=new THREE.Group();
@@ -984,11 +1261,14 @@ function bldVillage(){
   ];
   hr.forEach(h=>{const rad=h.a*Math.PI/180;bldHouse(Math.cos(rad)*h.r,Math.sin(rad)*h.r,h.sx,h.sz,'village',h.rm);});
 
-  // Fence
-  for(let a=0;a<360;a+=10){
+  // Decorative fence posts (no collision — just visual)
+  for(let a=0;a<360;a+=15){
     const rad=a*Math.PI/180,r=14.5;
-    addM('village',bx(.18,1.2,.18,M.fc,Math.cos(rad)*r,.6,Math.sin(rad)*r));
+    const post=bx(.18,.8,.18,M.fc,Math.cos(rad)*r,.4,Math.sin(rad)*r);
+    // horizontal rail between posts
+    addM('village',post);
   }
+  // Note: no addC for fence posts — player can walk through freely
 
   // Trees
   [{x:28,z:-8},{x:-30,z:-12},{x:24,z:28},{x:-26,z:26},{x:32,z:18},{x:-34,z:0},{x:30,z:-22},{x:-28,z:20}]
@@ -1052,9 +1332,9 @@ function bldForest(){
   bldRoad(0,-16,-5,-50,3,'forest',M.path);
   bldRoad(-5,-50,5,-75,3,'forest',M.path);
   bldRoad(5,-75,-3,-100,3,'forest',M.path);
-  buildRiver('forest');
-  // Bridge over the river — crossing point between pts[2] and [3]
-  bldBridge(-2,-82,8,-76,'forest');
+  buildProperRiver('forest');
+  // Bridge over river
+  bldBridge(-6,-72,3,-66,'forest');
   for(let i=0;i<52;i++){const x=(Math.random()-.5)*92,z=-100+(Math.random()-.5)*92;if(Math.abs(x)<6&&z>-55&&z<-14)continue;bldTree(x,z,3.8+Math.random()*3,'forest');}
   for(let i=0;i<12;i++)bldRock((Math.random()-.5)*78,-100+(Math.random()-.5)*78,.6+Math.random()*1.4,'forest');
   const cg=new THREE.Group();cg.add(sp(.5,6,M.st,0,.25,0));cg.add(sp(.34,6,M.fi,0,.62,0));cg.position.set(-14,0,-88);addM('forest',cg);
@@ -1071,6 +1351,7 @@ function bldOuter(){
   for(let i=0;i<14;i++)bldRock(-100+(Math.random()-.5)*82,50+(Math.random()-.5)*82,.5+Math.random()*1.5,'outer');
   for(let i=0;i<14;i++)bldTree(-100+(Math.random()-.5)*80,50+(Math.random()-.5)*80,3+Math.random()*2,'outer');
   for(let i=0;i<7;i++)spawnEnemy(-100+(Math.random()-.5)*72,50+(Math.random()-.5)*72,'Bandit',65,'outer');
+  buildProceduralCastle(-80,-80);
   spawnNPC(-100,50,'Hermit Gal','Hermit','neutral','🧙‍♂️',["The Black Tower birthed the curse.","Find three runes to break it.","The runes glow at midnight."],'outer');
   spawnNPC(-88,68,'Lost Knight','Knight','good','🛡️',["Thank the gods, a warrior!","I've been cursed for weeks."],'outer');
   spawnNPC(-114,45,'Scout Rei','Scout','neutral','🏹',["Watch the ruins at night.","Bandits camp there in numbers."],'outer');
@@ -1125,11 +1406,12 @@ function spawnEnemy(x,z,type,hp,chunk){
 
 // ─── PLAYER STATE ────────────────────────────────────────
 const P={
-  pos:{x:0,z:5},
+  pos:{x:0,z:5,y:0},
   hp:100,mhp:100,sp:100,msp:100,
   spd:8.5,lv:1,xp:0,gold:50,
   weapon:'sword',alive:true,state:'idle',
   atkT:0,hurtInv:0,comboCount:0,comboT:0,rollCD:0,facing:0,
+  velY:0,onGround:true,jumpCD:0,
   skills:{strength:{lv:1,max:5,icon:'⚔️',name:'Strength'},defense:{lv:1,max:5,icon:'🛡️',name:'Defense'},archery:{lv:1,max:5,icon:'🏹',name:'Archery'},agility:{lv:1,max:5,icon:'💨',name:'Agility'},magic:{lv:0,max:5,icon:'✨',name:'Magic'},herb:{lv:0,max:5,icon:'🌿',name:'Herb'}},
   sp2:3,
 };
@@ -1189,7 +1471,10 @@ function doAttack(){
 
 function killE(e){
   e.alive=false;e.state='dead';
-  const xg=20+P.skills.defense.lv*2,gg=5+Math.floor(Math.random()*14);
+  const isBoss=e.type==='Dark Lord';
+  const xg=isBoss?500:20+P.skills.defense.lv*2;
+  const gg=isBoss?500:5+Math.floor(Math.random()*14);
+  if(isBoss){notif('🏆 DARK LORD DEFEATED! You broke the curse!');if(bossEntity)bossEntity.alive=false;}
   P.xp+=xg;P.gold+=gg;$('gc2').textContent=P.gold;
   notif(`+${xg}XP  +${gg}💰`);checkLvUp();
   e.mesh.rotation.z=Math.PI/2;setTimeout(()=>scene.remove(e.mesh),2000);
@@ -1323,46 +1608,57 @@ function animPlayer(dt,t,moving){
   }
 }
 
-// ─── WEAPON WHEEL ────────────────────────────────────────
+// ─── WEAPON SELECTOR ─────────────────────────────────────
 const WS=[
-  {name:'Sword',       icon:'⚔️',col:'#cc2222', key:'sword'},
-  {name:'Bow',         icon:'🏹',col:'#2255cc', key:'bow'},
-  {name:'M.Sword',     icon:'🗡️',col:'#8833cc', key:'minecraft sword'},
-  {name:'Hammer',      icon:'🔨',col:'#cc8800', key:'hammer'},
+  {name:'Sword',   icon:'⚔️', key:'sword',          ammo:'∞ Melee'},
+  {name:'Bow',     icon:'🏹', key:'bow',             ammo:'∞ Ranged'},
+  {name:'M.Sword', icon:'🗡️', key:'minecraft sword', ammo:'∞ Melee'},
+  {name:'Hammer',  icon:'🔨', key:'hammer',          ammo:'∞ Heavy'},
 ];
-let selW=0,wOpen=false;
-function drawWheel(hov){
-  const cv=$('wc'),ctx=cv.getContext('2d');ctx.clearRect(0,0,240,240);
-  const CX=120,CY=120,OR=108,IR=34;
+let selW=0, wOpen=false;
+
+function buildWeaponGrid(){
+  const grid=$('wwGrid'); grid.innerHTML='';
   WS.forEach((w,i)=>{
-    const sA=((i*90-45)*Math.PI/180)-Math.PI/2,eA=((i*90+45)*Math.PI/180)-Math.PI/2;
-    ctx.beginPath();ctx.moveTo(CX,CY);ctx.arc(CX,CY,OR,sA,eA);ctx.closePath();
-    ctx.fillStyle=i===hov?w.col+'dd':w.col+'55';ctx.fill();
-    ctx.strokeStyle=i===hov?'#f0d060':'#ffffff33';ctx.lineWidth=i===hov?2.5:1;ctx.stroke();
-    const mA=(i*90*Math.PI/180)-Math.PI/2;
-    ctx.font='22px serif';ctx.fillText(w.icon,CX+Math.cos(mA)*72-11,CY+Math.sin(mA)*72+8);
-    ctx.fillStyle=i===hov?'#f0d060':'#aaa';ctx.font='8px sans-serif';ctx.textAlign='center';
-    ctx.fillText(w.name,CX+Math.cos(mA)*90,CY+Math.sin(mA)*90+3);ctx.textAlign='left';
+    const d=document.createElement('div');
+    d.className='wwItem'+(i===selW?' sel':'');
+    d.innerHTML='<div class="wwItemIcon">'+w.icon+'</div><div class="wwItemName">'+w.name+'</div><div class="wwItemAmmo">'+w.ammo+'</div>';
+    d.addEventListener('touchstart',function(e){
+      e.preventDefault();
+      selW=i; P.weapon=w.key; updateWpnBadge(); buildWeaponGrid(); closeWheel();
+      notif('Equipped: '+w.name);
+    },{passive:false});
+    d.onclick=function(){selW=i;P.weapon=w.key;updateWpnBadge();closeWheel();notif('Equipped: '+w.name);};
+    grid.appendChild(d);
   });
-  ctx.beginPath();ctx.arc(CX,CY,IR,0,Math.PI*2);ctx.fillStyle='rgba(5,5,15,.9)';ctx.fill();
-  ctx.strokeStyle='#f0d060aa';ctx.lineWidth=2;ctx.stroke();
-  $('wctr').textContent=WS[selW].icon;$('wlb').textContent=WS[selW].name.toUpperCase();
 }
-function openWheel(){wOpen=true;slowMo=.18;$('ww').classList.add('on');$('wo').classList.add('on');drawWheel(selW);}
-function closeWheel(){wOpen=false;slowMo=1;$('ww').classList.remove('on');$('wo').classList.remove('on');P.weapon=WS[selW].name.toLowerCase();updateWpnBadge();}
+
+function openWheel(){
+  wOpen=true; paused=true;
+  buildWeaponGrid();
+  $('ww').classList.add('on');
+  $('wo').classList.add('on');
+}
+function closeWheel(){
+  wOpen=false; paused=false;
+  $('ww').classList.remove('on');
+  $('wo').classList.remove('on');
+}
+
+// Tap ⚙️ once to open weapon panel
+$('biv').addEventListener('touchstart',function(e){e.preventDefault();openWheel();},{passive:false});
+$('biv').addEventListener('click',openWheel);
+$('wwClose').addEventListener('touchstart',function(e){e.preventDefault();closeWheel();},{passive:false});
+$('wwClose').onclick=closeWheel;
+$('wo').addEventListener('touchstart',function(e){e.preventDefault();closeWheel();},{passive:false});
+$('wo').onclick=closeWheel;
+
 function updateWpnBadge(){
   const icons={sword:'⚔️',bow:'🏹',throwable:'💣',potion:'🧪','minecraft sword':'⚔️',hammer:'🔨'};
   $('wpnIcon').textContent=icons[P.weapon]||'⚔️';
   $('wpnName').textContent=P.weapon.toUpperCase();
 }
-let wHT=null;
-$('biv').addEventListener('touchstart',e=>{e.preventDefault();wHT=setTimeout(openWheel,180);},{passive:false});
-$('biv').addEventListener('touchend',e=>{e.preventDefault();clearTimeout(wHT);if(wOpen)closeWheel();},{passive:false});
-$('biv').addEventListener('mousedown',()=>{wHT=setTimeout(openWheel,180);});
-$('biv').addEventListener('mouseup',()=>{clearTimeout(wHT);if(wOpen)closeWheel();});
-function wSlot(mx,my){const r=$('wc').getBoundingClientRect();const dx=mx-(r.left+120),dy=my-(r.top+120);if(Math.hypot(dx,dy)<30)return selW;return Math.floor(((Math.atan2(dy,dx)*180/Math.PI+90+360)%360+45)/90)%4;}
-$('wc').addEventListener('touchmove',e=>{const t=e.changedTouches[0];selW=wSlot(t.clientX,t.clientY);drawWheel(selW);},{passive:true});
-$('wc').addEventListener('mousemove',e=>{if(!wOpen)return;selW=wSlot(e.clientX,e.clientY);drawWheel(selW);});
+// weapon selector handled by tap grid (no wc canvas)
 
 // ─── JOYSTICK ────────────────────────────────────────────
 const jzEl=$('jz'),jkEl=$('jk');
@@ -1449,6 +1745,16 @@ $('brl').addEventListener('click',()=>{
   P.pos.x+=-Math.sin(P.facing)*3.5;P.pos.z+=-Math.cos(P.facing)*3.5;
   PG.rotation.x=.6;setTimeout(()=>{PG.rotation.x=0;P.state='idle';},350);notif('Dodge Roll!');
 });
+// Jump button
+function doJump(){
+  if(!P.onGround||P.jumpCD>0)return;
+  P.velY=8.5;P.onGround=false;P.jumpCD=0.6;P.state='jump';
+  if(P.sp>=8)drainSP(8);
+}
+$('bjp').addEventListener('touchstart',e=>{e.preventDefault();doJump();},{passive:false});
+$('bjp').addEventListener('click',doJump);
+if(typeof KB!=='undefined'){}// space key jump added below
+
 $('bin').addEventListener('click',()=>{
   if(inDlg){closeDlg();return;}
   let best=null,bd=Infinity;
@@ -1474,6 +1780,9 @@ function drawMM(){
   mmCtx.strokeStyle='#4488aacc';mmCtx.lineWidth=2;mmCtx.beginPath();mmCtx.moveTo(ox-40*sc,oz-60*sc);mmCtx.bezierCurveTo(ox+0,oz-85*sc,ox+45*sc,oz-55*sc,ox+45*sc,oz-55*sc);mmCtx.stroke();
   // Naruto house marker
   mmCtx.fillStyle='#ff8800';mmCtx.fillRect(ox+35*sc-2,oz+12*sc-2,5,5);
+  // Castle marker
+  mmCtx.fillStyle='#aa00ff';mmCtx.fillRect(ox-80*sc-3,oz+80*sc-3,6,6);
+  mmCtx.strokeStyle='#aa00ff';mmCtx.strokeRect(ox-80*sc-4,oz+80*sc-4,8,8);
   mmCtx.fillStyle='#ff4444';enemies.forEach(e=>{if(!e.alive)return;mmCtx.fillRect(ox+e.x*sc-1.5,oz+e.z*sc-1.5,3,3);});
   mmCtx.fillStyle='#44ff88';npcs.forEach(n=>{mmCtx.fillRect(ox+n.x*sc-1.5,oz+n.z*sc-1.5,3,3);});
   mmCtx.fillStyle='#f0d060';mmCtx.beginPath();mmCtx.arc(MSZ/2,MSZ/2,4,0,Math.PI*2);mmCtx.fill();
@@ -1519,7 +1828,7 @@ function loop(){
     if(jA){mx=jDX;mz=jDZ;}
     if(KB['KeyW']||KB['ArrowUp'])mz=-1;if(KB['KeyS']||KB['ArrowDown'])mz=1;
     if(KB['KeyA']||KB['ArrowLeft'])mx=-1;if(KB['KeyD']||KB['ArrowRight'])mx=1;
-    if(KB['Space'])doAttack();if(KB['KeyE'])$('bin').click();if(KB['ShiftLeft']&&P.rollCD<=0)$('brl').click();
+    if(KB['Space'])doJump();if(KB['KeyF'])doAttack();if(KB['KeyE'])$('bin').click();if(KB['ShiftLeft']&&P.rollCD<=0)$('brl').click();if(P.jumpCD>0)P.jumpCD-=dt;
     const moving=(mx!==0||mz!==0)&&P.alive&&P.state!=='dead';
     if(moving){
       const spd=P.spd*(P.sp>5?1:.45)*dt;
@@ -1527,16 +1836,22 @@ function loop(){
       const wx=-sy*(-mz)+cy2*mx,wz=-cy2*(-mz)-sy*mx;
       const len=Math.hypot(wx,wz)||1;
       const nx=P.pos.x+(wx/len)*spd,nz=P.pos.z+(wz/len)*spd;
-      if(!hitC(nx,P.pos.z)&&Math.abs(nx)<98)P.pos.x=nx;
-      if(!hitC(P.pos.x,nz)&&Math.abs(nz)<98)P.pos.z=nz;
+      if(!hitC(nx,P.pos.z)&&Math.abs(nx)<195)P.pos.x=nx;
+      if(!hitC(P.pos.x,nz)&&Math.abs(nz)<195)P.pos.z=nz;
       P.facing=Math.atan2(-(wx/len),-(wz/len));PG.rotation.y=P.facing;
       if(P.sp>0&&P.state!=='dodge')drainSP(4*dt);
       if(P.state==='idle')P.state='walk';
     } else if(P.state==='walk'||P.state==='idle')P.state='idle';
     regenSP(dt);
-    if(P.atkT>0)P.atkT-=dt;if(P.hurtInv>0)P.hurtInv-=dt;if(P.rollCD>0)P.rollCD-=dt;
+    if(P.atkT>0)P.atkT-=dt;if(P.hurtInv>0)P.hurtInv-=dt;if(P.rollCD>0)P.rollCD-=dt;if(P.jumpCD>0)P.jumpCD-=dt;
     if(P.comboT>0){P.comboT-=dt;if(P.comboT<=0){P.comboCount=0;$('combo').classList.remove('on');}}
-    PG.position.set(P.pos.x,0,P.pos.z);
+    // Jump physics
+    if(!P.onGround){
+      P.velY-=22*dt;
+      P.pos.y+=P.velY*dt;
+      if(P.pos.y<=0){P.pos.y=0;P.velY=0;P.onGround=true;P.state='idle';}
+    }
+    PG.position.set(P.pos.x,P.pos.y,P.pos.z);
     // Attach equipped weapon model to hand if loaded
     if(P.weapon==='minecraft sword'&&window._swordModel&&!window._swordAttached){
       window._swordAttached=true;
@@ -1556,7 +1871,7 @@ function loop(){
       SW.add(blade);SW.add(guard);SW.add(grip);
     }
     animPlayer(dt,t,moving);
-    updEnemies(dt);updNPCs(dt,t);animWater(t);
+    updEnemies(dt);updNPCs(dt,t);animWater(t);updateBossBar();
     fr++;
     if(fr%28===0)tickChunks(P.pos.x,P.pos.z,.44);
     updLOD(dt);
@@ -1569,8 +1884,18 @@ function loop(){
       cam.position.set(P.pos.x+Math.sin(camYaw)*Math.cos(camPitch)*CAM_D,Math.sin(camPitch)*CAM_D+1.8,P.pos.z+Math.cos(camYaw)*Math.cos(camPitch)*CAM_D);
       cam.lookAt(P.pos.x,1.3,P.pos.z);
     } else {
-      cam.position.set(P.pos.x,1.65,P.pos.z);cam.rotation.order='YXZ';cam.rotation.y=camYaw;cam.rotation.x=-camPitch*.35;
+      // First-person: position at eye height, hide player mesh
+      cam.position.set(
+        P.pos.x - Math.sin(P.facing)*0.1,
+        1.7,
+        P.pos.z - Math.cos(P.facing)*0.1
+      );
+      cam.rotation.order='YXZ';
+      cam.rotation.y=camYaw+Math.PI; // face forward
+      cam.rotation.x=-(camPitch-0.4)*0.6;
+      PG.visible=false; // hide player in first person
     }
+    if(camMode==='third') PG.visible=true;
     $('hf').style.width=(P.hp/P.mhp*100)+'%';
     $('sf').style.width=(P.sp/P.msp*100)+'%';
     drawMM();
