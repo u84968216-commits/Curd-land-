@@ -322,25 +322,32 @@ function buildHorizonTerrain(){
   window._fallbackHills=[];
   angles.forEach((a,i)=>{
     const rad=a*Math.PI/180;
-    const dist=155+Math.random()*35;
-    const h=18+Math.random()*28;
-    const w=14+Math.random()*18;
+    const dist=145+Math.random()*30;
+    const h=28+Math.random()*38; // bigger: 28-66 units
+    const w=20+Math.random()*22; // wider base
     const rocky=i%3===0;
     const hill=new THREE.Mesh(
-      new THREE.ConeGeometry(w,h,rocky?5:6),
+      new THREE.ConeGeometry(w,h,rocky?6:7),
       rocky?hillMat3:(i%2===0?hillMat:hillMat2)
     );
-    hill.position.set(Math.cos(rad)*dist,h*.44,Math.sin(rad)*dist);
+    hill.position.set(Math.cos(rad)*dist, h*0.45, Math.sin(rad)*dist);
     hill.rotation.y=Math.random()*Math.PI;
-    hill._isGround=true; // never hide
+    hill._isGround=true;
+    hill.castShadow=true; hill.receiveShadow=true;
     scene.add(hill);
     window._fallbackHills.push(hill);
-    // Snow caps on tall hills
-    if(h>30){
-      const snow=new THREE.Mesh(new THREE.ConeGeometry(w*.3,h*.25,5),new THREE.MeshLambertMaterial({color:0xeeeeff}));
-      snow.position.set(Math.cos(rad)*dist,h*.44+h*.55,Math.sin(rad)*dist);
-      scene.add(snow);
-    }
+    // Snow cap on all hills (they're big enough)
+    const snowH=h*0.28;
+    const snow=new THREE.Mesh(
+      new THREE.ConeGeometry(w*0.28,snowH,6),
+      new THREE.MeshLambertMaterial({color:0xeef0ff})
+    );
+    snow.position.set(Math.cos(rad)*dist, h*0.45+h*0.62, Math.sin(rad)*dist);
+    snow._isGround=true;
+    scene.add(snow);
+    window._fallbackHills.push(snow);
+    // Climbable: NO addC() — player can walk up the slope naturally
+    // (cone geometry slopes gradually, player can ascend with movement)
   });
   // Outer flat ground ring
   const outerGnd=new THREE.Mesh(
@@ -547,7 +554,9 @@ loadScript(GLTF_CDN,ok=>{
     }
     // Only wall colliders — leave center open so player can enter
     addC(-80,-88,14,2);  // north wall
-    addC(-80,-72,14,2);  // south wall
+    // south wall removed — gate is open here
+    addC(-80,-72,4,2);  // south-east wall section
+    addC(-80,-72,4,2);  // south-west wall section (gate center open)
     addC(-94,-80,2,14);  // west wall
     addC(-66,-80,2,14);  // east wall
     // Boss spawns inside castle courtyard
@@ -644,6 +653,26 @@ function setupWaterMaterial(){
 // Water placeholder — DoubleSide so it never disappears from below
 M.wat=new THREE.MeshLambertMaterial({color:0x1a6a9a,transparent:true,opacity:0.85,side:THREE.DoubleSide});
 setupWaterMaterial();
+
+// ── Grass texture loader ──────────────────────────────
+(function loadGrass(){
+  const tl=new THREE.TextureLoader();
+  tl.load('./textures/grass.jpg', tex=>{
+    tex.wrapS=tex.wrapT=THREE.RepeatWrapping;
+    tex.repeat.set(20,20);
+    // Apply to all ground materials
+    [M.gnd, M.gnd2].forEach(m=>{
+      m.map=tex; m.color.setHex(0xffffff); m.needsUpdate=true;
+    });
+    // Update any already-built ground meshes
+    scene.traverse(o=>{
+      if(o.isMesh&&o._isGround&&(o.material===M.gnd||o.material===M.gnd2)){
+        o.material.map=tex; o.material.needsUpdate=true;
+      }
+    });
+    console.log('✅ grass.jpg loaded');
+  }, undefined, ()=>console.log('grass.jpg not found — using colour'));
+})();
 
 // ══════════════════════════════════════════════════════════
 //  PLAYER (procedural — replaced by GLB)
@@ -790,8 +819,8 @@ function buildRiver(chunk){
 // River channel: carved path with banks, flowing water texture, depth illusion
 const RIVER_PATH=[
   // Start near mountain (north)
-  {x:5,z:-135},
-  {x:2,z:-118},
+  {x:4,z:-118}, // waterfall base
+  {x:2,z:-108},
   {x:-5,z:-105},
   {x:-10,z:-92},
   {x:-8,z:-78},
@@ -807,54 +836,76 @@ const RIVER_PATH=[
 ];
 
 function buildProperRiver(chunk){
-  const riverW=5.5;
-  const bankMat=new THREE.MeshLambertMaterial({color:0x6a5030});
-  const bedMat=new THREE.MeshLambertMaterial({color:0x1a4a1a}); // dark muddy bed
+  const RW=6; // river width
+  // Water texture repeated along river
+  const watMat=()=>{
+    const m=new THREE.MeshLambertMaterial({
+      color:0x2299cc, transparent:true, opacity:0.82, side:THREE.DoubleSide
+    });
+    // Apply water texture if already loaded
+    if(M.wat&&M.wat.map){
+      m.map=M.wat.map;
+      m.color.setHex(0xaaddff);
+      m.map.wrapS=m.map.wrapT=THREE.RepeatWrapping;
+      m.map.repeat.set(2,6);
+    }
+    return m;
+  };
+  const bedMat=new THREE.MeshLambertMaterial({color:0x3a5a2a});
+  const bankMat=new THREE.MeshLambertMaterial({color:0x7a6040});
+  const foamMat=new THREE.MeshLambertMaterial({color:0xddeeff,transparent:true,opacity:0.55});
 
   for(let i=0;i<RIVER_PATH.length-1;i++){
-    const a=RIVER_PATH[i],b=RIVER_PATH[i+1];
-    const dx=b.x-a.x,dz=b.z-a.z,len=Math.hypot(dx,dz);
-    const ang=Math.atan2(dx,dz);
-    const cx=(a.x+b.x)/2,cz=(a.z+b.z)/2;
+    const a=RIVER_PATH[i], b=RIVER_PATH[i+1];
+    const dx=b.x-a.x, dz=b.z-a.z;
+    const len=Math.hypot(dx,dz);
+    const ang=Math.atan2(dx,dz); // angle along segment
+    const cx=(a.x+b.x)/2, cz=(a.z+b.z)/2;
 
-    // River bed (sunken -0.15)
-    const bed=new THREE.Mesh(new THREE.PlaneGeometry(riverW,len),bedMat);
-    bed.rotation.x=-Math.PI/2;bed.rotation.z=-ang+Math.PI/2;
-    bed.position.set(cx,-0.12,cz);bed._isGround=true;
-    scene.add(bed);if(chunk)CM[chunk].push(bed);
+    // helper: make a horizontal plane rotated to segment direction
+    const makeSeg=(w,mat,yo)=>{
+      const m=new THREE.Mesh(new THREE.PlaneGeometry(w,len),mat);
+      m.rotation.order='YXZ';
+      m.rotation.x=-Math.PI/2; // lay flat
+      m.rotation.y=ang;        // face segment direction
+      m.position.set(cx,yo,cz);
+      m._isGround=true;
+      return m;
+    };
 
-    // Water surface
-    const wm=new THREE.Mesh(new THREE.PlaneGeometry(riverW-0.6,len),M.wat?M.wat.clone():new THREE.MeshLambertMaterial({color:0x1a6a9a,transparent:true,opacity:0.85}));
-    wm.rotation.x=-Math.PI/2;wm.rotation.z=-ang+Math.PI/2;
-    wm.position.set(cx,-0.04,cz);
-    wm._wPhase=i*0.3;
-    scene.add(wm);if(chunk)CM[chunk].push(wm);waterMeshes.push(wm);
+    // Sunken river bed (dark green/mud)
+    const bed=makeSeg(RW, bedMat, -0.18);
+    scene.add(bed); if(chunk)CM[chunk].push(bed);
 
-    // Left bank
-    const lbMat=bankMat.clone();
-    const lb=new THREE.Mesh(new THREE.PlaneGeometry(3,len),lbMat);
-    lb.rotation.x=-Math.PI/2;lb.rotation.z=-ang+Math.PI/2;
-    const perp={x:Math.cos(ang-Math.PI/2),z:Math.sin(ang-Math.PI/2)};
-    lb.position.set(cx+perp.x*(riverW/2+1.5),-0.01,cz+perp.z*(riverW/2+1.5));
-    lb._isGround=true;scene.add(lb);if(chunk)CM[chunk].push(lb);
+    // Water surface — slightly above bed
+    const wm=makeSeg(RW-0.4, watMat(), 0.02);
+    wm._isGround=false; wm._wPhase=i*0.4; wm._riverSeg=true;
+    scene.add(wm); if(chunk)CM[chunk].push(wm); waterMeshes.push(wm);
 
-    // Right bank
-    const rb=lb.clone();
-    rb.position.set(cx-perp.x*(riverW/2+1.5),-0.01,cz-perp.z*(riverW/2+1.5));
-    rb._isGround=true;scene.add(rb);if(chunk)CM[chunk].push(rb);
+    // Foam/white water on top
+    const foam=makeSeg(RW-1.5, foamMat, 0.04);
+    foam._wPhase=i*0.6+0.3;
+    scene.add(foam); if(chunk)CM[chunk].push(foam); waterMeshes.push(foam);
 
-    // River rocks along banks
-    if(i%2===0){
-      const rk=sp(0.3+Math.random()*0.4,5,M.st,
-        cx+perp.x*(riverW/2+0.3)+dx/len*(Math.random()-.5)*len*.4,
-        0.1,
-        cz+perp.z*(riverW/2+0.3)+dz/len*(Math.random()-.5)*len*.4
-      );
-      scene.add(rk);if(chunk)CM[chunk].push(rk);
-    }
+    // Banks (dirt strips either side)
+    const perpX=Math.cos(ang+Math.PI/2), perpZ=Math.sin(ang+Math.PI/2);
+    [1,-1].forEach(side=>{
+      const bk=makeSeg(4, bankMat, -0.02);
+      bk.position.set(cx+perpX*side*(RW/2+2), -0.02, cz+perpZ*side*(RW/2+2));
+      scene.add(bk); if(chunk)CM[chunk].push(bk);
+      // Bank rocks every 2 segments
+      if(i%2===0){
+        const rs=sp(0.3+Math.random()*0.5,5,M.st,
+          cx+perpX*side*(RW/2+0.5)+(Math.random()-.5)*2,
+          0.15,
+          cz+perpZ*side*(RW/2+0.5)+(Math.random()-.5)*2
+        );
+        scene.add(rs); if(chunk)CM[chunk].push(rs);
+      }
+    });
   }
-  // Waterfall at mountain base (visual)
-  buildWaterfall(5,-130,chunk);
+  // Waterfall where river starts (at mountain)
+  buildWaterfall(4,-118,chunk); // start of river, within forest chunk
 }
 
 // ── Waterfall texture material (loaded once, shared) ────────
@@ -999,13 +1050,20 @@ function animWater(t){
       }
       // Pulse opacity for realism
       if(w.material) w.material.opacity=0.72+Math.sin(t*2.5+w._wPhase)*0.1;
-    } else {
-      // River/pool water — scroll downstream (positive Y = forward)
+    } else if(w._riverSeg){
+      // River water — scroll texture along flow direction
       if(w.material&&w.material.map){
-        w.material.map.offset.y+=0.008;
+        w.material.map.offset.y += 0.012;
+        w.material.map.needsUpdate=true;
       }
-      // Gentle vertical bob
-      w.position.y=-0.04+Math.sin(t*0.8+(w._wPhase||0))*0.018;
+      // Gentle bob
+      w.position.y = 0.02 + Math.sin(t*1.2+(w._wPhase||0))*0.015;
+    } else {
+      // Pool / other water
+      if(w.material&&w.material.map){
+        w.material.map.offset.y += 0.006;
+      }
+      w.position.y = 0.02 + Math.sin(t*0.8+(w._wPhase||0))*0.018;
     }
   });
   if(window._animWaterCanvas)window._animWaterCanvas(t);
@@ -1418,21 +1476,8 @@ function bldVillage(){
   const wring=pl(5.8,5.8,M.wat,0,.12,0);wring._wPhase=0;fg.add(wring);waterMeshes.push(wring);
   addM('village',fg);
 
-  // Village ring houses — placed via GLB (placeNPCHouses) when house_2 loads.
-  // Procedural fallback for ALL 9 positions if GLB not loaded yet.
-  const VHPOS=VILLAGE_HOUSE_POS; // defined in placeNPCHouses block
-  if(!window._house2){
-    // fallback procedural
-    const hr=[
-      {a:0,r:22,sx:1,sz:1,rm:M.rR},{a:40,r:22,sx:1,sz:1,rm:M.rD},
-      {a:80,r:22,sx:1,sz:1,rm:M.rR},{a:120,r:24,sx:1,sz:1,rm:M.rG},
-      {a:160,r:22,sx:1,sz:1,rm:M.rR},{a:200,r:22,sx:1,sz:1,rm:M.rD},
-      {a:240,r:24,sx:1.2,sz:1.1,rm:M.rG},{a:290,r:24,sx:1.2,sz:1.1,rm:M.rR},
-      {a:335,r:26,sx:1.5,sz:1.3,rm:M.rD},
-    ];
-    hr.forEach(h=>{const rad=h.a*Math.PI/180;bldHouse(Math.cos(rad)*h.r,Math.sin(rad)*h.r,h.sx,h.sz,'village',h.rm);});
-  }
-  // When GLB arrives it will call placeNPCHouses which adds models at VILLAGE_HOUSE_POS
+  // Houses placed ONLY via house_2.glb — called by placeNPCHouses when GLB loads
+  // No procedural fallback — clean map until models arrive
 
   // Decorative fence posts (no collision — just visual)
   for(let a=0;a<360;a+=15){
@@ -1933,7 +1978,7 @@ $('brl').addEventListener('click',()=>{
 // Jump button
 function doJump(){
   if(!P.onGround||P.jumpCD>0)return;
-  P.velY=8.5;P.onGround=false;P.jumpCD=0.6;P.state='jump';
+  P.velY=10;P.onGround=false;P.jumpCD=0.8;P.state='jump';
   if(P.sp>=8)drainSP(8);
 }
 $('bjp').addEventListener('touchstart',e=>{e.preventDefault();doJump();},{passive:false});
@@ -2036,13 +2081,18 @@ function loop(){
     regenSP(dt);
     if(P.atkT>0)P.atkT-=dt;if(P.hurtInv>0)P.hurtInv-=dt;if(P.rollCD>0)P.rollCD-=dt;if(P.jumpCD>0)P.jumpCD-=dt;
     if(P.comboT>0){P.comboT-=dt;if(P.comboT<=0){P.comboCount=0;$('combo').classList.remove('on');}}
-    // Jump physics
-    if(!P.onGround){
-      P.velY-=22*dt;
-      P.pos.y+=P.velY*dt;
-      if(P.pos.y<=0){P.pos.y=0;P.velY=0;P.onGround=true;P.state='idle';}
+    // Jump physics — gravity
+    if(!P.onGround || P.velY>0){
+      P.velY -= 28*dt;
+      P.pos.y += P.velY*dt;
+      if(P.pos.y <= 0){
+        P.pos.y=0; P.velY=0; P.onGround=true;
+        if(P.state==='jump') P.state='idle';
+      }
+    } else {
+      P.pos.y=0; P.onGround=true;
     }
-    PG.position.set(P.pos.x,P.pos.y,P.pos.z);
+    PG.position.set(P.pos.x, P.pos.y, P.pos.z);
     // Attach equipped weapon model to hand if loaded
     if(P.weapon==='minecraft sword'&&window._swordModel&&!window._swordAttached){
       window._swordAttached=true;
